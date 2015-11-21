@@ -8,7 +8,6 @@ use League\Container\Container;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
-use League\Container\ServiceProvider\ServiceProviderInterface;
 use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
@@ -98,16 +97,6 @@ class Glue implements ContainerAwareInterface
         $this->container->addServiceProvider(ConfigurationServiceProvider::class);
         $providers = $this->container->get('config.providers');
         array_walk($providers, [$this->container, 'addServiceProvider']);
-
-        /* @var ServiceProviderInterface $instance */
-        // Boot providers that need it
-        foreach ($providers as $provider) {
-            $instance = new $provider();
-            $instance->setContainer($this->container);
-            if (method_exists($instance, 'boot')) {
-                $instance->boot();
-            }
-        }
     }
 
     /**

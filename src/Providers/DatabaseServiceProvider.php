@@ -40,13 +40,7 @@ class DatabaseServiceProvider extends AbstractServiceProvider
 
             return $capsule;
         });
-    }
 
-    /**
-     * Boot the provider.
-     */
-    public function boot()
-    {
-        $database = $this->container->get(Manager::class);
+        $this->container->get(Manager::class);
     }
 }
