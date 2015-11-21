@@ -1,10 +1,10 @@
 <?php
-namespace Madewithlove\Nanoframework\Providers;
+
+namespace Madewithlove\Nanoframework\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\Route;
 use League\Route\RouteCollection;
-use Zend\Diactoros\Response;
 
 class RoutingServiceProvider extends AbstractServiceProvider
 {
@@ -29,13 +29,19 @@ class RoutingServiceProvider extends AbstractServiceProvider
     {
         $this->container->share(RouteCollection::class, function () {
             $router = new RouteCollection($this->container);
-
-            /** @var callable $routes */
-            // Bind routes to Router
-            $routes = $this->container->get('config.routes');
-            $router = $routes($router);
+            $this->routes = $this->getRoutes($router);
 
             return $router;
         });
+    }
+
+    /**
+     * @param RouteCollection $router
+     *
+     * @return array
+     */
+    protected function getRoutes(RouteCollection $router)
+    {
+        return [];
     }
 }

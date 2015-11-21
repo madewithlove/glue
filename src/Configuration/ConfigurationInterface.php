@@ -1,7 +1,6 @@
 <?php
-namespace Madewithlove\Nanoframework\Configuration;
 
-use League\Route\RouteCollection;
+namespace Madewithlove\Nanoframework\Configuration;
 
 interface ConfigurationInterface
 {
@@ -34,11 +33,4 @@ interface ConfigurationInterface
      * @return bool
      */
     public function isDebug();
-
-    /**
-     * @param RouteCollection $router
-     *
-     * @return RouteCollection
-     */
-    public function getRoutes(RouteCollection $router);
 }

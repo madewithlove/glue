@@ -1,5 +1,6 @@
 <?php
-namespace Madewithlove\Nanoframework\Providers;
+
+namespace Madewithlove\Nanoframework\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
@@ -18,8 +19,6 @@ class RequestServiceProvider extends AbstractServiceProvider
      * Use the register method to register items with the container via the
      * protected $this->container property or the `getContainer` method
      * from the ContainerAwareTrait.
-     *
-     * @return void
      */
     public function register()
     {

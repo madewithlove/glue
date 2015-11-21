@@ -1,5 +1,6 @@
 <?php
-namespace Madewithlove\Nanoframework\Middlewares;
+
+namespace Madewithlove\Nanoframework\Http\Middlewares;
 
 use League\Route\RouteCollection;
 use Psr\Http\Message\RequestInterface as Request;

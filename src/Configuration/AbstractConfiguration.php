@@ -1,20 +1,25 @@
 <?php
+
 namespace Madewithlove\Nanoframework\Configuration;
 
-use League\Container\ContainerAwareTrait;
-use League\Route\RouteCollection;
+use Interop\Container\ContainerInterface;
 
 abstract class AbstractConfiguration implements ConfigurationInterface
 {
-    use ContainerAwareTrait;
+    /**
+     * @param ContainerInterface $container
+     */
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
 
     /**
      * @return array
      */
     public function getConfiguration()
     {
-        $routes    = $this->container->get(RouteCollection::class);
-        $providers = $this->getProviders();
+        $providers = array_values($this->getProviders());
         if ($this->isDebug()) {
             $providers = array_merge($providers, $this->getDebugProviders());
         }
@@ -24,7 +29,6 @@ abstract class AbstractConfiguration implements ConfigurationInterface
             'providers'   => $providers,
             'middlewares' => $this->getMiddlewares(),
             'paths'       => $this->getPaths(),
-            'routes'      => $this->getRoutes($routes),
         ];
     }
 }

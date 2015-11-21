@@ -1,4 +1,5 @@
 <?php
+
 namespace Madewithlove\Nanoframework\Providers;
 
 class PathsServiceProvider extends AbstractValuesProvider

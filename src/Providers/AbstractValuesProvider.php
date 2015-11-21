@@ -1,4 +1,5 @@
 <?php
+
 namespace Madewithlove\Nanoframework\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -28,10 +29,12 @@ abstract class AbstractValuesProvider extends AbstractServiceProvider
      */
     public function provides($alias = null)
     {
-        $provided = $this->getProvided();
+        $provided = array_map(function ($key) {
+            return $this->key.'.'.$key;
+        }, $this->getProvided());
 
         if (!is_null($alias)) {
-            return (in_array($alias, $provided));
+            return (in_array($alias, $provided, true));
         }
 
         return $provided;

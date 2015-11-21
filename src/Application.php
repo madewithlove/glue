@@ -1,13 +1,14 @@
 <?php
+
 namespace Madewithlove\Nanoframework;
 
 use Dotenv\Dotenv;
-use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use League\Container\ServiceProvider\ServiceProviderInterface;
+use Madewithlove\Nanoframework\Configuration\ConfigurationInterface;
 use Madewithlove\Nanoframework\Configuration\DefaultConfiguration;
-use Madewithlove\Nanoframework\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Nanoframework\Providers\ConfigurationServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Relay\RelayBuilder;
@@ -20,6 +21,11 @@ class Application
      * @var Container
      */
     protected $container;
+
+    /**
+     * @var string
+     */
+    protected $configuration = DefaultConfiguration::class;
 
     /**
      * @var string
@@ -38,17 +44,47 @@ class Application
         $this->container = $container ?: new Container();
         $this->container->delegate(new ReflectionContainer());
         $this->container->share(ContainerInterface::class, $this->container);
+    }
 
+    /**
+     * @param string $configuration
+     */
+    public function setConfiguration($configuration)
+    {
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * Boot the application.
+     */
+    public function boot()
+    {
         // Load dotenv files
         $dotenv = new Dotenv($this->rootPath);
         $dotenv->load();
 
         // Bind configuration
         $this->container->add('paths.root', $this->rootPath);
-        $this->container->addServiceProvider(ConfigurationServiceProvider::class);
+        $this->container->add(ConfigurationInterface::class, function () {
+            $class = $this->configuration;
+
+            return new $class($this->container);
+        });
 
         // Register providers
-        array_walk($this->container->get('config.providers'), [$this->container, 'addServiceProvider']);
+        $this->container->addServiceProvider(ConfigurationServiceProvider::class);
+        $providers = $this->container->get('config.providers');
+        array_walk($providers, [$this->container, 'addServiceProvider']);
+
+        /* @var ServiceProviderInterface $instance */
+        // Boot providers that need it
+        foreach ($providers as $provider) {
+            $instance = new $provider();
+            $instance->setContainer($this->container);
+            if (method_exists($instance, 'boot')) {
+                $instance->boot();
+            }
+        }
     }
 
     /**
@@ -56,6 +92,8 @@ class Application
      */
     public function run()
     {
+        $this->boot();
+
         $request  = $this->container->get(ServerRequestInterface::class);
         $response = new Response();
 

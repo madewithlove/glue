@@ -1,39 +1,49 @@
 <?php
+
 namespace Madewithlove\Nanoframework\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
-use League\Route\RouteCollection;
-use Madewithlove\Nanoframework\Middlewares\LeagueRouteMiddleware;
+use Madewithlove\Nanoframework\Http\Middlewares\LeagueRouteMiddleware;
+use Madewithlove\Nanoframework\Http\Providers\RequestServiceProvider;
+use Madewithlove\Nanoframework\Http\Providers\RoutingServiceProvider;
+use Madewithlove\Nanoframework\Http\Providers\TwigServiceProvider;
+use Madewithlove\Nanoframework\Providers\CommandBusServiceProvider;
+use Madewithlove\Nanoframework\Providers\DatabaseServiceProvider;
+use Madewithlove\Nanoframework\Providers\DebugbarServiceProvider;
+use Madewithlove\Nanoframework\Providers\LogsServiceProvider;
 use Madewithlove\Nanoframework\Providers\PathsServiceProvider;
-use Madewithlove\Nanoframework\Providers\RequestServiceProvider;
-use Madewithlove\Nanoframework\Providers\RoutingServiceProvider;
+use PhpMiddleware\PhpDebugBar\PhpDebugBarMiddleware;
 
 class DefaultConfiguration extends AbstractConfiguration
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function getProviders()
     {
         return [
-            RequestServiceProvider::class,
-            PathsServiceProvider::class,
-            RoutingServiceProvider::class,
+            'request'    => RequestServiceProvider::class,
+            'paths'      => PathsServiceProvider::class,
+            'routing'    => RoutingServiceProvider::class,
+            'twig'       => TwigServiceProvider::class,
+            'db'         => DatabaseServiceProvider::class,
+            'logs'       => LogsServiceProvider::class,
+            'commandbus' => CommandBusServiceProvider::class,
         ];
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getDebugProviders()
     {
         return [
-
+            DebugbarServiceProvider::class,
         ];
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getPaths()
     {
@@ -49,14 +59,23 @@ class DefaultConfiguration extends AbstractConfiguration
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getMiddlewares()
     {
-        return [
-            WhoopsMiddleware::class,
-            LeagueRouteMiddleware::class,
-        ];
+        switch (getenv('APP_ENV')) {
+            case 'local':
+                return [
+                    PhpDebugBarMiddleware::class,
+                    WhoopsMiddleware::class,
+                    LeagueRouteMiddleware::class,
+                ];
+
+            default:
+                return [
+                    LeagueRouteMiddleware::class,
+                ];
+        }
     }
 
     /**
@@ -65,15 +84,5 @@ class DefaultConfiguration extends AbstractConfiguration
     public function isDebug()
     {
         return getenv('APP_ENV') === 'local';
-    }
-
-    /**
-     * @param RouteCollection $router
-     *
-     * @return RouteCollection
-     */
-    public function getRoutes(RouteCollection $router)
-    {
-        return $router;
     }
 }

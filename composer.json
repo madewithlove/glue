@@ -14,10 +14,14 @@
         }
     },
     "require": {
+        "barryvdh/laravel-debugbar": "^2.0",
         "franzl/whoops-middleware": "^0.2.0",
+        "illuminate/database": "^5.1",
         "league/container": "^2.0",
         "league/route": "2.*@dev",
         "league/tactician": "^0.6.1",
+        "monolog/monolog": "^1.17",
+        "php-middleware/php-debug-bar": "^1.0",
         "relay/relay": "^1.0",
         "twig/twig": "^1.23",
         "vlucas/phpdotenv": "^2.1",
@@ -27,5 +31,8 @@
         "branch-alias": {
             "dev-master": "0.1-dev"
         }
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "2.0.x@dev"
     }
 }
