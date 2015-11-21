@@ -1,9 +1,10 @@
 <?php
+
 namespace Madewithlove\Glue\Traits;
 
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerInterface;
-use Madewithlove\Glue\Configuration\ArrayConfiguration;
+use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 
 trait Configurable
@@ -35,6 +36,8 @@ trait Configurable
         if ($this->configuration instanceof ContainerAwareInterface) {
             $this->configuration->setContainer($this->getContainer());
         }
+
+        $this->configuration->configure();
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -42,15 +45,17 @@ trait Configurable
     //////////////////////////////////////////////////////////////////////
 
     /**
-     * Modify something in the configuration
+     * Modify something in the configuration.
      *
-     * @param array $configuration
-     * @param bool  $recursive
+     * @param string|array $configuration
+     * @param null         $value
      */
-    public function configure(array $configuration, $recursive = true)
+    public function configure($configuration, $value = null)
     {
-        $method = $recursive ? 'array_merge_recursive' : 'array_merge';
+        if ($value && !is_array($configuration)) {
+            $configuration = [$configuration => $value];
+        }
 
-        $this->configuration = new ArrayConfiguration($method($this->configuration->toArray(), $configuration));
+        $this->configuration = new Configuration(array_merge($this->configuration->toArray(), $configuration));
     }
 }

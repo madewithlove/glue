@@ -23,7 +23,7 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * DefaultConfiguration constructor.
      */
-    public function __construct()
+    public function configure()
     {
         $this->debug       = getenv('APP_ENV') === 'local';
         $this->rootPath    = $this->configureRootPath();
@@ -32,22 +32,6 @@ class DefaultConfiguration extends AbstractConfiguration
         $this->paths       = $this->configurePaths();
         $this->middlewares = $this->configureMiddlewares();
         $this->commands    = $this->configureCommands();
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'debug'       => getenv('APP_ENV') === 'local',
-            'rootPath'    => $this->configureRootPath(),
-            'namespace'   => $this->configureNamespace(),
-            'providers'   => $this->configureProviders(),
-            'paths'       => $this->configurePaths(),
-            'middlewares' => $this->configureMiddlewares(),
-            'commands'    => $this->configureCommands(),
-        ];
     }
 
     /**
@@ -94,7 +78,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'migrations' => PhinxServiceProvider::class,
         ];
 
-        if ($this->isDebug()) {
+        if ($this->debug) {
             $providers += [
                 'console'  => ConsoleServiceProvider::class,
                 'debugbar' => DebugbarServiceProvider::class,
@@ -124,7 +108,7 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function configureMiddlewares()
     {
-        if ($this->isDebug()) {
+        if ($this->debug) {
             return [
                 FormatNegotiator::class,
                 DebugBar::class,

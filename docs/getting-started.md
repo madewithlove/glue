@@ -17,7 +17,7 @@ You can configure the application by passing a `ConfigurationInterface` implemen
 If none is passed, Glue will use the `DefaultConfiguration` class which provides some smart defaults.
 
 ```php
-$app = new Glue(new ArrayConfiguration([
+$app = new Glue(new Configuration([
     'namespace'   => 'MyApp',
     'debug'       => getenv('APP_DEBUG'),
     'providers'   => [SomeProvider::class],
@@ -36,6 +36,9 @@ $app = new Glue();
 $app->configure([
     'namespace' => 'MyApp',
 ]);
+
+// Or
+$app->configure('namespace', 'MyApp');
 ```
 
 Any configuration key passed to Glue will be bound on the container as `config.{key}`, per example if you need to share a configuration
@@ -48,7 +51,12 @@ $app->configure([
 ]);
 ```
 
-### Directory structure
+## Environment variables
+
+Some configuration, like database credentials and such, are fetched through environment variables.
+By default Glue will attempt to load an `.env` file in the root path if found, so you can define things there too.
+
+## Directory structure
 
 While Glue doesn't assume any directory structure, here are the paths configured by default:
 
@@ -59,6 +67,9 @@ While Glue doesn't assume any directory structure, here are the paths configured
 'cache'      => $rootPath.'/storage/cache',
 'logs'       => $rootPath.'/storage/logs',
 ```
+
+Those are of course only needed in case you use the related providers, if per example you don't use migrations, you won't need
+the `migrations` path, and so on.
 
 ## Changing container
 
@@ -73,3 +84,5 @@ $container->share(Foobar::class, function() {
 $app = new Glue();
 $app->setContainer($container);
 ```
+
+It has however to be an instance of `League\Container` as Glue relies heavily on its service provider feature.

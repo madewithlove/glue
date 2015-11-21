@@ -20,58 +20,10 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     use ContainerAwareTrait;
 
     /**
-     * @return string
+     * Setup the configuration.
      */
-    public function getNamespace()
+    public function configure()
     {
-        return $this->namespace;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRootPath()
-    {
-        return $this->rootPath;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function isDebug()
-    {
-        return $this->debug;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getProviders()
-    {
-        return $this->providers;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getMiddlewares()
-    {
-        return $this->middlewares;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getCommands()
-    {
-        return $this->commands;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getPaths()
-    {
-        return $this->paths;
+        // ...
     }
 }

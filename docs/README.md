@@ -3,6 +3,7 @@
 * [Getting started](/docs/getting-started.md)
     * Creating an app
     * Configuration
+    * Environment variables
     * Changing container
 * [Routing](/docs/routing.md)
     * Defining routes
@@ -11,4 +12,4 @@
     * Usage
     * Adding commands
     * Using a difference CLI
-* [Custom configuration](/docs/custom-configuration.md)
+* [The Configuration object](/docs/configuration-object.md)

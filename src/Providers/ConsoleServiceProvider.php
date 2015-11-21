@@ -12,7 +12,7 @@ class ConsoleServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         'console',
-      Application::class,
+        Application::class,
     ];
 
     /**
@@ -24,6 +24,8 @@ class ConsoleServiceProvider extends AbstractServiceProvider
     {
         $this->container->share(Application::class, function () {
             $console = new Application();
+            $console->setName('Glue');
+            $console->setVersion('0.1.0');
 
             // Register commands
             $commands = $this->container->get('config.commands');
@@ -35,8 +37,8 @@ class ConsoleServiceProvider extends AbstractServiceProvider
             return $console;
         });
 
-        $this->container->add('console', function() {
-           return $this->container->get(Application::class);
+        $this->container->add('console', function () {
+            return $this->container->get(Application::class);
         });
     }
 }

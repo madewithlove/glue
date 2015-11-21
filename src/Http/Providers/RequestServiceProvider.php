@@ -36,7 +36,7 @@ class RequestServiceProvider extends AbstractServiceProvider
         });
 
         $this->container->share(ResponseInterface::class, function () {
-           return new Response();
+            return new Response();
         });
     }
 }

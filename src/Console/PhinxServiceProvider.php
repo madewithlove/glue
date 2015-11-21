@@ -1,4 +1,5 @@
 <?php
+
 namespace Madewithlove\Glue\Console;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -12,8 +13,6 @@ class PhinxServiceProvider extends AbstractServiceProvider
      * Use the register method to register items with the container via the
      * protected $this->container property or the `getContainer` method
      * from the ContainerAwareTrait.
-     *
-     * @return void
      */
     public function register()
     {
@@ -21,7 +20,7 @@ class PhinxServiceProvider extends AbstractServiceProvider
     }
 
     /**
-     * Boot the provider
+     * Boot the provider.
      */
     public function boot()
     {
@@ -50,14 +49,14 @@ class PhinxServiceProvider extends AbstractServiceProvider
     }
 
     /**
-     * Get the Phinx configuration
+     * Get the Phinx configuration.
      *
      * @return Config
      */
     private function getConfiguration()
     {
         return new Config([
-            'paths'        => [
+            'paths' => [
                 'migrations' => $this->container->get('paths.migrations'),
             ],
             'environments' => [

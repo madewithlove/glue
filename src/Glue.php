@@ -10,7 +10,6 @@ use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Container\ServiceProvider\ServiceProviderInterface;
 use League\Route\RouteCollection;
-use Madewithlove\Glue\Configuration\ArrayConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Providers\ConfigurationServiceProvider;
@@ -44,13 +43,18 @@ class Glue implements ContainerAwareInterface
         $this->container->delegate(new ReflectionContainer());
         $this->container->share(ContainerInterface::class, $this->container);
 
-        // Load Dotenv files
-        $rootPath = (new DefaultConfiguration())->getRootPath();
-        $dotenv   = new Dotenv($rootPath);
-        $dotenv->load();
-
         // Setup configuration
         $this->setConfiguration($this->configuration ?: new DefaultConfiguration());
+
+        // Load environment variables
+        $path = $this->configuration->rootPath ?: getcwd();
+        if (file_exists($path)) {
+            $dotenv = (new Dotenv($path));
+            $dotenv->load();
+
+            // Re-set configuration after Dotenv for env dependant variables
+            $this->setConfiguration($this->configuration);
+        }
 
         // Bind routes callable
         $this->container->add('routes', function () {

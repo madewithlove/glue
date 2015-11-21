@@ -17,7 +17,7 @@ class ConfigurationServiceProvider extends AbstractValuesProvider
     protected function getProvided()
     {
         return array_merge(parent::getProvided(), [
-            ConfigurationInterface::class
+            ConfigurationInterface::class,
         ]);
     }
 
