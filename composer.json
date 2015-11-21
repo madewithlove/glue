@@ -23,6 +23,7 @@
         "franzl/whoops-middleware": "^0.2.0",
         "illuminate/database": "^5.1",
         "league/container": "^2.0",
+        "league/flysystem": "^1.0",
         "league/route": "2.*@dev",
         "league/tactician": "^0.6.1",
         "monolog/monolog": "^1.17",

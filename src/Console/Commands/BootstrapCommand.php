@@ -1,6 +1,7 @@
 <?php
 namespace Madewithlove\Glue\Console\Commands;
 
+use League\Flysystem\FilesystemInterface;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -15,15 +16,22 @@ class BootstrapCommand extends Command
     protected $configuration;
 
     /**
+     * @var FilesystemInterface
+     */
+    protected $filesystem;
+
+    /**
      * BootstrapCommand constructor.
      *
      * @param ConfigurationInterface $configuration
+     * @param FilesystemInterface    $filesystem
      */
-    public function __construct(ConfigurationInterface $configuration)
+    public function __construct(ConfigurationInterface $configuration, FilesystemInterface $filesystem)
     {
         parent::__construct();
 
         $this->configuration = $configuration;
+        $this->filesystem    = $filesystem;
     }
 
 
@@ -49,16 +57,18 @@ class BootstrapCommand extends Command
         // Scaffold folder structure
         $paths = (array) $this->configuration->paths;
         foreach ($paths as $path) {
-            if (!is_dir($path)) {
-                mkdir($path, 0644, true);
+            if (!$this->filesystem->has($path)) {
+                $this->filesystem->createDir($path);
                 $this->created($output, $path);
             }
         }
 
         // Create Dotenv file
         $dotenv = $this->configuration->rootPath.'/.env';
-        file_put_contents($dotenv, 'APP_ENV=local');
-        $this->created($output, $dotenv);
+        if (!$this->filesystem->has($dotenv)) {
+            $this->filesystem->put($dotenv, 'APP_ENV=local');
+            $this->created($output, $dotenv);
+        }
     }
 
     /**

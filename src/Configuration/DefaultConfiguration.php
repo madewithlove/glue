@@ -16,6 +16,7 @@ use Madewithlove\Glue\Providers\CommandBusServiceProvider;
 use Madewithlove\Glue\Providers\ConsoleServiceProvider;
 use Madewithlove\Glue\Providers\DatabaseServiceProvider;
 use Madewithlove\Glue\Providers\DebugbarServiceProvider;
+use Madewithlove\Glue\Providers\FilesystemServiceProvider;
 use Madewithlove\Glue\Providers\LogsServiceProvider;
 use Madewithlove\Glue\Providers\PathsServiceProvider;
 use Madewithlove\Glue\Services\UrlGenerator;
@@ -74,16 +75,17 @@ class DefaultConfiguration extends AbstractConfiguration
     public function configureProviders()
     {
         $providers = [
-            'request'    => RequestServiceProvider::class,
             'paths'      => PathsServiceProvider::class,
+            'commandbus' => CommandBusServiceProvider::class,
+            'db'         => DatabaseServiceProvider::class,
+            'filesystem' => FilesystemServiceProvider::class,
+            'logs'       => LogsServiceProvider::class,
+            'migrations' => PhinxServiceProvider::class,
+            'request'    => RequestServiceProvider::class,
             'routing'    => RoutingServiceProvider::class,
             'twig'       => TwigServiceProvider::class,
-            'db'         => DatabaseServiceProvider::class,
-            'logs'       => LogsServiceProvider::class,
-            'commandbus' => CommandBusServiceProvider::class,
-            'migrations' => PhinxServiceProvider::class,
-            'assets'     => WebpackServiceProvider::class,
             'url'        => UrlGeneratorServiceProvider::class,
+            'assets'     => WebpackServiceProvider::class,
         ];
 
         if ($this->debug) {

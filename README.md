@@ -22,6 +22,7 @@ Glue comes with several providers by default:
 - Logs handling with `monolog/monolog`
 - A debugbar with `maximebf/debugbar`
 - A small CLi with `symfony/console`
+- A filesystem handler through `league/flysystem`
 - Migrations through `robmorgan/phinx`
 
 Any of these can be overidden or removed; this package doesn't enforce any structure or the use of any dependency in particular besides `league/container` (as the Glue class expects service provider capabilities), so you can make of it whatever you wish.
