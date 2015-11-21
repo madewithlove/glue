@@ -3,11 +3,13 @@
 namespace Madewithlove\Nanoframework\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
+use Madewithlove\Nanoframework\Console\Commands\TinkerCommand;
 use Madewithlove\Nanoframework\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Nanoframework\Http\Providers\RequestServiceProvider;
 use Madewithlove\Nanoframework\Http\Providers\RoutingServiceProvider;
 use Madewithlove\Nanoframework\Http\Providers\TwigServiceProvider;
 use Madewithlove\Nanoframework\Providers\CommandBusServiceProvider;
+use Madewithlove\Nanoframework\Providers\ConsoleServiceProvider;
 use Madewithlove\Nanoframework\Providers\DatabaseServiceProvider;
 use Madewithlove\Nanoframework\Providers\DebugbarServiceProvider;
 use Madewithlove\Nanoframework\Providers\LogsServiceProvider;
@@ -38,6 +40,7 @@ class DefaultConfiguration extends AbstractConfiguration
     public function getDebugProviders()
     {
         return [
+            ConsoleServiceProvider::class,
             DebugbarServiceProvider::class,
         ];
     }
@@ -76,6 +79,16 @@ class DefaultConfiguration extends AbstractConfiguration
                     LeagueRouteMiddleware::class,
                 ];
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getConsoleCommands()
+    {
+        return [
+            TinkerCommand::class,
+        ];
     }
 
     /**

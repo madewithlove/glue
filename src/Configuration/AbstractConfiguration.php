@@ -25,6 +25,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         }
 
         return [
+            'commands'    => $this->getConsoleCommands(),
             'namespace'   => $this->getNamespace(),
             'debug'       => $this->isDebug(),
             'providers'   => $providers,

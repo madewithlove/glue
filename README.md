@@ -15,7 +15,7 @@ Facultative providers include:
 Any of these can be overidden, this package doesn't enforce any structure or the use of any dependency in particular besides `league/container` (as the Application class expects service provider capabilities).
 
 ## Usage
-### Base usage
+### Basic usage
 
 ```php
 // Create an app instance with your root app path
@@ -24,8 +24,48 @@ $app = new Application(__DIR__);
 $app->run();
 ```
 
+You can configure the application through the `configure` method which accepts an array of various parameters:
+
+```php
+$app = new Application(__DIR__);
+$app->configure([
+    'namespace'   => 'MyApp',
+    'debug'       => getenv('APP_DEBUG'),
+    'providers'   => [SomeProvider::class],
+    'middlewares' => [SomeMiddleware::class],
+    'paths'       => [
+        'views' => __DIR__.'/paths/to/views',
+    ],
+]);
+```
+
+### Command line
+
+The package also provides a small CLI, for this, same principle, create a `console` file (or whatever you want) and call the `console` method of the Application:
+
+```php
+#!/usr/bin/env php
+<?php
+require 'vendor/autoload.php';
+
+$app = new Application(realpath(__DIR__));
+$app->console();
+```
+
+You can then run `php console` to access the CLI. To add commands, set the `commands` option:
+
+```php
+$app->configure([
+    'commands' => [
+        SomeCommand::class,
+    ],
+]);
+```
+
+All commands are resolved through the container so you can inject dependencies in their constructor.
+
 ### Advanced usage
-For advanced usage, it is recommended to create a `Configuration` class extending `DefaultConfiguration`. You can there tweak the providers, the paths, the middlewares, etc:
+For advanced usage, it is recommended to create a `Configuration` class extending `AbstractConfiguration`. You can there tweak the providers, middlewares, etc. in a more advanced fashion:
 
 ```php
 namespace Acme;
@@ -58,7 +98,7 @@ class MyConfiguration extends \Madewithlove\Nanoframework\DefaultConfiguration
      */
     public function isDebug()
     {
-        return getenv('APP_DEBUG');
+        return $this->container->get('some.debug.value');
     }
 }
 ```

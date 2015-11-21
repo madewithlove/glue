@@ -1,6 +1,6 @@
 {
     "name": "madewithlove/nanoframework-helpers",
-    "description": "Same small helper classes and service providers for package-based applications",
+    "description": "Some small helper classes and service providers for package-based applications",
     "license": "MIT",
     "authors": [
         {
@@ -27,18 +27,20 @@
         "league/tactician": "^0.6.1",
         "monolog/monolog": "^1.17",
         "php-middleware/php-debug-bar": "^1.0",
+        "psy/psysh": "^0.6.1",
         "relay/relay": "^1.0",
+        "symfony/console": "^2.7",
         "twig/twig": "^1.23",
         "vlucas/phpdotenv": "^2.1",
         "zendframework/zend-diactoros": "^1.1"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "2.0.x@dev",
+        "phpunit/phpunit": "^5.0"
     },
     "extra": {
         "branch-alias": {
             "dev-master": "0.1-dev"
         }
-    },
-    "require-dev": {
-        "fabpot/php-cs-fixer": "2.0.x@dev",
-        "phpunit/phpunit": "^5.0"
     }
 }

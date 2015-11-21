@@ -12,6 +12,7 @@ use Madewithlove\Nanoframework\Configuration\DefaultConfiguration;
 use Madewithlove\Nanoframework\Providers\ConfigurationServiceProvider;
 use Psr\Http\Message\ServerRequestInterface;
 use Relay\RelayBuilder;
+use Symfony\Component\Console\Application as Console;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 
@@ -44,6 +45,14 @@ class Application
         $this->container = $container ?: new Container();
         $this->container->delegate(new ReflectionContainer());
         $this->container->share(ContainerInterface::class, $this->container);
+    }
+
+    /**
+     * @param array $configuration
+     */
+    public function configure(array $configuration)
+    {
+        $this->container->add('config', $configuration);
     }
 
     /**
@@ -108,5 +117,17 @@ class Application
         $response    = $relay($request, $response);
 
         (new SapiEmitter())->emit($response);
+    }
+
+    /**
+     * Run the console application
+     *
+     * @return mixed
+     */
+    public function console()
+    {
+        $this->boot();
+
+        return $this->container->get(Console::class)->run();
     }
 }

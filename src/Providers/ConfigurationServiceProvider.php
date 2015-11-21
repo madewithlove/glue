@@ -25,9 +25,11 @@ class ConfigurationServiceProvider extends AbstractValuesProvider
     protected function getValues()
     {
         /** @var ConfigurationInterface $configuration */
-        $configuration = $this->container->get(ConfigurationInterface::class);
-        $configuration = $configuration->getConfiguration();
+        if (!$this->container->has('config')) {
+            $configuration = $this->container->get(ConfigurationInterface::class);
+            $this->container->add('config', $configuration->getConfiguration());
+        }
 
-        return $configuration;
+        return $this->container->get('config');
     }
 }

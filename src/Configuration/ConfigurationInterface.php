@@ -10,24 +10,29 @@ interface ConfigurationInterface
     public function getConfiguration();
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getProviders();
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getDebugProviders();
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getPaths();
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getMiddlewares();
+
+    /**
+     * @return string[]
+     */
+    public function getConsoleCommands();
 
     /**
      * @return bool
