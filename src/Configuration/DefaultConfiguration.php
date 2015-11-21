@@ -6,15 +6,18 @@ use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Console\PhinxServiceProvider;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
+use Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider;
 use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
 use Madewithlove\Glue\Http\Providers\RoutingServiceProvider;
 use Madewithlove\Glue\Http\Providers\TwigServiceProvider;
+use Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider;
 use Madewithlove\Glue\Providers\CommandBusServiceProvider;
 use Madewithlove\Glue\Providers\ConsoleServiceProvider;
 use Madewithlove\Glue\Providers\DatabaseServiceProvider;
 use Madewithlove\Glue\Providers\DebugbarServiceProvider;
 use Madewithlove\Glue\Providers\LogsServiceProvider;
 use Madewithlove\Glue\Providers\PathsServiceProvider;
+use Madewithlove\Glue\Services\UrlGenerator;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
 
@@ -76,6 +79,8 @@ class DefaultConfiguration extends AbstractConfiguration
             'logs'       => LogsServiceProvider::class,
             'commandbus' => CommandBusServiceProvider::class,
             'migrations' => PhinxServiceProvider::class,
+            'assets'     => WebpackServiceProvider::class,
+            'url'        => UrlGeneratorServiceProvider::class,
         ];
 
         if ($this->debug) {
