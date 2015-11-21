@@ -2,14 +2,14 @@
 
 ## Usage
 
-The package also provides a small CLI, for this, same principle, create a `console` file (or whatever you want) and call the `console` method of the Application:
+The package also provides a small CLI, for this, same principle, create a `console` file (or whatever you want) and call the `console` method of the Glue:
 
 ```php
 #!/usr/bin/env php
 <?php
 require 'vendor/autoload.php';
 
-$app = new Application(realpath(__DIR__));
+$app = new Glue();
 $app->console();
 ```
 
@@ -39,5 +39,6 @@ $container->share('console', function() {
     return new League\CLImate\CLImate;
 });
 
-$app = new Application(__DIR__, $container);
+$app = new Glue();
+$app->setContainer($container);
 ```

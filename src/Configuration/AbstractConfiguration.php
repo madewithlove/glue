@@ -2,60 +2,22 @@
 
 namespace Madewithlove\Glue\Configuration;
 
+use Illuminate\Support\Fluent;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
-use Symfony\Component\Console\Command\Command;
 
-abstract class AbstractConfiguration implements ConfigurationInterface, ContainerAwareInterface
+/**
+ * @property $namespace   The namespace of your application
+ * @property $rootPath    The path to the root of your application
+ * @property $debug       Whether we're in debug mode or not
+ * @property $providers   The providers to apply
+ * @property $middlewares The middlewares to apply to the current route
+ * @property $commands    The commands to register with the CLI
+ * @property $paths       The paths in your application
+ */
+abstract class AbstractConfiguration extends Fluent implements ConfigurationInterface, ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
-    /**
-     * The namespace of your application
-     *
-     * @var string
-     */
-    public $namespace;
-
-    /**
-     * @var string
-     */
-    public $rootPath;
-
-    /**
-     * Whether we're in debug mode or not
-     *
-     * @var bool
-     */
-    public $debug;
-
-    /**
-     * The providers to apply
-     *
-     * @var string[]
-     */
-    public $providers;
-
-    /**
-     * The middlewares to apply to the current route
-     *
-     * @var string[]
-     */
-    public $middlewares;
-
-    /**
-     * The commands to register with the CLI
-     *
-     * @var string[]
-     */
-    public $commands;
-
-    /**
-     * The paths in your application
-     *
-     * @var string[]
-     */
-    public $paths;
 
     /**
      * @return string
@@ -63,14 +25,6 @@ abstract class AbstractConfiguration implements ConfigurationInterface, Containe
     public function getNamespace()
     {
         return $this->namespace;
-    }
-
-    /**
-     * @param string $namespace
-     */
-    public function setNamespace($namespace)
-    {
-        $this->namespace = $namespace;
     }
 
     /**
@@ -82,27 +36,11 @@ abstract class AbstractConfiguration implements ConfigurationInterface, Containe
     }
 
     /**
-     * @param string $rootPath
-     */
-    public function setRootPath($rootPath)
-    {
-        $this->rootPath = $rootPath;
-    }
-
-    /**
      * @return boolean
      */
     public function isDebug()
     {
         return $this->debug;
-    }
-
-    /**
-     * @param boolean $debug
-     */
-    public function setDebug($debug)
-    {
-        $this->debug = $debug;
     }
 
     /**
@@ -114,27 +52,11 @@ abstract class AbstractConfiguration implements ConfigurationInterface, Containe
     }
 
     /**
-     * @param string[] $providers
-     */
-    public function setProviders(array $providers)
-    {
-        $this->providers = $providers;
-    }
-
-    /**
      * @return string[]
      */
     public function getMiddlewares()
     {
         return $this->middlewares;
-    }
-
-    /**
-     * @param string[] $middlewares
-     */
-    public function setMiddlewares(array $middlewares)
-    {
-        $this->middlewares = $middlewares;
     }
 
     /**
@@ -146,41 +68,10 @@ abstract class AbstractConfiguration implements ConfigurationInterface, Containe
     }
 
     /**
-     * @param string[] $commands
-     */
-    public function setCommands(array $commands)
-    {
-        $this->commands = $commands;
-    }
-
-    /**
      * @return string[]
      */
     public function getPaths()
     {
         return $this->paths;
-    }
-
-    /**
-     * @param string[] $paths
-     */
-    public function setPaths(array $paths)
-    {
-        $this->paths = $paths;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        return [
-            'commands'    => $this->commands,
-            'namespace'   => $this->namespace,
-            'debug'       => $this->debug,
-            'providers'   => $this->providers,
-            'middlewares' => $this->middlewares,
-            'paths'       => $this->paths,
-        ];
     }
 }

@@ -15,4 +15,4 @@ Glue comes with several providers by default:
 - A small CLi with `symfony/console`
 - Migrations through `robmorgan/phinx`
 
-Any of these can be overidden or removed; this package doesn't enforce any structure or the use of any dependency in particular besides `league/container` (as the Application class expects service provider capabilities), so you can make of it whatever you wish.
+Any of these can be overidden or removed; this package doesn't enforce any structure or the use of any dependency in particular besides `league/container` (as the Glue class expects service provider capabilities), so you can make of it whatever you wish.

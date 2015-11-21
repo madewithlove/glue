@@ -43,7 +43,7 @@ class MyConfiguration extends \Madewithlove\Glue\DefaultConfiguration
 And then set that class on the app:
 
 ```php
-$app = new Application(__DIR__);
-$app->setConfiguration(MyConfiguration::class);
+$app = new Glue();
+$app->setConfiguration(new MyConfiguration());
 $app->run();
 ```

@@ -14,6 +14,7 @@ use Madewithlove\Glue\Configuration\ArrayConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Providers\ConfigurationServiceProvider;
+use Madewithlove\Glue\Traits\Configurable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Relay\RelayBuilder;
@@ -22,14 +23,10 @@ use Zend\Diactoros\Response\SapiEmitter;
 /**
  * @mixin RouteCollection
  */
-class Application implements ContainerAwareInterface
+class Glue implements ContainerAwareInterface
 {
     use ContainerAwareTrait;
-
-    /**
-     * @var string
-     */
-    protected $configuration;
+    use Configurable;
 
     /**
      * @var array
@@ -47,9 +44,13 @@ class Application implements ContainerAwareInterface
         $this->container->delegate(new ReflectionContainer());
         $this->container->share(ContainerInterface::class, $this->container);
 
+        // Load Dotenv files
+        $rootPath = (new DefaultConfiguration())->getRootPath();
+        $dotenv   = new Dotenv($rootPath);
+        $dotenv->load();
+
         // Setup configuration
-        $this->configuration = $configuration ?: new DefaultConfiguration();
-        $this->setConfiguration($this->configuration);
+        $this->setConfiguration($this->configuration ?: new DefaultConfiguration());
 
         // Bind routes callable
         $this->container->add('routes', function () {
@@ -71,35 +72,6 @@ class Application implements ContainerAwareInterface
     }
 
     //////////////////////////////////////////////////////////////////////
-    //////////////////////////// CONFIGURATION ///////////////////////////
-    //////////////////////////////////////////////////////////////////////
-
-    /**
-     * @param array $configuration
-     */
-    public function configure(array $configuration)
-    {
-        $this->configuration = new ArrayConfiguration($configuration);
-    }
-
-    /**
-     * @return string
-     */
-    public function getConfiguration()
-    {
-        return $this->configuration;
-    }
-
-    /**
-     * @param ConfigurationInterface|array $configuration
-     */
-    public function setConfiguration(ConfigurationInterface $configuration)
-    {
-        $this->configuration = $configuration;
-        $this->configuration->setContainer($this->container);
-    }
-
-    //////////////////////////////////////////////////////////////////////
     ////////////////////////////// RUNTIME ///////////////////////////////
     //////////////////////////////////////////////////////////////////////
 
@@ -113,13 +85,9 @@ class Application implements ContainerAwareInterface
             return;
         }
 
-        // Load dotenv files
-        $dotenv = new Dotenv($this->configuration->getRootPath());
-        $dotenv->load();
-
         // Bind configuration
         $this->container->add(ConfigurationInterface::class, function () {
-            return $this->configuration;
+            return $this->getConfiguration();
         });
 
         // Register providers

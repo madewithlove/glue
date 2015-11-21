@@ -9,7 +9,7 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Application Test Suite">
+        <testsuite name="Glue Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

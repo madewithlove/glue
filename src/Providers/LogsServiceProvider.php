@@ -29,7 +29,7 @@ class LogsServiceProvider extends AbstractServiceProvider
             $path = $this->container->get('paths.logs');
             $path = sprintf('%s/%s.log', $path, $filename);
 
-            $logger = new Logger('history');
+            $logger = new Logger('app');
             $logger->pushHandler(new StreamHandler($path, Logger::WARNING));
 
             return $logger;

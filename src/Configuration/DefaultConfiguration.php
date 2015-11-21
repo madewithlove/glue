@@ -35,6 +35,22 @@ class DefaultConfiguration extends AbstractConfiguration
     }
 
     /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'debug'       => getenv('APP_ENV') === 'local',
+            'rootPath'    => $this->configureRootPath(),
+            'namespace'   => $this->configureNamespace(),
+            'providers'   => $this->configureProviders(),
+            'paths'       => $this->configurePaths(),
+            'middlewares' => $this->configureMiddlewares(),
+            'commands'    => $this->configureCommands(),
+        ];
+    }
+
+    /**
      * @return string
      */
     protected function configureRootPath()
@@ -94,7 +110,7 @@ class DefaultConfiguration extends AbstractConfiguration
     public function configurePaths()
     {
         return [
-            'builds'     => $this->rootPath.'/public/builds',
+            'assets'     => $this->rootPath.'/public/builds',
             'factories'  => $this->rootPath.'/resources/factories',
             'migrations' => $this->rootPath.'/resources/migrations',
             'views'      => $this->rootPath.'/resources/views',
@@ -108,20 +124,18 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function configureMiddlewares()
     {
-        switch (getenv('APP_ENV')) {
-            case 'local':
-                return [
-                    FormatNegotiator::class,
-                    DebugBar::class,
-                    WhoopsMiddleware::class,
-                    LeagueRouteMiddleware::class,
-                ];
-
-            default:
-                return [
-                    LeagueRouteMiddleware::class,
-                ];
+        if ($this->isDebug()) {
+            return [
+                FormatNegotiator::class,
+                DebugBar::class,
+                WhoopsMiddleware::class,
+                LeagueRouteMiddleware::class,
+            ];
         }
+
+        return [
+            LeagueRouteMiddleware::class,
+        ];
     }
 
     /**

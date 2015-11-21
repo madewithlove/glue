@@ -2,10 +2,10 @@
 
 ## Defining routes
 
-The `Application` class delegates calls to whatever class is bound to `router` so you can set your routes in your `index.php` file directly. Per example with `league/route`:
+The `Glue` class delegates calls to whatever class is bound to `router` so you can set your routes in your `index.php` file directly. Per example with `league/route`:
 
 ```php
-$app = new Application(__DIR__.'/..');
+$app = new Glue();
 
 $app->get('/users', 'UsersController::index');
 $app->post('/users/create', 'UsersController::store');

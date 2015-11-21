@@ -74,7 +74,7 @@ class TwigServiceProvider extends AbstractServiceProvider
      */
     private function getWebpackAssets()
     {
-        $assets = $this->container->get('paths.builds').'/manifest.json';
+        $assets = $this->container->get('paths.assets').'/manifest.json';
         if (!file_exists($assets)) {
             return [];
         }

@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Basic usage](/docs/basic-usage.md)
+* [Getting started](/docs/getting-started.md)
     * Creating an app
     * Configuration
     * Changing container
