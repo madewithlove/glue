@@ -27,7 +27,8 @@ class ConsoleServiceProvider extends AbstractServiceProvider
             // Register commands
             $commands = $this->container->get('config.commands');
             foreach ($commands as $command) {
-                $console->add($this->container->get($command));
+                $command = is_string($command) ? $this->container->get($command) : $command;
+                $console->add($command);
             }
 
             return $console;

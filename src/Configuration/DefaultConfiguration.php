@@ -4,6 +4,7 @@ namespace Madewithlove\Nanoframework\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use Madewithlove\Nanoframework\Console\Commands\TinkerCommand;
+use Madewithlove\Nanoframework\Console\PhinxServiceProvider;
 use Madewithlove\Nanoframework\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Nanoframework\Http\Providers\RequestServiceProvider;
 use Madewithlove\Nanoframework\Http\Providers\RoutingServiceProvider;
@@ -32,6 +33,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'db'         => DatabaseServiceProvider::class,
             'logs'       => LogsServiceProvider::class,
             'commandbus' => CommandBusServiceProvider::class,
+            'migrations' => PhinxServiceProvider::class,
         ];
     }
 
@@ -54,11 +56,12 @@ class DefaultConfiguration extends AbstractConfiguration
         $rootPath = $this->container->get('paths.root');
 
         return [
-            'builds'    => $rootPath.'/public/builds',
-            'factories' => $rootPath.'/resources/factories',
-            'views'     => $rootPath.'/resources/views',
-            'cache'     => $rootPath.'/storage/cache',
-            'logs'      => $rootPath.'/storage/logs',
+            'builds'     => $rootPath.'/public/builds',
+            'factories'  => $rootPath.'/resources/factories',
+            'migrations' => $rootPath.'/resources/migrations',
+            'views'      => $rootPath.'/resources/views',
+            'cache'      => $rootPath.'/storage/cache',
+            'logs'       => $rootPath.'/storage/logs',
         ];
     }
 

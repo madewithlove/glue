@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/madewithlove/nanoframework-helpers.svg)](https://travis-ci.org/madewithlove/nanoframework-helpers)
-
 # Madewithlove Nanoframework helpers
+
+[![Build Status](https://travis-ci.org/madewithlove/nanoframework-helpers.svg)](https://travis-ci.org/madewithlove/nanoframework-helpers)
 
 This is a set of helpers to quickly bootstrap a package-based application.
 It's all service providers and middlewares so although the defaults leverage `league/route` and `twig/twig` per example, anything can be used with it. It's just a small time saver.
@@ -15,6 +15,7 @@ Facultative providers include:
 - Logs handling with `monolog/monolog`
 - A debugbar with `maximebf/debugbar`
 - A small CLi with `symfony/console`
+- Migrations through `robmorgan/phinx`
 
 Any of these can be overidden or removed, this package doesn't enforce any structure or the use of any dependency in particular besides `league/container` (as the Application class expects service provider capabilities).
 
