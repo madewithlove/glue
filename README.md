@@ -43,6 +43,19 @@ $app->configure([
 ]);
 ```
 
+### Routing
+
+The `Application` class delegates calls to whatever class is bound to `router` so you can set your routes in your `index.php` file directly. Per example with `league/route`:
+
+```php
+$app = new Application(__DIR__.'/..');
+
+$app->get('/users', 'UsersController::index');
+$app->post('/users/create', 'UsersController::store');
+
+$app->run();
+```
+
 ### Command line
 
 The package also provides a small CLI, for this, same principle, create a `console` file (or whatever you want) and call the `console` method of the Application:

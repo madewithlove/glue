@@ -18,6 +18,7 @@ class RoutingServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
+        'router',
         RouteCollection::class,
         UrlGenerator::class,
     ];
@@ -30,27 +31,20 @@ class RoutingServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(RouteCollection::class, function () {
-            $router = new RouteCollection($this->container);
-            $this->routes = $this->getRoutes($router);
+            return new RouteCollection($this->container);
+        });
 
-            return $router;
+        $this->container->add('router', function() {
+           return $this->container->get(RouteCollection::class);
         });
 
         // Since RouteCollection doesn't have a getRoutes we collect the
         // Route instances ourselves and pass them to the UrlGenerator
         $this->container->share(UrlGenerator::class, function () {
-            $this->container->get(RouteCollection::class);
-            return new UrlGenerator($this->container->get('config.namespace'), $this->routes);
+            return new UrlGenerator(
+                $this->container->get('config.namespace'),
+                $this->container->get('routes')
+            );
         });
-    }
-
-    /**
-     * @param RouteCollection $router
-     *
-     * @return array
-     */
-    protected function getRoutes(RouteCollection $router)
-    {
-        return [];
     }
 }
