@@ -3,6 +3,7 @@
 namespace Madewithlove\Glue\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
+use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Console\PhinxServiceProvider;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
@@ -59,7 +60,7 @@ class DefaultConfiguration extends AbstractConfiguration
         $composer = file_get_contents($composer);
         $composer = json_decode($composer, true);
 
-        $namespaces = array_keys($composer['autoload']['psr-4']);
+        $namespaces = array_keys(array_get($composer, 'autoload.psr-4'));
         $namespace  = trim($namespaces[0], '\\');
 
         return $namespace;
@@ -133,6 +134,7 @@ class DefaultConfiguration extends AbstractConfiguration
     public function configureCommands()
     {
         return [
+            BootstrapCommand::class,
             TinkerCommand::class,
         ];
     }

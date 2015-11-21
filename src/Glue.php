@@ -47,8 +47,8 @@ class Glue implements ContainerAwareInterface
 
         // Load environment variables
         $path = $this->configuration->rootPath ?: getcwd();
-        if (file_exists($path)) {
-            $dotenv = (new Dotenv($path));
+        if (file_exists($path.'/.env')) {
+            $dotenv = new Dotenv($path);
             $dotenv->load();
 
             // Re-set configuration after Dotenv for env dependant variables

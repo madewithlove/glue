@@ -28,7 +28,7 @@ class TinkerCommand extends Command
      */
     public function __construct(ContainerInterface $container, Shell $shell)
     {
-        parent::__construct('tinker');
+        parent::__construct();
 
         $this->container = $container;
         $this->shell     = $shell;
@@ -39,7 +39,9 @@ class TinkerCommand extends Command
      */
     protected function configure()
     {
-        $this->setDescription('Tinker with the application and its classes');
+        $this
+            ->setName('glue:tinker')
+            ->setDescription('Tinker with the application and its classes');
     }
 
     /**
