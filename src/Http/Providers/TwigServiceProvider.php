@@ -1,9 +1,9 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Http\Providers;
+namespace Madewithlove\Glue\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Madewithlove\Nanoframework\Services\UrlGenerator;
+use Madewithlove\Glue\Services\UrlGenerator;
 use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;

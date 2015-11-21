@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Configuration;
+namespace Madewithlove\Glue\Configuration;
 
 interface ConfigurationInterface
 {

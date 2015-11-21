@@ -10,12 +10,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Madewithlove\\Nanoframework\\": "src"
+            "Madewithlove\\Glue\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Madewithlove\\Nanoframework\\": "tests"
+            "Madewithlove\\Glue\\": "tests"
         }
     },
     "require": {

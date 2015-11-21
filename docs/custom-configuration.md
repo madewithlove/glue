@@ -5,7 +5,7 @@ For advanced usage, it is recommended to create a `Configuration` class extendin
 ```php
 namespace Acme;
 
-class MyConfiguration extends \Madewithlove\Nanoframework\DefaultConfiguration
+class MyConfiguration extends \Madewithlove\Glue\DefaultConfiguration
 {
     /**
      * {@inheritdoc}

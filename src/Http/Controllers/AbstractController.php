@@ -1,9 +1,9 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Http\Controllers;
+namespace Madewithlove\Glue\Http\Controllers;
 
 use League\Tactician\CommandBus;
-use Madewithlove\Nanoframework\Traits\DispatchesCommands;
+use Madewithlove\Glue\Traits\DispatchesCommands;
 use Twig_Environment;
 use Zend\Diactoros\Response\HtmlResponse;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Traits;
+namespace Madewithlove\Glue\Traits;
 
 use League\Tactician\CommandBus;
-use Madewithlove\Nanoframework\CommandBus\CommandInterface;
+use Madewithlove\Glue\CommandBus\CommandInterface;
 
 trait DispatchesCommands
 {

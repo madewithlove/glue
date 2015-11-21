@@ -1,5 +1,5 @@
 # Glue
-[![Build Status](https://travis-ci.org/madewithlove/nanoframework-helpers.svg)](https://travis-ci.org/madewithlove/nanoframework-helpers)
+[![Build Status](https://travis-ci.org/madewithlove/glue.svg)](https://travis-ci.org/madewithlove/glue)
 
 Glue is a nano-framework made to quickly bootstrap packages-based applications.
 At its core it's just a container and a quick PSR7 setup, on top of which are glued together service providers and middlewares. So although the defaults leverage `league/route` and `twig/twig` per example, anything can be used with it.

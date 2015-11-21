@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\CommandBus;
+namespace Madewithlove\Glue\CommandBus;
 
 use Interop\Container\ContainerInterface;
 use League\Tactician\Exception\MissingHandlerException;

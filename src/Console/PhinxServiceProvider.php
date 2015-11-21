@@ -1,5 +1,5 @@
 <?php
-namespace Madewithlove\Nanoframework\Console;
+namespace Madewithlove\Glue\Console;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Phinx\Config\Config;

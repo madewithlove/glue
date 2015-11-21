@@ -1,13 +1,13 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Providers;
+namespace Madewithlove\Glue\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Tactician\CommandBus;
 use League\Tactician\Handler\CommandHandlerMiddleware;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\MethodNameInflector\HandleInflector;
-use Madewithlove\Nanoframework\CommandBus\ContainerLocator;
+use Madewithlove\Glue\CommandBus\ContainerLocator;
 
 class CommandBusServiceProvider extends AbstractServiceProvider
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework;
+namespace Madewithlove\Glue;
 
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
@@ -11,9 +11,9 @@ use League\Container\ImmutableContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Container\ServiceProvider\ServiceProviderInterface;
 use League\Route\RouteCollection;
-use Madewithlove\Nanoframework\Configuration\ConfigurationInterface;
-use Madewithlove\Nanoframework\Configuration\DefaultConfiguration;
-use Madewithlove\Nanoframework\Providers\ConfigurationServiceProvider;
+use Madewithlove\Glue\Configuration\ConfigurationInterface;
+use Madewithlove\Glue\Configuration\DefaultConfiguration;
+use Madewithlove\Glue\Providers\ConfigurationServiceProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Relay\RelayBuilder;

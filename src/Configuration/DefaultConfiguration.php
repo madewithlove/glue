@@ -1,20 +1,20 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Configuration;
+namespace Madewithlove\Glue\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
-use Madewithlove\Nanoframework\Console\Commands\TinkerCommand;
-use Madewithlove\Nanoframework\Console\PhinxServiceProvider;
-use Madewithlove\Nanoframework\Http\Middlewares\LeagueRouteMiddleware;
-use Madewithlove\Nanoframework\Http\Providers\RequestServiceProvider;
-use Madewithlove\Nanoframework\Http\Providers\RoutingServiceProvider;
-use Madewithlove\Nanoframework\Http\Providers\TwigServiceProvider;
-use Madewithlove\Nanoframework\Providers\CommandBusServiceProvider;
-use Madewithlove\Nanoframework\Providers\ConsoleServiceProvider;
-use Madewithlove\Nanoframework\Providers\DatabaseServiceProvider;
-use Madewithlove\Nanoframework\Providers\DebugbarServiceProvider;
-use Madewithlove\Nanoframework\Providers\LogsServiceProvider;
-use Madewithlove\Nanoframework\Providers\PathsServiceProvider;
+use Madewithlove\Glue\Console\Commands\TinkerCommand;
+use Madewithlove\Glue\Console\PhinxServiceProvider;
+use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
+use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
+use Madewithlove\Glue\Http\Providers\RoutingServiceProvider;
+use Madewithlove\Glue\Http\Providers\TwigServiceProvider;
+use Madewithlove\Glue\Providers\CommandBusServiceProvider;
+use Madewithlove\Glue\Providers\ConsoleServiceProvider;
+use Madewithlove\Glue\Providers\DatabaseServiceProvider;
+use Madewithlove\Glue\Providers\DebugbarServiceProvider;
+use Madewithlove\Glue\Providers\LogsServiceProvider;
+use Madewithlove\Glue\Providers\PathsServiceProvider;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
 

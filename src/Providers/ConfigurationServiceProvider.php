@@ -1,8 +1,8 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Providers;
+namespace Madewithlove\Glue\Providers;
 
-use Madewithlove\Nanoframework\Configuration\ConfigurationInterface;
+use Madewithlove\Glue\Configuration\ConfigurationInterface;
 
 class ConfigurationServiceProvider extends AbstractValuesProvider
 {

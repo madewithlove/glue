@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Providers;
+namespace Madewithlove\Glue\Providers;
 
 use Illuminate\Database\Capsule\Manager;
 use League\Container\ServiceProvider\AbstractServiceProvider;

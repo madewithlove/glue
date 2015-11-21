@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Providers;
+namespace Madewithlove\Glue\Providers;
 
 use Barryvdh\Debugbar\DataCollector\QueryCollector;
 use DebugBar\DebugBar;

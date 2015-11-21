@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Services;
+namespace Madewithlove\Glue\Services;
 
 use Illuminate\Support\Arr;
 use InvalidArgumentException;

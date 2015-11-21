@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Http\Providers;
+namespace Madewithlove\Glue\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Psr\Http\Message\ResponseInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Console\Commands;
+namespace Madewithlove\Glue\Console\Commands;
 
 use Interop\Container\ContainerInterface;
 use Psy\Shell;

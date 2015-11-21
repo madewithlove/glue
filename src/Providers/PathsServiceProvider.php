@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Providers;
+namespace Madewithlove\Glue\Providers;
 
 class PathsServiceProvider extends AbstractValuesProvider
 {

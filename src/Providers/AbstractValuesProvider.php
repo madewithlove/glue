@@ -1,6 +1,6 @@
 <?php
 
-namespace Madewithlove\Nanoframework\Providers;
+namespace Madewithlove\Glue\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
