@@ -1,0 +1,16 @@
+{
+    "gitbook": "2.x",
+    "structure": {
+        "summary": "docs/README.md"
+    },
+    "plugins": ["edit-link", "github", "anchors"],
+    "pluginsConfig": {
+        "edit-link": {
+            "base": "https://github.com/madewithlove/glue/tree/master",
+            "label": "Edit This Page"
+        },
+        "github": {
+            "url": "https://github.com/madewithlove/glue/"
+        }
+    }
+}

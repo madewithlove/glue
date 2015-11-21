@@ -11,6 +11,7 @@ class ConsoleServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
+        'console',
       Application::class,
     ];
 
@@ -32,6 +33,10 @@ class ConsoleServiceProvider extends AbstractServiceProvider
             }
 
             return $console;
+        });
+
+        $this->container->add('console', function() {
+           return $this->container->get(Application::class);
         });
     }
 }

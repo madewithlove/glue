@@ -165,6 +165,6 @@ class Application implements ContainerAwareInterface
     {
         $this->boot();
 
-        return $this->container->get(Console::class)->run();
+        return $this->container->get('console')->run();
     }
 }
