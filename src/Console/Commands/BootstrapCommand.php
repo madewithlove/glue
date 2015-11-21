@@ -54,20 +54,35 @@ class BootstrapCommand extends Command
     {
         $output = new SymfonyStyle($input, $output);
 
-        // Scaffold folder structure
-        $paths = (array) $this->configuration->paths;
+        // Scaffold folders
+        $paths    = (array) $this->configuration->paths;
+        $rootPath = $this->configuration->rootPath.DIRECTORY_SEPARATOR;
         foreach ($paths as $path) {
+            $path = str_replace($rootPath, null, $path);
             if (!$this->filesystem->has($path)) {
                 $this->filesystem->createDir($path);
                 $this->created($output, $path);
             }
         }
 
-        // Create Dotenv file
-        $dotenv = $this->configuration->rootPath.'/.env';
-        if (!$this->filesystem->has($dotenv)) {
-            $this->filesystem->put($dotenv, 'APP_ENV=local');
-            $this->created($output, $dotenv);
+        $files = [
+            '.env'             => 'APP_ENV=local',
+            'public/index.php' => <<<'PHP'
+<?php
+require __DIR__.'/../vendor/autoload.php';
+
+$glue = new Madewithlove\Glue\Glue;
+$glue->run();
+PHP
+            ,
+        ];
+
+        // Scaffold files
+        foreach ($files as $path => $contents) {
+            if (!$this->filesystem->has($path)) {
+                $this->filesystem->put($path, $contents);
+                $this->created($output, $path);
+            }
         }
     }
 
