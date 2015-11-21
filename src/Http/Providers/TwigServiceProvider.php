@@ -3,9 +3,11 @@
 namespace Madewithlove\Nanoframework\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Madewithlove\Nanoframework\Services\UrlGenerator;
 use Twig_Environment;
 use Twig_Extension_Debug;
 use Twig_Loader_Filesystem;
+use Twig_SimpleFunction;
 
 class TwigServiceProvider extends AbstractServiceProvider
 {
@@ -49,6 +51,10 @@ class TwigServiceProvider extends AbstractServiceProvider
     private function addTwigExtensions(Twig_Environment $twig)
     {
         $twig->addExtension(new Twig_Extension_Debug());
+
+        $twig->addFunction(new Twig_SimpleFunction('url', function ($action, $parameters = []) {
+            return $this->container->get(UrlGenerator::class)->to($action, $parameters);
+        }));
     }
 
     /**

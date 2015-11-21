@@ -5,6 +5,7 @@ namespace Madewithlove\Nanoframework\Http\Providers;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\Route;
 use League\Route\RouteCollection;
+use Madewithlove\Nanoframework\Services\UrlGenerator;
 
 class RoutingServiceProvider extends AbstractServiceProvider
 {
@@ -18,6 +19,7 @@ class RoutingServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         RouteCollection::class,
+        UrlGenerator::class,
     ];
 
     /**
@@ -32,6 +34,13 @@ class RoutingServiceProvider extends AbstractServiceProvider
             $this->routes = $this->getRoutes($router);
 
             return $router;
+        });
+
+        // Since RouteCollection doesn't have a getRoutes we collect the
+        // Route instances ourselves and pass them to the UrlGenerator
+        $this->container->share(UrlGenerator::class, function () {
+            $this->container->get(RouteCollection::class);
+            return new UrlGenerator($this->container->get('config.namespace'), $this->routes);
         });
     }
 

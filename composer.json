@@ -13,6 +13,11 @@
             "Madewithlove\\Nanoframework\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Madewithlove\\Nanoframework": "tests"
+        }
+    },
     "require": {
         "barryvdh/laravel-debugbar": "^2.0",
         "franzl/whoops-middleware": "^0.2.0",
@@ -33,6 +38,7 @@
         }
     },
     "require-dev": {
-        "fabpot/php-cs-fixer": "2.0.x@dev"
+        "fabpot/php-cs-fixer": "2.0.x@dev",
+        "phpunit/phpunit": "^5.0"
     }
 }
