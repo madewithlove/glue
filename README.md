@@ -1,4 +1,7 @@
+[![Build Status](https://travis-ci.org/madewithlove/nanoframework-helpers.svg)](https://travis-ci.org/madewithlove/nanoframework-helpers)
+
 # Madewithlove Nanoframework helpers
+
 This is a set of helpers to quickly bootstrap a package-based application.
 It's all service providers and middlewares so although the defaults leverage `league/route` and `twig/twig` per example, anything can be used with it. It's just a small time saver.
 
