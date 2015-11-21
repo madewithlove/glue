@@ -44,5 +44,11 @@
         "branch-alias": {
             "dev-master": "0.1-dev"
         }
+    },
+    "scripts": {
+        "lint": "php-cs-fixer fix",
+        "docs": [
+            "gitbook build && cd _book && git init && git checkout -b gh-pages && touch .nojekyll && git add --all && git commit -am 'Generate documentation' && git push git@github.com:madewithlove/glue.git gh-pages --force"
+        ]
     }
 }
