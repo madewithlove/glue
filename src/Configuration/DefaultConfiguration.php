@@ -60,10 +60,12 @@ class DefaultConfiguration extends AbstractConfiguration
         $composer = file_get_contents($composer);
         $composer = json_decode($composer, true);
 
-        $namespaces = array_keys(array_get($composer, 'autoload.psr-4'));
-        $namespace  = trim($namespaces[0], '\\');
+        $namespaces = array_keys(array_get($composer, 'autoload.psr-4', []));
+        if (!$namespaces) {
+            return;
+        }
 
-        return $namespace;
+        return trim($namespaces[0], '\\');
     }
 
     /**

@@ -46,12 +46,27 @@ class BootstrapCommand extends Command
     {
         $output = new SymfonyStyle($input, $output);
 
+        // Scaffold folder structure
         $paths = (array) $this->configuration->paths;
         foreach ($paths as $path) {
             if (!is_dir($path)) {
                 mkdir($path, 0644, true);
-                $output->writeln('<info>✓</info> Created folder <comment>'.$path.'</comment>');
+                $this->created($output, $path);
             }
         }
+
+        // Create Dotenv file
+        $dotenv = $this->configuration->rootPath.'/.env';
+        file_put_contents($dotenv, 'APP_ENV=local');
+        $this->created($output, $dotenv);
+    }
+
+    /**
+     * @param OutputInterface $output
+     * @param string          $path
+     */
+    protected function created(OutputInterface $output, $path)
+    {
+        $output->writeln('<info>✓</info> Created <comment>'.$path.'</comment>');
     }
 }

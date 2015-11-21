@@ -5,6 +5,7 @@ namespace Madewithlove\Glue\Http\Providers;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Twig_Environment;
 use Twig_Extension_Debug;
+use Twig_Loader_Array;
 use Twig_Loader_Filesystem;
 
 class TwigServiceProvider extends AbstractServiceProvider
@@ -24,7 +25,8 @@ class TwigServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(Twig_Environment::class, function () {
-            $loader = new Twig_Loader_Filesystem($this->container->get('paths.views'));
+            $views  = $this->container->get('paths.views');
+            $loader = is_dir($views) ? new Twig_Loader_Filesystem($views) : new Twig_Loader_Array([]);
 
             $debug = $this->container->get('config.debug');
             $twig  = new Twig_Environment($loader, [
