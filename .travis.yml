@@ -16,11 +16,11 @@ before_install:
   - composer self-update
 
 install:
-  - travis_retry composer update --no-interaction --prefer-source --dev $PREFER_LOWEST
+  - travis_retry composer update --no-interaction --prefer-source $PREFER_LOWEST
 
 script:
   - phpunit
-  - php-cs-fixer fix --dry-run
+  - vendor/bin/php-cs-fixer fix --dry-run
 
 # Cache dependencies
 cache:
