@@ -1,4 +1,5 @@
 <?php
+
 namespace Madewithlove\Nanoframework\Console\Commands;
 
 use Interop\Container\ContainerInterface;
@@ -33,11 +34,13 @@ class TinkerCommand extends Command
         $this->shell     = $shell;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this->setDescription('Tinker with the application and its classes');
     }
-
 
     /**
      * {@inheritdoc}

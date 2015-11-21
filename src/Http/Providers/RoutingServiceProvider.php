@@ -34,7 +34,7 @@ class RoutingServiceProvider extends AbstractServiceProvider
             return new RouteCollection($this->container);
         });
 
-        $this->container->add('router', function() {
+        $this->container->add('router', function () {
            return $this->container->get(RouteCollection::class);
         });
 

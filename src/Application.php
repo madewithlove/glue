@@ -61,7 +61,7 @@ class Application
     }
 
     /**
-     * Delegate calls to the Router
+     * Delegate calls to the Router.
      *
      * @param string $name
      * @param array  $arguments
@@ -159,7 +159,7 @@ class Application
     }
 
     /**
-     * Run the console application
+     * Run the console application.
      *
      * @return mixed
      */

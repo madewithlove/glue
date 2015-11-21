@@ -1,4 +1,5 @@
 <?php
+
 namespace Madewithlove\Nanoframework\Services;
 
 use Illuminate\Support\Arr;
