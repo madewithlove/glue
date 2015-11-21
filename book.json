@@ -3,7 +3,13 @@
     "structure": {
         "summary": "docs/README.md"
     },
-    "plugins": ["edit-link", "github", "anchors"],
+    "plugins": [
+        "edit-link",
+        "github",
+        "anchors",
+        "prism",
+        "-highlight"
+    ],
     "pluginsConfig": {
         "edit-link": {
             "base": "https://github.com/madewithlove/glue/tree/master",
