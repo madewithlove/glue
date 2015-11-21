@@ -3,11 +3,11 @@
 namespace Madewithlove\Nanoframework\Providers;
 
 use Barryvdh\Debugbar\DataCollector\QueryCollector;
+use DebugBar\DebugBar;
 use DebugBar\JavascriptRenderer;
 use DebugBar\StandardDebugBar;
 use Illuminate\Database\Capsule\Manager;
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use Twig_Environment;
 
 class DebugbarServiceProvider extends AbstractServiceProvider
 {
@@ -15,7 +15,7 @@ class DebugbarServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        StandardDebugBar::class,
+        DebugBar::class,
         JavascriptRenderer::class,
     ];
 
@@ -26,21 +26,9 @@ class DebugbarServiceProvider extends AbstractServiceProvider
      */
     public function register()
     {
-        $this->container->share(StandardDebugBar::class, function () {
-            $twig = $this->container->get(Twig_Environment::class);
-
-            // Create Debugbar
+        $this->container->share(DebugBar::class, function () {
             $debugbar = new StandardDebugBar();
             $debugbar->addCollector(new QueryCollector());
-
-            // Publish assets
-            $renderer = $debugbar->getJavascriptRenderer();
-            $renderer->dumpCssAssets('builds/debugbar.css');
-            $renderer->dumpJsAssets('builds/debugbar.js');
-            $renderer->addAssets(['/builds/debugbar.css'], ['/builds/debugbar.js']);
-
-            // Bind renderer to views
-            $twig->addGlobal('debugbar', $renderer);
 
             // Bind QueryCollector to current connection
             /* @var StandardDebugbar $debugbar */
@@ -54,7 +42,7 @@ class DebugbarServiceProvider extends AbstractServiceProvider
         });
 
         $this->container->share(JavascriptRenderer::class, function () {
-            return $this->container->get(StandardDebugBar::class)->getJavascriptRenderer();
+            return $this->container->get(DebugBar::class)->getJavascriptRenderer();
         });
     }
 }

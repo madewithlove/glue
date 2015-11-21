@@ -114,9 +114,7 @@ class Application
         // Bind configuration
         $this->container->add('paths.root', $this->rootPath);
         $this->container->add(ConfigurationInterface::class, function () {
-            $class = $this->configuration;
-
-            return new $class($this->container);
+            return $this->container->get($this->configuration);
         });
 
         // Register providers

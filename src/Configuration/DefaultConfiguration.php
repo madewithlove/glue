@@ -14,7 +14,8 @@ use Madewithlove\Nanoframework\Providers\DatabaseServiceProvider;
 use Madewithlove\Nanoframework\Providers\DebugbarServiceProvider;
 use Madewithlove\Nanoframework\Providers\LogsServiceProvider;
 use Madewithlove\Nanoframework\Providers\PathsServiceProvider;
-use PhpMiddleware\PhpDebugBar\PhpDebugBarMiddleware;
+use Psr7Middlewares\Middleware\DebugBar;
+use Psr7Middlewares\Middleware\FormatNegotiator;
 
 class DefaultConfiguration extends AbstractConfiguration
 {
@@ -69,7 +70,8 @@ class DefaultConfiguration extends AbstractConfiguration
         switch (getenv('APP_ENV')) {
             case 'local':
                 return [
-                    PhpDebugBarMiddleware::class,
+                    FormatNegotiator::class,
+                    DebugBar::class,
                     WhoopsMiddleware::class,
                     LeagueRouteMiddleware::class,
                 ];

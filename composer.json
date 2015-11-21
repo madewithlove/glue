@@ -26,12 +26,13 @@
         "league/route": "2.*@dev",
         "league/tactician": "^0.6.1",
         "monolog/monolog": "^1.17",
-        "php-middleware/php-debug-bar": "^1.0",
+        "oscarotero/psr7-middlewares": "^3.7",
         "psy/psysh": "^0.6.1",
         "relay/relay": "^1.0",
         "symfony/console": "^2.7",
         "twig/twig": "^1.23",
         "vlucas/phpdotenv": "^2.1",
+        "willdurand/negotiation": "^2.0",
         "zendframework/zend-diactoros": "^1.1"
     },
     "require-dev": {
