@@ -7,17 +7,16 @@ use Interop\Container\ContainerInterface;
 use League\Container\Container;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
-use League\Container\ImmutableContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Container\ServiceProvider\ServiceProviderInterface;
 use League\Route\RouteCollection;
+use Madewithlove\Glue\Configuration\ArrayConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Providers\ConfigurationServiceProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Relay\RelayBuilder;
-use Symfony\Component\Console\Application as Console;
 use Zend\Diactoros\Response\SapiEmitter;
 
 /**
@@ -30,12 +29,7 @@ class Application implements ContainerAwareInterface
     /**
      * @var string
      */
-    protected $configuration = DefaultConfiguration::class;
-
-    /**
-     * @var string
-     */
-    protected $rootPath;
+    protected $configuration;
 
     /**
      * @var array
@@ -43,18 +37,21 @@ class Application implements ContainerAwareInterface
     protected $routes = [];
 
     /**
-     * @param string         $rootPath
-     * @param Container|null $container
+     * @param ConfigurationInterface|null $configuration
+     * @param Container|null              $container
      */
-    public function __construct($rootPath, Container $container = null)
+    public function __construct(ConfigurationInterface $configuration = null, Container $container = null)
     {
-        $this->rootPath = $rootPath;
-
         // Setup container
         $this->container = $container ?: new Container();
         $this->container->delegate(new ReflectionContainer());
         $this->container->share(ContainerInterface::class, $this->container);
 
+        // Setup configuration
+        $this->configuration = $configuration ?: new DefaultConfiguration();
+        $this->setConfiguration($this->configuration);
+
+        // Bind routes callable
         $this->container->add('routes', function () {
             return $this->routes;
         });
@@ -82,15 +79,24 @@ class Application implements ContainerAwareInterface
      */
     public function configure(array $configuration)
     {
-        $this->container->add('config', $configuration);
+        $this->configuration = new ArrayConfiguration($configuration);
     }
 
     /**
-     * @param string $configuration
+     * @return string
      */
-    public function setConfiguration($configuration)
+    public function getConfiguration()
+    {
+        return $this->configuration;
+    }
+
+    /**
+     * @param ConfigurationInterface|array $configuration
+     */
+    public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
+        $this->configuration->setContainer($this->container);
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -103,18 +109,17 @@ class Application implements ContainerAwareInterface
     public function boot()
     {
         // If already booted, cancel
-        if ($this->container->has('paths.root')) {
+        if ($this->container->has(ConfigurationInterface::class)) {
             return;
         }
 
         // Load dotenv files
-        $dotenv = new Dotenv($this->rootPath);
+        $dotenv = new Dotenv($this->configuration->getRootPath());
         $dotenv->load();
 
         // Bind configuration
-        $this->container->add('paths.root', $this->rootPath);
         $this->container->add(ConfigurationInterface::class, function () {
-            return $this->container->get($this->configuration);
+            return $this->configuration;
         });
 
         // Register providers

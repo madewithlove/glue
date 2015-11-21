@@ -16,20 +16,16 @@ class ConfigurationServiceProvider extends AbstractValuesProvider
      */
     protected function getProvided()
     {
-        return array_merge(parent::getProvided(), [ConfigurationInterface::class]);
+        return array_merge(parent::getProvided(), [
+            ConfigurationInterface::class
+        ]);
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     protected function getValues()
     {
-        /* @var ConfigurationInterface $configuration */
-        if (!$this->container->has('config')) {
-            $configuration = $this->container->get(ConfigurationInterface::class);
-            $this->container->add('config', $configuration->getConfiguration());
-        }
-
-        return $this->container->get('config');
+        return $this->container->get(ConfigurationInterface::class)->toArray();
     }
 }

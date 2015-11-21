@@ -21,11 +21,53 @@ use Psr7Middlewares\Middleware\FormatNegotiator;
 class DefaultConfiguration extends AbstractConfiguration
 {
     /**
+     * DefaultConfiguration constructor.
+     */
+    public function __construct()
+    {
+        $this->debug       = getenv('APP_ENV') === 'local';
+        $this->rootPath    = $this->configureRootPath();
+        $this->namespace   = $this->configureNamespace();
+        $this->providers   = $this->configureProviders();
+        $this->paths       = $this->configurePaths();
+        $this->middlewares = $this->configureMiddlewares();
+        $this->commands    = $this->configureCommands();
+    }
+
+    /**
+     * @return string
+     */
+    protected function configureRootPath()
+    {
+        $folder = getcwd();
+        while (!file_exists($folder.'/composer.json')) {
+            $folder .= '/..';
+        }
+
+        return realpath($folder);
+    }
+
+    /**
+     * @return string
+     */
+    protected function configureNamespace()
+    {
+        $composer = $this->rootPath.'/composer.json';
+        $composer = file_get_contents($composer);
+        $composer = json_decode($composer, true);
+
+        $namespaces = array_keys($composer['autoload']['psr-4']);
+        $namespace  = trim($namespaces[0], '\\');
+
+        return $namespace;
+    }
+
+    /**
      * @return string[]
      */
-    public function getProviders()
+    public function configureProviders()
     {
-        return [
+        $providers = [
             'request'    => RequestServiceProvider::class,
             'paths'      => PathsServiceProvider::class,
             'routing'    => RoutingServiceProvider::class,
@@ -35,40 +77,36 @@ class DefaultConfiguration extends AbstractConfiguration
             'commandbus' => CommandBusServiceProvider::class,
             'migrations' => PhinxServiceProvider::class,
         ];
+
+        if ($this->isDebug()) {
+            $providers += [
+                'console'  => ConsoleServiceProvider::class,
+                'debugbar' => DebugbarServiceProvider::class,
+            ];
+        }
+
+        return $providers;
     }
 
     /**
      * @return string[]
      */
-    public function getDebugProviders()
+    public function configurePaths()
     {
         return [
-            ConsoleServiceProvider::class,
-            DebugbarServiceProvider::class,
+            'builds'     => $this->rootPath.'/public/builds',
+            'factories'  => $this->rootPath.'/resources/factories',
+            'migrations' => $this->rootPath.'/resources/migrations',
+            'views'      => $this->rootPath.'/resources/views',
+            'cache'      => $this->rootPath.'/storage/cache',
+            'logs'       => $this->rootPath.'/storage/logs',
         ];
     }
 
     /**
      * @return string[]
      */
-    public function getPaths()
-    {
-        $rootPath = $this->container->get('paths.root');
-
-        return [
-            'builds'     => $rootPath.'/public/builds',
-            'factories'  => $rootPath.'/resources/factories',
-            'migrations' => $rootPath.'/resources/migrations',
-            'views'      => $rootPath.'/resources/views',
-            'cache'      => $rootPath.'/storage/cache',
-            'logs'       => $rootPath.'/storage/logs',
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getMiddlewares()
+    public function configureMiddlewares()
     {
         switch (getenv('APP_ENV')) {
             case 'local':
@@ -89,18 +127,10 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * @return string[]
      */
-    public function getConsoleCommands()
+    public function configureCommands()
     {
         return [
             TinkerCommand::class,
         ];
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDebug()
-    {
-        return getenv('APP_ENV') === 'local';
     }
 }
