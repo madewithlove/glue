@@ -43,6 +43,21 @@ $app->configure([
 ]);
 ```
 
+The application also implements `ContainerAwareInterface` so you can swap the container at any time:
+
+```php
+$container = new Container;
+$container->share(Foobar::class, function() {
+    return new Foobar;
+});
+
+$app = new Application(__DIR__, $container);
+
+// Or
+$app = new Application(__DIR__);
+$app->setContainer($container);
+```
+
 ### Routing
 
 The `Application` class delegates calls to whatever class is bound to `router` so you can set your routes in your `index.php` file directly. Per example with `league/route`:

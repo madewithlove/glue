@@ -5,6 +5,9 @@ namespace Madewithlove\Nanoframework;
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
+use League\Container\ContainerAwareInterface;
+use League\Container\ContainerAwareTrait;
+use League\Container\ImmutableContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Container\ServiceProvider\ServiceProviderInterface;
 use League\Route\RouteCollection;
@@ -20,12 +23,9 @@ use Zend\Diactoros\Response\SapiEmitter;
 /**
  * @mixin RouteCollection
  */
-class Application
+class Application implements ContainerAwareInterface
 {
-    /**
-     * @var Container
-     */
-    protected $container;
+    use ContainerAwareTrait;
 
     /**
      * @var string
