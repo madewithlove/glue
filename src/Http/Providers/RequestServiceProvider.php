@@ -3,7 +3,9 @@
 namespace Madewithlove\Nanoframework\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
 
 class RequestServiceProvider extends AbstractServiceProvider
@@ -13,6 +15,7 @@ class RequestServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         ServerRequestInterface::class,
+        ResponseInterface::class,
     ];
 
     /**
@@ -30,6 +33,10 @@ class RequestServiceProvider extends AbstractServiceProvider
                 $_COOKIE,
                 $_FILES
             );
+        });
+
+        $this->container->share(ResponseInterface::class, function () {
+           return new Response();
         });
     }
 }

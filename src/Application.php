@@ -11,10 +11,10 @@ use League\Route\RouteCollection;
 use Madewithlove\Nanoframework\Configuration\ConfigurationInterface;
 use Madewithlove\Nanoframework\Configuration\DefaultConfiguration;
 use Madewithlove\Nanoframework\Providers\ConfigurationServiceProvider;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Relay\RelayBuilder;
 use Symfony\Component\Console\Application as Console;
-use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
 
 /**
@@ -141,7 +141,7 @@ class Application
         $this->boot();
 
         $request  = $this->container->get(ServerRequestInterface::class);
-        $response = new Response();
+        $response = $this->container->get(ResponseInterface::class);
 
         // Build Relay factory
         $builder = new RelayBuilder(function ($callable) {

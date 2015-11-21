@@ -5,6 +5,7 @@ namespace Madewithlove\Nanoframework\Http\Providers;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\Route;
 use League\Route\RouteCollection;
+use League\Route\Strategy\ParamStrategy;
 use Madewithlove\Nanoframework\Services\UrlGenerator;
 
 class RoutingServiceProvider extends AbstractServiceProvider
@@ -31,7 +32,13 @@ class RoutingServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(RouteCollection::class, function () {
-            return new RouteCollection($this->container);
+            $strategy = new ParamStrategy();
+            $strategy->setContainer($this->container);
+
+            $router = new RouteCollection($this->container);
+            $router->setStrategy($strategy);
+
+            return $router;
         });
 
         $this->container->add('router', function () {
