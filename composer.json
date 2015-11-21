@@ -15,7 +15,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Madewithlove\\Nanoframework": "tests"
+            "Madewithlove\\Nanoframework\\": "tests"
         }
     },
     "require": {
