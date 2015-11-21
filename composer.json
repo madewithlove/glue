@@ -1,0 +1,31 @@
+{
+    "name": "madewithlove/nanoframework-helpers",
+    "description": "Same small helper classes and service providers for package-based applications",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Madewithlove",
+            "email": "heroes@madewithlove.be"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Madewithlove\\Nanoframework\\": "src"
+        }
+    },
+    "require": {
+        "franzl/whoops-middleware": "^0.2.0",
+        "league/container": "^2.0",
+        "league/route": "2.*@dev",
+        "league/tactician": "^0.6.1",
+        "relay/relay": "^1.0",
+        "twig/twig": "^1.23",
+        "vlucas/phpdotenv": "^2.1",
+        "zendframework/zend-diactoros": "^1.1"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    }
+}
