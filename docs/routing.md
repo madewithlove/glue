@@ -7,7 +7,7 @@ The `Glue` class delegates calls to whatever class is bound to `router` so you c
 ```php
 $app = new Glue();
 
-$app->get('users', 'UsersController::index');
+$app->get('users/{user}', 'UsersController::show');
 $app->post('users/create', 'UsersController::store');
 
 $app->run();
@@ -15,8 +15,8 @@ $app->run();
 
 ## Controllers
 
-Glue also comes with a slim `AbstractController` you can (or not) use. It provides a convience `render` method which call Twig's, and it also provides a `dispatch` method to dispatch commands to the command bus.
-By default the router uses the ParamStrategy:
+Glue also comes with a slim `AbstractController` you can (or not) use. It provides a convience `render` method which calls Twig's, and it also provides a `dispatch` method to dispatch commands to the command bus.
+By default the router uses the `ParamStrategy` of `league/route`:
 
 ```php
 class UsersController
