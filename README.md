@@ -14,15 +14,16 @@ Facultative providers include:
 - A command bus with `league/tactician`
 - Logs handling with `monolog/monolog`
 - A debugbar with `maximebf/debugbar`
+- A small CLi with `symfony/console`
 
-Any of these can be overidden, this package doesn't enforce any structure or the use of any dependency in particular besides `league/container` (as the Application class expects service provider capabilities).
+Any of these can be overidden or removed, this package doesn't enforce any structure or the use of any dependency in particular besides `league/container` (as the Application class expects service provider capabilities).
 
 ## Usage
 ### Basic usage
 
 ```php
 // Create an app instance with your root app path
-// and simply ru nit
+// and simply run it
 $app = new Application(__DIR__);
 $app->run();
 ```
@@ -103,6 +104,8 @@ class MyConfiguration extends \Madewithlove\Nanoframework\DefaultConfiguration
     {
         return $this->container->get('some.debug.value');
     }
+
+    // etc.
 }
 ```
 
