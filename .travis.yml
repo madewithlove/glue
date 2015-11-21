@@ -18,7 +18,9 @@ before_install:
 install:
   - travis_retry composer update --no-interaction --prefer-source --dev $PREFER_LOWEST
 
-script: phpunit
+script:
+  - phpunit
+  - php-cs-fixer fix --dry-run
 
 # Cache dependencies
 cache:
