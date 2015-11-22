@@ -77,10 +77,10 @@ class BootstrapCommand extends Command
     protected function createFolders()
     {
         $paths = $this->configuration->getPaths();
-        $rootPath = $this->configuration->getRootPath();
 
         foreach ($paths as $path) {
-            $path = str_replace($rootPath, null, $path);
+            $path = $this->formatPath($path);
+
             if (!$this->filesystem->has($path)) {
                 $this->filesystem->createDir($path);
                 $this->created($path);
@@ -103,7 +103,7 @@ require 'vendor/autoload.php';
 $app = new Madewithlove\Glue\Glue();
 $app->console();
 PHP
-,
+            ,
             $web.DS.'/index.php' => <<<'PHP'
 <?php
 require 'vendor/autoload.php';
@@ -111,10 +111,12 @@ require 'vendor/autoload.php';
 $app = new Madewithlove\Glue\Glue();
 $app->run();
 PHP
-,
+            ,
         ];
 
         foreach ($files as $path => $contents) {
+            $path = $this->formatPath($path);
+
             if (!$this->filesystem->has($path)) {
                 $this->filesystem->put($path, $contents);
                 $this->created($path);
@@ -128,5 +130,18 @@ PHP
     protected function created($path)
     {
         $this->output->writeln('<info>✓</info> Created <comment>'.$path.'</comment>');
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    protected function formatPath($path)
+    {
+        $rootPath = $this->configuration->getRootPath();
+        $path = str_replace($rootPath, null, $path);
+
+        return $path;
     }
 }

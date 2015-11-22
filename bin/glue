@@ -1,6 +1,11 @@
 #!/usr/bin/env php
 <?php
+use Madewithlove\Glue\Configuration\Configuration;
+use Madewithlove\Glue\Configuration\DefaultConfiguration;
+use Madewithlove\Glue\Console\Commands\BootstrapCommand;
+use Madewithlove\Glue\Console\ConsoleServiceProvider;
 use Madewithlove\Glue\Glue;
+use Madewithlove\Glue\Providers\FilesystemServiceProvider;
 use Madewithlove\Glue\Utils;
 
 require __DIR__.'/../src/Utils.php';
@@ -8,5 +13,16 @@ require __DIR__.'/../src/Utils.php';
 // Look for vendor folder, wherever it is
 require Utils::find('vendor/autoload.php');
 
-$glue = new Glue();
+$glue = new Glue(new Configuration([
+    'debug'     => true,
+    'paths'     => (new DefaultConfiguration())->getPaths(),
+    'providers' => [
+        FilesystemServiceProvider::class,
+        ConsoleServiceProvider::class,
+    ],
+    'commands'  => [
+        BootstrapCommand::class,
+    ],
+]));
+
 $glue->console();

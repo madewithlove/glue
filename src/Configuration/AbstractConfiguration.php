@@ -30,6 +30,14 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
+    public function isDebug()
+    {
+        return $this->debug !== null ? $this->debug : true;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getPaths()
     {
         return (array) $this->paths;
@@ -48,7 +56,7 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
      */
     public function getRootPath()
     {
-        return rtrim($this->rootPath, DS);
+        return rtrim($this->rootPath, DS) ?: getcwd();
     }
 
     /**

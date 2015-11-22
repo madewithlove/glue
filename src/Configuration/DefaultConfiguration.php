@@ -36,17 +36,27 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * DefaultConfiguration constructor.
      */
+    public function __construct()
+    {
+        parent::__construct([
+            'debug' => true,
+            'rootPath' => $this->configureRootPath(),
+            'namespace' => $this->configureNamespace(),
+            'providers' => $this->configureProviders(),
+            'paths' => $this->configurePaths(),
+            'middlewares' => $this->configureMiddlewares(),
+            'commands' => $this->configureCommands(),
+        ]);
+    }
+
+    /**
+     * Configure with the container and environment variables.
+     */
     public function configure()
     {
         $environment = getenv('APP_ENV');
 
         $this->debug = $environment ? $environment === 'local' : true;
-        $this->rootPath = $this->configureRootPath();
-        $this->namespace = $this->configureNamespace();
-        $this->providers = $this->configureProviders();
-        $this->paths = $this->configurePaths();
-        $this->middlewares = $this->configureMiddlewares();
-        $this->commands = $this->configureCommands();
     }
 
     /**
@@ -149,7 +159,6 @@ class DefaultConfiguration extends AbstractConfiguration
     public function configureCommands()
     {
         return [
-            BootstrapCommand::class,
             TinkerCommand::class,
         ];
     }

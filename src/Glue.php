@@ -60,7 +60,7 @@ class Glue implements ContainerAwareInterface
         $this->container->share(ContainerInterface::class, $this->container);
 
         // Setup configuration
-        $this->setConfiguration($this->configuration ?: new DefaultConfiguration());
+        $this->setConfiguration($configuration ?: new DefaultConfiguration());
 
         // Load environment variables
         $path = $this->configuration->getRootPath() ?: getcwd();

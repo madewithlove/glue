@@ -13,6 +13,11 @@ namespace Madewithlove\Glue\Configuration;
 interface ConfigurationInterface
 {
     /**
+     * @return bool
+     */
+    public function isDebug();
+
+    /**
      * Get the root path of the application.
      *
      * @return string
