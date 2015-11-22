@@ -69,7 +69,15 @@ trait Configurable
             $configuration = [$configuration => $value];
         }
 
-        $configuration = array_merge_recursive($this->configuration->toArray(), $configuration);
+        // Merge stuff manually cause PHP is bad at it
+        foreach ($this->configuration->toArray() as $key => $value) {
+            if (is_array($value)) {
+                $configuration[$key] = array_merge($value, array_get($configuration, $key, []));
+            } else {
+                $configuration[$key] = array_get($configuration, $key) ?: $value;
+            }
+        }
+
         $this->configuration = new Configuration($configuration);
     }
 }

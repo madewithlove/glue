@@ -11,7 +11,6 @@
 namespace Madewithlove\Glue\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
-use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Console\ConsoleServiceProvider;
 use Madewithlove\Glue\Console\PhinxServiceProvider;
@@ -54,9 +53,12 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function configure()
     {
-        $environment = getenv('APP_ENV');
+        // Reset debug mode from env variables now that they're available
+        $this->debug = getenv('APP_ENV') ? getenv('APP_ENV') === 'local' : true;
 
-        $this->debug = $environment ? $environment === 'local' : true;
+        // Update middlewares and providers if they're debug dependant
+        $this->middlewares = $this->configureMiddlewares();
+        $this->providers = $this->configureProviders();
     }
 
     /**
@@ -106,7 +108,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'assets' => WebpackServiceProvider::class,
         ];
 
-        if ($this->debug) {
+        if ($this->isDebug()) {
             $providers += [
                 'console' => ConsoleServiceProvider::class,
                 'migrations' => PhinxServiceProvider::class,
@@ -139,7 +141,7 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function configureMiddlewares()
     {
-        if ($this->debug) {
+        if ($this->isDebug()) {
             return [
                 FormatNegotiator::class,
                 DebugBar::class,
