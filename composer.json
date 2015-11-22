@@ -44,7 +44,7 @@
     "require-dev": {
         "fabpot/php-cs-fixer": "2.0.x@dev",
         "mockery/mockery": "^0.9.4",
-        "phpunit/phpunit": "^5.0"
+        "phpunit/phpunit": "^5.0.9"
     },
     "extra": {
         "branch-alias": {

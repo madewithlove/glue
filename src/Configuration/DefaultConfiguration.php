@@ -40,9 +40,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'debug' => true,
             'rootPath' => $this->configureRootPath(),
             'namespace' => $this->configureNamespace(),
-            'providers' => $this->configureProviders(),
             'paths' => $this->configurePaths(),
-            'middlewares' => $this->configureMiddlewares(),
             'commands' => $this->configureCommands(),
         ]);
     }
@@ -54,11 +52,21 @@ class DefaultConfiguration extends AbstractConfiguration
     {
         // Reset debug mode from env variables now that they're available
         $this->debug = getenv('APP_ENV') ? getenv('APP_ENV') === 'local' : true;
-
-        // Update middlewares and providers if they're debug dependant
-        $this->middlewares = $this->configureMiddlewares();
-        $this->providers = $this->configureProviders();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        $array = parent::toArray();
+
+        return array_merge($array, [
+            'providers' => $this->getProviders(),
+            'middlewares' => $this->getMiddlewares(),
+        ]);
+    }
+
 
     /**
      * @return string
@@ -92,7 +100,34 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * @return string[]
      */
-    public function configureProviders()
+    public function configurePaths()
+    {
+        $rootPath = $this->getRootPath();
+
+        return [
+            'assets' => $rootPath.'/public/builds',
+            'web' => $rootPath.'/public',
+            'migrations' => $rootPath.'/resources/migrations',
+            'views' => $rootPath.'/resources/views',
+            'cache' => $rootPath.'/storage/cache',
+            'logs' => $rootPath.'/storage/logs',
+        ];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function configureCommands()
+    {
+        return [
+            TinkerCommand::class,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviders()
     {
         $providers = [
             'commandbus' => CommandBusServiceProvider::class,
@@ -118,26 +153,9 @@ class DefaultConfiguration extends AbstractConfiguration
     }
 
     /**
-     * @return string[]
+     * {@inheritdoc}
      */
-    public function configurePaths()
-    {
-        $rootPath = $this->getRootPath();
-
-        return [
-            'assets' => $rootPath.'/public/builds',
-            'web' => $rootPath.'/public',
-            'migrations' => $rootPath.'/resources/migrations',
-            'views' => $rootPath.'/resources/views',
-            'cache' => $rootPath.'/storage/cache',
-            'logs' => $rootPath.'/storage/logs',
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function configureMiddlewares()
+    public function getMiddlewares()
     {
         if ($this->isDebug()) {
             return [
@@ -150,16 +168,6 @@ class DefaultConfiguration extends AbstractConfiguration
 
         return [
             LeagueRouteMiddleware::class,
-        ];
-    }
-
-    /**
-     * @return string[]
-     */
-    public function configureCommands()
-    {
-        return [
-            TinkerCommand::class,
         ];
     }
 }
