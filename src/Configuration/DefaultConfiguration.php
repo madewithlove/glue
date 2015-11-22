@@ -79,7 +79,6 @@ class DefaultConfiguration extends AbstractConfiguration
             'db'         => DatabaseServiceProvider::class,
             'filesystem' => FilesystemServiceProvider::class,
             'logs'       => LogsServiceProvider::class,
-            'migrations' => PhinxServiceProvider::class,
             'request'    => RequestServiceProvider::class,
             'routing'    => RoutingServiceProvider::class,
             'twig'       => TwigServiceProvider::class,
@@ -89,8 +88,9 @@ class DefaultConfiguration extends AbstractConfiguration
 
         if ($this->debug) {
             $providers += [
-                'console'  => ConsoleServiceProvider::class,
-                'debugbar' => DebugbarServiceProvider::class,
+                'console'    => ConsoleServiceProvider::class,
+                'migrations' => PhinxServiceProvider::class,
+                'debugbar'   => DebugbarServiceProvider::class,
             ];
         }
 

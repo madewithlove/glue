@@ -3,10 +3,8 @@
 namespace Madewithlove\Glue\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
-use League\Route\Route;
 use League\Route\RouteCollection;
 use League\Route\Strategy\ParamStrategy;
-use Madewithlove\Glue\Services\UrlGenerator;
 
 class RoutingServiceProvider extends AbstractServiceProvider
 {

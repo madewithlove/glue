@@ -1,4 +1,5 @@
 <?php
+
 namespace Madewithlove\Glue\Console\Commands;
 
 use League\Flysystem\FilesystemInterface;
@@ -33,7 +34,6 @@ class BootstrapCommand extends Command
         $this->configuration = $configuration;
         $this->filesystem    = $filesystem;
     }
-
 
     /**
      * {@inheritdoc}

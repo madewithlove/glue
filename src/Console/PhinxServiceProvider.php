@@ -3,11 +3,12 @@
 namespace Madewithlove\Glue\Console;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use Phinx\Config\Config;
 use Phinx\Console\Command;
 use Symfony\Component\Console\Application;
 
-class PhinxServiceProvider extends AbstractServiceProvider
+class PhinxServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
     /**
      * Use the register method to register items with the container via the
@@ -26,7 +27,6 @@ class PhinxServiceProvider extends AbstractServiceProvider
     {
         /** @var Application $console */
         $console = $this->container->get(Application::class);
-
         $console->addCommands([
             $this->getCommand(new Command\Create()),
             $this->getCommand(new Command\Migrate()),

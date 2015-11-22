@@ -25,11 +25,11 @@ class TwigServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(Twig_Environment::class, function () {
-            $views  = $this->container->get('paths.views');
+            $views = $this->container->get('paths.views');
             $loader = is_dir($views) ? new Twig_Loader_Filesystem($views) : new Twig_Loader_Array([]);
 
             $debug = $this->container->get('config.debug');
-            $twig  = new Twig_Environment($loader, [
+            $twig = new Twig_Environment($loader, [
                 'debug'            => $debug,
                 'auto_reload'      => $debug,
                 'strict_variables' => false,

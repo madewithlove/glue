@@ -1,4 +1,5 @@
 <?php
+
 namespace Madewithlove\Glue\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
@@ -20,14 +21,12 @@ class FilesystemServiceProvider extends AbstractServiceProvider
      * Use the register method to register items with the container via the
      * protected $this->container property or the `getContainer` method
      * from the ContainerAwareTrait.
-     *
-     * @return void
      */
     public function register()
     {
         $this->container->share(FilesystemInterface::class, function () {
             $configuration = $this->container->get(ConfigurationInterface::class);
-            $adapter       = new Local($configuration->rootPath);
+            $adapter = new Local($configuration->rootPath);
 
             return new Filesystem($adapter);
         });
