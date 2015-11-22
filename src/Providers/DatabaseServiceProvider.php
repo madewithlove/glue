@@ -12,8 +12,9 @@ namespace Madewithlove\Glue\Providers;
 
 use Illuminate\Database\Capsule\Manager;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
-class DatabaseServiceProvider extends AbstractServiceProvider
+class DatabaseServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
     /**
      * @var array
@@ -43,12 +44,20 @@ class DatabaseServiceProvider extends AbstractServiceProvider
             ]);
 
             // Configure database capsule
-            $capsule->setAsGlobal();
             $capsule->bootEloquent();
+            $capsule->setAsGlobal();
 
             return $capsule;
         });
+    }
 
+    /**
+     * Method will be invoked on registration of a service provider implementing
+     * this interface. Provides ability for eager loading of Service Providers.
+     */
+    public function boot()
+    {
+        $this->register();
         $this->container->get(Manager::class);
     }
 }
