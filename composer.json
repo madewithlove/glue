@@ -52,6 +52,7 @@
         }
     },
     "scripts": {
+        "test": "phpunit",
         "lint": "php-cs-fixer fix",
         "docs": [
             "gitbook install",

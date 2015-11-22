@@ -20,8 +20,8 @@ install:
   - travis_retry composer update --no-interaction --prefer-source $PREFER_LOWEST
 
 script:
-  - phpunit
-  - vendor/bin/php-cs-fixer fix --dry-run
+  - composer test
+  - composer lint -- --dry-run
 
 # Cache dependencies
 cache:
