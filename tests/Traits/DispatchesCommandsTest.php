@@ -1,8 +1,16 @@
 <?php
+
+/*
+ * This file is part of Glue
+ *
+ * (c) Madewithlove <heroes@madewithlove.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ */
+
 namespace Madewithlove\Glue\Traits;
 
 use League\Tactician\CommandBus;
-use Madewithlove\Glue\Dummies\DummyCommand;
 use Madewithlove\Glue\Dummies\DummyController;
 use Madewithlove\Glue\TestCase;
 use Mockery;
@@ -13,7 +21,7 @@ class DispatchesCommandsTest extends TestCase
     public function testCanDispatchCommand()
     {
         $bus = Mockery::mock(CommandBus::class);
-        $bus->shouldReceive('handle')->times(3)->andReturnUsing(function($command) {
+        $bus->shouldReceive('handle')->times(3)->andReturnUsing(function ($command) {
             return $command->foobar;
         });
 

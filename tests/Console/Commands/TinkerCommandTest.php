@@ -1,4 +1,13 @@
 <?php
+
+/*
+ * This file is part of Glue
+ *
+ * (c) Madewithlove <heroes@madewithlove.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ */
+
 namespace Madewithlove\Glue\Console\Commands;
 
 use League\Container\Container;
@@ -20,7 +29,7 @@ class TinkerCommandTest extends TestCase
         $repl->shouldReceive('run')->once();
         $repl->shouldReceive('setScopeVariables')->once()->with([
             'app' => $container,
-            'config'    => 'foobar',
+            'config' => 'foobar',
         ]);
 
         $tinker = new TinkerCommand($container, $repl);

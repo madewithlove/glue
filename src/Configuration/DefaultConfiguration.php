@@ -25,7 +25,6 @@ use Madewithlove\Glue\Providers\DatabaseServiceProvider;
 use Madewithlove\Glue\Providers\DebugbarServiceProvider;
 use Madewithlove\Glue\Providers\FilesystemServiceProvider;
 use Madewithlove\Glue\Providers\LogsServiceProvider;
-use Madewithlove\Glue\Providers\PathsServiceProvider;
 use Madewithlove\Glue\Utils;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;

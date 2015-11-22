@@ -146,6 +146,7 @@ class Glue implements ContainerAwareInterface
 
         $request = $this->container->get(ServerRequestInterface::class);
         $response = $this->container->get(ResponseInterface::class);
+        $emitter = $this->container->get(SapiEmitter::class);
 
         // Build Relay factory
         $builder = new RelayBuilder(function ($callable) {
@@ -157,7 +158,7 @@ class Glue implements ContainerAwareInterface
         $relay = $builder->newInstance($middlewares);
         $response = $relay($request, $response);
 
-        (new SapiEmitter())->emit($response);
+        $emitter->emit($response);
     }
 
     /**

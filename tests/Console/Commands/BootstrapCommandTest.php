@@ -1,4 +1,13 @@
 <?php
+
+/*
+ * This file is part of Glue
+ *
+ * (c) Madewithlove <heroes@madewithlove.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ */
+
 namespace Madewithlove\Glue\Console\Commands;
 
 use League\Flysystem\FilesystemInterface;
@@ -24,9 +33,9 @@ class BootstrapCommandTest extends TestCase
 
         $configuration = new Configuration([
             'paths' => [
-                'web'        => 'web',
+                'web' => 'web',
                 'migrations' => 'foo/migrations',
-                'cache'      => 'bar/cache',
+                'cache' => 'bar/cache',
             ],
         ]);
 

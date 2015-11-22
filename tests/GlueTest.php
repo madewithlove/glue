@@ -12,8 +12,16 @@ namespace Madewithlove\Glue;
 
 use League\Container\Container;
 use League\Container\ServiceProvider\ServiceProviderInterface;
+use League\Tactician\CommandBus;
 use Madewithlove\Glue\Configuration\Configuration;
+use Madewithlove\Glue\Dummies\DummyController;
+use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
+use Madewithlove\Glue\Http\Providers\RoutingServiceProvider;
 use Mockery;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response\SapiEmitter;
+use Zend\Diactoros\Uri;
 
 class GlueTest extends TestCase
 {
@@ -81,5 +89,50 @@ class GlueTest extends TestCase
         $glue->setContainer($container);
 
         $this->assertEquals('foobar', $glue->console());
+    }
+
+    public function testDoesntRunIfNoRoutes()
+    {
+        $emitter = Mockery::mock(SapiEmitter::class);
+        $emitter->shouldNotReceive('emit');
+
+        $container = new Container();
+        $container->add(SapiEmitter::class, $emitter);
+
+        $glue = new Glue(new Configuration(), $container);
+        $glue->run();
+    }
+
+    public function testCanRunApp()
+    {
+        $request = Mockery::mock(ServerRequestInterface::class);
+        $request->shouldReceive('getMethod')->andReturn('GET');
+        $request->shouldReceive('getUri')->andReturn(new Uri('/foobar'));
+
+        $response = Mockery::mock(ResponseInterface::class);
+        $response->shouldReceive('getBody->isWritable')->andReturn(true);
+        $response->shouldReceive('getBody->write')->with('foobar');
+
+        $emitter = Mockery::mock(SapiEmitter::class);
+        $emitter->shouldReceive('emit')->once()->with($response);
+
+        $bus = Mockery::mock(CommandBus::class);
+        $bus->shouldReceive('handle')->andReturn('foobar');
+        $bus->shouldIgnoreMissing();
+
+        $container = new Container();
+        $container->add(ServerRequestInterface::class, $request);
+        $container->add(ResponseInterface::class, $response);
+        $container->add(DummyController::class, new DummyController($bus));
+        $container->add(SapiEmitter::class, $emitter);
+
+        $glue = new Glue(new Configuration([
+            'debug' => false,
+            'providers' => [RoutingServiceProvider::class],
+            'middlewares' => [LeagueRouteMiddleware::class],
+        ]), $container);
+
+        $glue->get('foobar', DummyController::class.'::index');
+        $glue->run();
     }
 }
