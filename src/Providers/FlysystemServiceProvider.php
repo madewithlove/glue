@@ -17,7 +17,7 @@ use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 
-class FilesystemServiceProvider extends AbstractServiceProvider
+class FlysystemServiceProvider extends AbstractServiceProvider
 {
     /**
      * @var array

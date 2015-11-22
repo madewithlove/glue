@@ -14,7 +14,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Route\RouteCollection;
 use League\Route\Strategy\ParamStrategy;
 
-class RoutingServiceProvider extends AbstractServiceProvider
+class LeagueRouteServiceProvider extends AbstractServiceProvider
 {
     /**
      * @var array

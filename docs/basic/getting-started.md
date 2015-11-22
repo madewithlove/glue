@@ -50,7 +50,7 @@ $app = new Glue(new Configuration([
     'namespace'   => 'Acme',
     'debug'       => getenv('APP_DEBUG'),
     'providers'   => [
-        Madewithlove\Glue\Http\Providers\RoutingServiceProvider::class,
+        Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider::class,
         Acme\My\Own\Provider::class
     ],
     'middlewares' => [
@@ -63,7 +63,7 @@ $app = new Glue(new Configuration([
 ]));
 ```
 
-If none is passed, Glue will use the `DefaultConfiguration` class which provides some functionnality out of the box.
+If none is passed, Glue will use the `DefaultConfiguration` class which provides some functionnality out of the box (routing, database, logs, etc.).
 
 Ultimately, the configuration is freeform and besides two keys (`debug` and `paths`) none of the values are _really_ required.
 You can create your configuration however you'd like in whatever format you'd like. Make it a JSON, or a YAML file, use a third-party package, whatever you want.

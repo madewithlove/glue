@@ -17,7 +17,7 @@ use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Dummies\DummyController;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
-use Madewithlove\Glue\Http\Providers\RoutingServiceProvider;
+use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -129,7 +129,7 @@ class GlueTest extends TestCase
 
         $glue = new Glue(new Configuration([
             'debug' => false,
-            'providers' => [RoutingServiceProvider::class, RelayServiceProvider::class],
+            'providers' => [LeagueRouteServiceProvider::class, RelayServiceProvider::class],
             'middlewares' => [LeagueRouteMiddleware::class],
         ]), $container);
 
@@ -142,11 +142,11 @@ class GlueTest extends TestCase
         $glue = new Glue(new Configuration());
         $glue
             ->setPaths(['cache' => 'storage/cache'])
-            ->setProviders([RoutingServiceProvider::class])
+            ->setProviders([LeagueRouteServiceProvider::class])
             ->setMiddlewares([LeagueRouteMiddleware::class]);
 
         $this->assertEquals(['cache' => 'storage/cache'], $glue->getPaths());
         $this->assertEquals([LeagueRouteMiddleware::class], $glue->getMiddlewares());
-        $this->assertEquals([RoutingServiceProvider::class], $glue->getProviders());
+        $this->assertEquals([LeagueRouteServiceProvider::class], $glue->getProviders());
     }
 }

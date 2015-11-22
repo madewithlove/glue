@@ -18,14 +18,14 @@ use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider;
 use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
 use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
-use Madewithlove\Glue\Http\Providers\RoutingServiceProvider;
+use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
 use Madewithlove\Glue\Http\Providers\TwigServiceProvider;
 use Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider;
 use Madewithlove\Glue\Providers\CommandBusServiceProvider;
-use Madewithlove\Glue\Providers\DatabaseServiceProvider;
+use Madewithlove\Glue\Providers\EloquentServiceProvider;
 use Madewithlove\Glue\Providers\DebugbarServiceProvider;
-use Madewithlove\Glue\Providers\FilesystemServiceProvider;
-use Madewithlove\Glue\Providers\LogsServiceProvider;
+use Madewithlove\Glue\Providers\FlysystemServiceProvider;
+use Madewithlove\Glue\Providers\MonologServiceProvider;
 use Madewithlove\Glue\Utils;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
@@ -131,11 +131,11 @@ class DefaultConfiguration extends AbstractConfiguration
     {
         $providers = [
             'commandbus' => CommandBusServiceProvider::class,
-            'db' => DatabaseServiceProvider::class,
-            'filesystem' => FilesystemServiceProvider::class,
-            'logs' => LogsServiceProvider::class,
+            'db' => EloquentServiceProvider::class,
+            'filesystem' => FlysystemServiceProvider::class,
+            'logs' => MonologServiceProvider::class,
             'request' => RequestServiceProvider::class,
-            'routing' => RoutingServiceProvider::class,
+            'routing' => LeagueRouteServiceProvider::class,
             'view' => TwigServiceProvider::class,
             'pipeline' => RelayServiceProvider::class,
             'url' => UrlGeneratorServiceProvider::class,

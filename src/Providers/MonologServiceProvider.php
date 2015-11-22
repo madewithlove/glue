@@ -16,7 +16,7 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
-class LogsServiceProvider extends AbstractServiceProvider
+class MonologServiceProvider extends AbstractServiceProvider
 {
     /**
      * @var array

@@ -54,13 +54,14 @@ $app = (new Glue())
     ->setProviders([
         SomeProvider::class,
         AnotherProvider::class,
-        RoutingServiceProvider::class
+        LeagueRouteServiceProvider::class
     ]);
     ->setMiddlewares([
         SomeMiddleware::class,
         LeagueRouteMiddleware::class,
     ]);
 
+// Decorates a router of your choice
 $app->get('/', 'SomeController::index');
 
 $app->run();

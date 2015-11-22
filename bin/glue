@@ -5,7 +5,7 @@ use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\ConsoleServiceProvider;
 use Madewithlove\Glue\Glue;
-use Madewithlove\Glue\Providers\FilesystemServiceProvider;
+use Madewithlove\Glue\Providers\FlysystemServiceProvider;
 use Madewithlove\Glue\Utils;
 
 require __DIR__.'/../src/Utils.php';
@@ -17,7 +17,7 @@ $glue = new Glue(new Configuration([
     'debug'     => true,
     'paths'     => (new DefaultConfiguration())->getPaths(),
     'providers' => [
-        FilesystemServiceProvider::class,
+        FlysystemServiceProvider::class,
         ConsoleServiceProvider::class,
     ],
     'commands'  => [

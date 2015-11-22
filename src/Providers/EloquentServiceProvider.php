@@ -14,7 +14,7 @@ use Illuminate\Database\Capsule\Manager;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
 
-class DatabaseServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
+class EloquentServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
     /**
      * @var array
