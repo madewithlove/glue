@@ -35,6 +35,11 @@ class Glue implements ContainerAwareInterface
     use Configurable;
 
     /**
+     * @var string
+     */
+    const VERSION = '0.1.0';
+
+    /**
      * @var array
      */
     protected $routes = [];

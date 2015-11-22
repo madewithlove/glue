@@ -8,9 +8,10 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Providers;
+namespace Madewithlove\Glue\Console;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Madewithlove\Glue\Glue;
 use Symfony\Component\Console\Application;
 
 class ConsoleServiceProvider extends AbstractServiceProvider
@@ -33,7 +34,7 @@ class ConsoleServiceProvider extends AbstractServiceProvider
         $this->container->share(Application::class, function () {
             $console = new Application();
             $console->setName('Glue');
-            $console->setVersion('0.1.0');
+            $console->setVersion(Glue::VERSION);
 
             // Register commands
             if ($this->container->has('config.commands')) {

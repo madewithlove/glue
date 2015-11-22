@@ -30,6 +30,11 @@ class BootstrapCommand extends Command
     protected $filesystem;
 
     /**
+     * @var SymfonyStyle
+     */
+    protected $output;
+
+    /**
      * BootstrapCommand constructor.
      *
      * @param ConfigurationInterface $configuration
@@ -40,7 +45,7 @@ class BootstrapCommand extends Command
         parent::__construct();
 
         $this->configuration = $configuration;
-        $this->filesystem = $filesystem;
+        $this->filesystem    = $filesystem;
     }
 
     /**
@@ -60,38 +65,51 @@ class BootstrapCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output = new SymfonyStyle($input, $output);
+        $this->output = new SymfonyStyle($input, $output);
 
-        // Scaffold folders
-        $paths = (array) $this->configuration->paths;
+        $this->createFolders();
+        $this->createFiles();
+    }
+
+    /**
+     * Create the configured folders
+     */
+    protected function createFolders()
+    {
+        $paths    = (array) $this->configuration->paths;
         $rootPath = $this->configuration->rootPath.DIRECTORY_SEPARATOR;
+
         foreach ($paths as $path) {
             $path = str_replace($rootPath, null, $path);
             if (!$this->filesystem->has($path)) {
                 $this->filesystem->createDir($path);
-                $this->created($output, $path);
-            }
-        }
-
-        $files = [
-            '.env' => 'APP_ENV=local',
-        ];
-
-        // Scaffold files
-        foreach ($files as $path => $contents) {
-            if (!$this->filesystem->has($path)) {
-                $this->filesystem->put($path, $contents);
-                $this->created($output, $path);
+                $this->created($path);
             }
         }
     }
 
     /**
-     * @param OutputInterface $output
-     * @param string          $path
+     * Create the configured files
      */
-    protected function created(OutputInterface $output, $path)
+    protected function createFiles()
     {
-        $output->writeln('<info>✓</info> Created <comment>'.$path.'</comment>');
+        $files = [
+            '.env' => 'APP_ENV=local',
+        ];
+
+        foreach ($files as $path => $contents) {
+            if (!$this->filesystem->has($path)) {
+                $this->filesystem->put($path, $contents);
+                $this->created($path);
+            }
+        }
+    }
+
+    /**
+     * @param string $path
+     */
+    protected function created($path)
+    {
+        $this->output->writeln('<info>✓</info> Created <comment>'.$path.'</comment>');
     }
 }
