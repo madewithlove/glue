@@ -48,7 +48,7 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
      */
     public function getRootPath()
     {
-        return $this->rootPath;
+        return rtrim($this->rootPath, DS);
     }
 
     /**

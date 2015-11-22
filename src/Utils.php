@@ -27,6 +27,6 @@ class Utils
             $path .= '/..';
         }
 
-        return realpath($path);
+        return realpath($path.DIRECTORY_SEPARATOR.$file);
     }
 }

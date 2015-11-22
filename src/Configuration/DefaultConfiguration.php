@@ -54,7 +54,10 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     protected function configureRootPath()
     {
-        return str_replace('composer.json', null, Utils::find('composer.json'));
+        $folder = Utils::find('composer.json', getcwd());
+        $folder = str_replace('composer.json', null, $folder);
+
+        return $folder;
     }
 
     /**

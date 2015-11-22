@@ -3,6 +3,8 @@
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\Utils;
 
+require __DIR__.'/../src/Utils.php';
+
 // Look for vendor folder, wherever it is
 require Utils::find('vendor/autoload.php');
 

@@ -77,7 +77,7 @@ class BootstrapCommand extends Command
     protected function createFolders()
     {
         $paths = $this->configuration->getPaths();
-        $rootPath = rtrim($this->configuration->getRootPath().DS, DS);
+        $rootPath = $this->configuration->getRootPath();
 
         foreach ($paths as $path) {
             $path = str_replace($rootPath, null, $path);
