@@ -16,6 +16,7 @@ use Madewithlove\Glue\Console\ConsoleServiceProvider;
 use Madewithlove\Glue\Console\PhinxServiceProvider;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider;
+use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
 use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
 use Madewithlove\Glue\Http\Providers\RoutingServiceProvider;
 use Madewithlove\Glue\Http\Providers\TwigServiceProvider;
@@ -142,6 +143,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'request' => RequestServiceProvider::class,
             'routing' => RoutingServiceProvider::class,
             'view' => TwigServiceProvider::class,
+            'pipeline' => RelayServiceProvider::class,
             'url' => UrlGeneratorServiceProvider::class,
             'assets' => WebpackServiceProvider::class,
         ];

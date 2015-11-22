@@ -59,6 +59,7 @@ Variables: $app, $config
      "request" => "Madewithlove\Glue\Http\Providers\RequestServiceProvider",
      "routing" => "Madewithlove\Glue\Http\Providers\RoutingServiceProvider",
      "view" => "Madewithlove\Glue\Http\Providers\TwigServiceProvider",
+     "pipeline" => "Madewithlove\Glue\Http\Providers\RelayServiceProvider",
      "url" => "Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider",
      "assets" => "Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider",
      "console" => "Madewithlove\Glue\Console\ConsoleServiceProvider",

@@ -26,7 +26,6 @@ use Madewithlove\Glue\Providers\PathsServiceProvider;
 use Madewithlove\Glue\Traits\Configurable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Relay\RelayBuilder;
 use Zend\Diactoros\Response\SapiEmitter;
 
 if (!defined('DS')) {
@@ -158,15 +157,10 @@ class Glue implements ContainerAwareInterface
         $response = $this->container->get(ResponseInterface::class);
         $emitter = $this->container->get(SapiEmitter::class);
 
-        // Build Relay factory
-        $builder = new RelayBuilder(function ($callable) {
-            return is_string($callable) ? $this->container->get($callable) : $callable;
-        });
-
-        // Process middlewares
-        $middlewares = (array) $this->configuration->getMiddlewares();
-        $relay = $builder->newInstance($middlewares);
-        $response = $relay($request, $response);
+        // Get response middleware pipine
+        /** @var callable $pipeline */
+        $pipeline = $this->container->get('pipeline');
+        $response = $pipeline($request, $response);
 
         $emitter->emit($response);
     }

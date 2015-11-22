@@ -16,6 +16,7 @@ use League\Tactician\CommandBus;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Dummies\DummyController;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
+use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
 use Madewithlove\Glue\Http\Providers\RoutingServiceProvider;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
@@ -128,7 +129,7 @@ class GlueTest extends TestCase
 
         $glue = new Glue(new Configuration([
             'debug' => false,
-            'providers' => [RoutingServiceProvider::class],
+            'providers' => [RoutingServiceProvider::class, RelayServiceProvider::class],
             'middlewares' => [LeagueRouteMiddleware::class],
         ]), $container);
 
