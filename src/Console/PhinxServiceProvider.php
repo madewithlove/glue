@@ -12,6 +12,7 @@ namespace Madewithlove\Glue\Console;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
+use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Phinx\Config\Config;
 use Phinx\Console\Command;
 use Symfony\Component\Console\Application;
@@ -50,36 +51,12 @@ class PhinxServiceProvider extends AbstractServiceProvider implements BootableSe
      */
     protected function getCommand(Command\AbstractCommand $command)
     {
+        $configuration = $this->container->get(ConfigurationInterface::class);
+        $configuration = new Config($configuration->getPackageConfiguration(__CLASS__));
+
         $command->setName('migrate:'.$command->getName());
-        $command->setConfig($this->getConfiguration());
+        $command->setConfig($configuration);
 
         return $command;
-    }
-
-    /**
-     * Get the Phinx configuration.
-     *
-     * @return Config
-     */
-    private function getConfiguration()
-    {
-        return new Config([
-            'paths' => [
-                'migrations' => $this->container->get('paths.migrations'),
-            ],
-            'environments' => [
-                'default_migration_table' => 'phinxlog',
-                'default_database' => 'default',
-                'default' => [
-                    'adapter' => 'mysql',
-                    'host' => getenv('DB_HOST'),
-                    'name' => getenv('DB_DATABASE'),
-                    'user' => getenv('DB_USERNAME'),
-                    'pass' => getenv('DB_PASSWORD'),
-                    'port' => 3306,
-                    'charset' => 'utf8',
-                ],
-            ],
-        ]);
     }
 }

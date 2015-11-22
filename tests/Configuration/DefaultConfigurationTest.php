@@ -10,6 +10,7 @@
 
 namespace Madewithlove\Glue\Configuration;
 
+use Madewithlove\Glue\Http\Providers\TwigServiceProvider;
 use Madewithlove\Glue\TestCase;
 use Psr7Middlewares\Middleware\DebugBar;
 
@@ -69,5 +70,16 @@ class DefaultConfigurationTest extends TestCase
         $configuration->setDebug(false);
 
         $this->assertEquals(['foobar'], $configuration->getPaths());
+    }
+
+    public function testCanSetPackageConfiguration()
+    {
+        $configuration = new DefaultConfiguration();
+        $configuration->setPackagesConfiguration([]);
+        $configuration->setPackageConfiguration(TwigServiceProvider::class, [
+           'foo' => 'bar',
+        ]);
+
+        $this->assertEquals([TwigServiceProvider::class => ['foo' => 'bar']], $configuration->getPackagesConfiguration());
     }
 }

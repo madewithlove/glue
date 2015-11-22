@@ -13,6 +13,7 @@ namespace Madewithlove\Glue\Providers;
 use Illuminate\Database\Capsule\Manager;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
+use Madewithlove\Glue\Configuration\ConfigurationInterface;
 
 class EloquentServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface
 {
@@ -31,17 +32,13 @@ class EloquentServiceProvider extends AbstractServiceProvider implements Bootabl
     public function register()
     {
         $this->container->share(Manager::class, function () {
+            $configuration = $this->container->get(ConfigurationInterface::class);
+            $configuration = $configuration->getPackageConfiguration(__CLASS__);
+
             $capsule = new Manager();
-            $capsule->addConnection([
-                'driver' => 'mysql',
-                'host' => getenv('DB_HOST'),
-                'database' => getenv('DB_DATABASE'),
-                'username' => getenv('DB_USERNAME'),
-                'password' => getenv('DB_PASSWORD'),
-                'charset' => 'utf8',
-                'collation' => 'utf8_unicode_ci',
-                'prefix' => '',
-            ]);
+            foreach ($configuration['connections'] as $name => $connection) {
+                $capsule->addConnection($connection, $name);
+            }
 
             // Configure database capsule
             $capsule->bootEloquent();

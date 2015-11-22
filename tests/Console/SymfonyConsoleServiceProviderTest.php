@@ -16,12 +16,12 @@ use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\TestCase;
 use Symfony\Component\Console\Application;
 
-class ConsoleServiceProviderTest extends TestCase
+class SymfonyConsoleServiceProviderTest extends TestCase
 {
     public function testCanBindCommandsToConsole()
     {
         $glue = new Glue(new Configuration([
-            'providers' => [ConsoleServiceProvider::class],
+            'providers' => [SymfonyConsoleServiceProvider::class],
             'commands' => [TinkerCommand::class],
         ]));
 

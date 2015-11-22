@@ -10,8 +10,8 @@
 
 namespace Madewithlove\Glue\Providers;
 
-use DateTime;
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -33,11 +33,12 @@ class MonologServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(LoggerInterface::class, function () {
-            $filename = (new DateTime())->format('Y-m-d');
-            $path = $this->container->get('paths.logs');
-            $path = sprintf('%s/%s.log', $path, $filename);
+            /** @var ConfigurationInterface $configuration */
+            $configuration = $this->container->get(ConfigurationInterface::class);
+            $configuration = $configuration->getPackageConfiguration(__CLASS__);
 
             $logger = new Logger('app');
+            $path   = $configuration['path'].DS.$configuration['filename'];
             $logger->pushHandler(new StreamHandler($path, Logger::WARNING));
 
             return $logger;

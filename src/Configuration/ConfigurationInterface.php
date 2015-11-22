@@ -89,4 +89,35 @@ interface ConfigurationInterface extends Arrayable
      * @return $this
      */
     public function setMiddlewares(array $middlewares = []);
+
+    /**
+     * Get the configuration for the various packages
+     *
+     * @return array
+     */
+    public function getPackagesConfiguration();
+
+    /**
+     * Get the configuration of a package in particular
+     *
+     * @param string $package
+     *
+     * @return array
+     */
+    public function getPackageConfiguration($package);
+
+    /**
+     * Set configuration for all packages
+     *
+     * @param array $configurations
+     */
+    public function setPackagesConfiguration(array $configurations = []);
+
+    /**
+     * Set configuration for a package
+     *
+     * @param string $package
+     * @param array  $configuration
+     */
+    public function setPackageConfiguration($package, array $configuration = []);
 }

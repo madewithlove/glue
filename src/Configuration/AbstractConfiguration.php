@@ -22,6 +22,7 @@ use League\Container\ContainerAwareTrait;
  * @property $middlewares The middlewares to apply to the current route
  * @property $commands    The commands to register with the CLI
  * @property $paths       The paths in your application
+ * @property $packages    The configuration for the various packages
  */
 abstract class AbstractConfiguration extends Fluent implements ConfigurationInterface, ContainerAwareInterface
 {
@@ -113,6 +114,39 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
         $this->middlewares = $middlewares;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPackagesConfiguration()
+    {
+        return (array) $this->packages;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPackageConfiguration($package)
+    {
+        return array_get($this->getPackagesConfiguration(), $package);
+    }
+
+    /**
+     * @param array $configurations
+     */
+    public function setPackagesConfiguration(array $configurations = [])
+    {
+        $this->packages = $configurations;
+    }
+
+    /**
+     * @param string $package
+     * @param array  $configuration
+     */
+    public function setPackageConfiguration($package, array $configuration = [])
+    {
+        $this->packages = array_merge($this->packages, [$package => $configuration]);
     }
 
     /**

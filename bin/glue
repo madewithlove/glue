@@ -3,7 +3,7 @@
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
-use Madewithlove\Glue\Console\ConsoleServiceProvider;
+use Madewithlove\Glue\Console\SymfonyConsoleServiceProvider;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\Providers\FlysystemServiceProvider;
 use Madewithlove\Glue\Utils;
@@ -18,7 +18,7 @@ $glue = new Glue(new Configuration([
     'paths'     => (new DefaultConfiguration())->getPaths(),
     'providers' => [
         FlysystemServiceProvider::class,
-        ConsoleServiceProvider::class,
+        SymfonyConsoleServiceProvider::class,
     ],
     'commands'  => [
         BootstrapCommand::class,

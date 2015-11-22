@@ -11,10 +11,8 @@
 namespace Madewithlove\Glue\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Twig_Environment;
-use Twig_Extension_Debug;
-use Twig_Loader_Array;
-use Twig_Loader_Filesystem;
 
 class TwigServiceProvider extends AbstractServiceProvider
 {
@@ -33,19 +31,14 @@ class TwigServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(Twig_Environment::class, function () {
-            $views = $this->container->get('paths.views');
-            $loader = is_dir($views) ? new Twig_Loader_Filesystem($views) : new Twig_Loader_Array([]);
+            /** @var ConfigurationInterface $configuration */
+            $configuration = $this->container->get(ConfigurationInterface::class);
+            $configuration = $configuration->getPackageConfiguration(__CLASS__);
 
-            $debug = $this->container->get('config.debug');
-            $twig = new Twig_Environment($loader, [
-                'debug' => $debug,
-                'auto_reload' => $debug,
-                'strict_variables' => false,
-                'cache' => $this->container->get('paths.cache').'/twig',
-            ]);
+            $twig = new Twig_Environment($configuration['loader'], $configuration['environment']);
 
-            if ($debug) {
-                $twig->addExtension(new Twig_Extension_Debug());
+            foreach ($configuration['extensions'] as $extension) {
+                $twig->addExtension($extension);
             }
 
             return $twig;

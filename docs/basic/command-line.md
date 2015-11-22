@@ -62,7 +62,7 @@ Variables: $app, $config
      "pipeline" => "Madewithlove\Glue\Http\Providers\RelayServiceProvider",
      "url" => "Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider",
      "assets" => "Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider",
-     "console" => "Madewithlove\Glue\Console\ConsoleServiceProvider",
+     "console" => "Madewithlove\Glue\Console\SymfonyConsoleServiceProvider",
      "migrations" => "Madewithlove\Glue\Console\PhinxServiceProvider",
      "debugbar" => "Madewithlove\Glue\Providers\DebugbarServiceProvider",
    ]

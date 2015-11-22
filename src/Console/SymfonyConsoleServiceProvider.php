@@ -14,7 +14,7 @@ use League\Container\ServiceProvider\AbstractServiceProvider;
 use Madewithlove\Glue\Glue;
 use Symfony\Component\Console\Application;
 
-class ConsoleServiceProvider extends AbstractServiceProvider
+class SymfonyConsoleServiceProvider extends AbstractServiceProvider
 {
     /**
      * @var array

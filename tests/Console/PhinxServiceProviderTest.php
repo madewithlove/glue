@@ -24,9 +24,14 @@ class PhinxServiceProviderTest extends TestCase
               'migrations' => 'foobar',
             ],
             'providers' => [
-                ConsoleServiceProvider::class,
+                SymfonyConsoleServiceProvider::class,
                 PhinxServiceProvider::class,
             ],
+            'packages' => [
+                PhinxServiceProvider::class => [
+                    'paths' => ['migrations' => 'foobar'],
+                ]
+            ]
         ]));
 
         $glue->boot();

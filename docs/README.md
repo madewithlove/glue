@@ -7,6 +7,7 @@
     - [Command line](/docs/basic/command-line.md)
 - Advanced usage
     - [The Configuration object](/docs/advanced/configuration-object.md)
+    - [Providers configuration](/docs/advanced/providers-configuration.md)
 - Other informations
     - [Changelog](CHANGELOG.md)
     - [Contributing](CONTRIBUTING.md)
