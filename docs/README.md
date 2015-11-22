@@ -7,3 +7,4 @@
   - [Changelog](CHANGELOG.md)
   - [Contributing](CONTRIBUTING.md)
   - [Code of conduct](CONDUCT.md)
+  - [License](LICENSE.md)
