@@ -95,7 +95,7 @@ class Glue implements ContainerAwareInterface
 
         // Register providers
         $this->container->addServiceProvider(ConfigurationServiceProvider::class);
-        $providers = $this->container->get('config.providers');
+        $providers = (array) $this->configuration->providers;
         array_walk($providers, [$this->container, 'addServiceProvider']);
     }
 
@@ -121,7 +121,7 @@ class Glue implements ContainerAwareInterface
         });
 
         // Process middlewares
-        $middlewares = $this->container->get('config.middlewares');
+        $middlewares = (array) $this->configuration->middlewares;
         $relay       = $builder->newInstance($middlewares);
         $response    = $relay($request, $response);
 

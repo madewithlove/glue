@@ -28,10 +28,12 @@ class ConsoleServiceProvider extends AbstractServiceProvider
             $console->setVersion('0.1.0');
 
             // Register commands
-            $commands = $this->container->get('config.commands');
-            foreach ($commands as $command) {
-                $command = is_string($command) ? $this->container->get($command) : $command;
-                $console->add($command);
+            if ($this->container->has('config.commands')) {
+                $commands = $this->container->get('config.commands');
+                foreach ($commands as $command) {
+                    $command = is_string($command) ? $this->container->get($command) : $command;
+                    $console->add($command);
+                }
             }
 
             return $console;

@@ -13,13 +13,32 @@ class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
     {
         $this->debug = $this->container->get('something') ?: getenv('FOOBAR');
         $this->providers = [SomeProvider::class];
+        $this->someCustomConfig = 'foobar';
     }
 }
 ```
 
-And then pass that class on the app:
+If arrays are more your thing, you can do that too:
+
+```php
+class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
+{
+    protected function toArray()
+    {
+        return [
+            'debug' => $this->container->get('something') ?: getenv('FOOBAR'),
+            'providers' => [SomeProvider::class],
+            'someCustomConfig' => 'foobar',
+        ];
+    }
+}
+```
+
+Then pass that class on the app:
 
 ```php
 $app = new Glue(new MyConfiguration());
 $app->run();
 ```
+
+Ultimately, besides a few special keys, configuration is free of form and structure, it just needs to implement `ConfigurationInterface`. So, go wild.confi

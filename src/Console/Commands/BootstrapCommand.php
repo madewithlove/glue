@@ -66,15 +66,7 @@ class BootstrapCommand extends Command
         }
 
         $files = [
-            '.env'             => 'APP_ENV=local',
-            'public/index.php' => <<<'PHP'
-<?php
-require __DIR__.'/../vendor/autoload.php';
-
-$glue = new Madewithlove\Glue\Glue;
-$glue->run();
-PHP
-            ,
+            '.env' => 'APP_ENV=local',
         ];
 
         // Scaffold files

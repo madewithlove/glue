@@ -19,7 +19,6 @@ use Madewithlove\Glue\Providers\DebugbarServiceProvider;
 use Madewithlove\Glue\Providers\FilesystemServiceProvider;
 use Madewithlove\Glue\Providers\LogsServiceProvider;
 use Madewithlove\Glue\Providers\PathsServiceProvider;
-use Madewithlove\Glue\Services\UrlGenerator;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
 
@@ -105,7 +104,7 @@ class DefaultConfiguration extends AbstractConfiguration
     {
         return [
             'assets'     => $this->rootPath.'/public/builds',
-            'factories'  => $this->rootPath.'/resources/factories',
+            'web'        => $this->rootPath.'/public',
             'migrations' => $this->rootPath.'/resources/migrations',
             'views'      => $this->rootPath.'/resources/views',
             'cache'      => $this->rootPath.'/storage/cache',

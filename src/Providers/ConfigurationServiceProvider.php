@@ -2,6 +2,7 @@
 
 namespace Madewithlove\Glue\Providers;
 
+use InvalidArgumentException;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 
 class ConfigurationServiceProvider extends AbstractValuesProvider
@@ -26,6 +27,15 @@ class ConfigurationServiceProvider extends AbstractValuesProvider
      */
     protected function getValues()
     {
-        return $this->container->get(ConfigurationInterface::class)->toArray();
+        $values = $this->container->get(ConfigurationInterface::class)->toArray();
+
+        // Validate object
+        $required = ['debug', 'paths'];
+        $missing  = array_diff($required, array_keys($values));
+        if ($missing) {
+            throw new InvalidArgumentException('Missing configuration keys: '.implode(', ', $missing));
+        }
+
+        return $values;
     }
 }
