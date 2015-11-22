@@ -20,19 +20,6 @@ abstract class AbstractValuesProvider extends AbstractServiceProvider
     protected $key;
 
     /**
-     * Use the register method to register items with the container via the
-     * protected $this->container property or the `getContainer` method
-     * from the ContainerAwareTrait.
-     */
-    public function register()
-    {
-        $values = $this->getValues();
-        foreach ($values as $key => $value) {
-            $this->container->add($this->key.'.'.$key, $value);
-        }
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function provides($alias = null)
@@ -49,15 +36,28 @@ abstract class AbstractValuesProvider extends AbstractServiceProvider
     }
 
     /**
-     * @return array
+     * Use the register method to register items with the container via the
+     * protected $this->container property or the `getContainer` method
+     * from the ContainerAwareTrait.
      */
-    protected function getProvided()
+    public function register()
     {
-        return array_keys($this->getValues());
+        $values = $this->getValues();
+        foreach ($values as $key => $value) {
+            $this->container->add($this->key.'.'.$key, $value);
+        }
     }
 
     /**
      * @return array
      */
     abstract protected function getValues();
+
+    /**
+     * @return array
+     */
+    protected function getProvided()
+    {
+        return array_keys($this->getValues());
+    }
 }

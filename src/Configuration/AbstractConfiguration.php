@@ -54,6 +54,16 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
+    public function setPaths(array $paths = [])
+    {
+        $this->paths = $paths;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getRootPath()
     {
         return rtrim($this->rootPath, DS) ?: getcwd();
@@ -70,9 +80,29 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
+    public function setProviders(array $providers = [])
+    {
+        $this->providers = $providers;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getMiddlewares()
     {
         return (array) $this->middlewares;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMiddlewares(array $middlewares = [])
+    {
+        $this->middlewares = $middlewares;
+
+        return $this;
     }
 
     /**

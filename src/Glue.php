@@ -18,6 +18,7 @@ use League\Container\ContainerAwareTrait;
 use League\Container\ContainerInterface as LeagueContainerInterface;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
+use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Providers\ConfigurationServiceProvider;
@@ -34,6 +35,7 @@ if (!defined('DS')) {
 
 /**
  * @mixin RouteCollection
+ * @mixin AbstractConfiguration
  */
 class Glue implements ContainerAwareInterface
 {
@@ -101,7 +103,18 @@ class Glue implements ContainerAwareInterface
     {
         $this->boot();
 
-        $this->routes[] = $this->container->get('router')->$name(...$arguments);
+        // Delegate to Configuration
+        if (method_exists($this->configuration, $name)) {
+            return $this->configuration->$name(...$arguments);
+        }
+
+        // Delegate to Router
+        if ($this->container->has('router')) {
+            $router = $this->container->get('router');
+            if (method_exists($router, $name)) {
+                $this->routes[] = $this->container->get('router')->$name(...$arguments);
+            }
+        }
     }
 
     //////////////////////////////////////////////////////////////////////

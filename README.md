@@ -1,14 +1,21 @@
 # Glue
-[![Latest Version on Packagist][ico-version]][link-packagist] [![Software License][ico-license]](LICENSE.md) [![Build Status][ico-travis]][link-travis] [![Coverage Status][ico-scrutinizer]][link-scrutinizer] [![Quality Score][ico-code-quality]][link-code-quality] [![Total Downloads][ico-downloads]][link-downloads]
+[![Latest Version on Packagist][ico-version]][link-packagist]
+[![Software License][ico-license]](LICENSE.md)
+[![Build Status][ico-travis]][link-travis]
+[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
+[![Quality Score][ico-code-quality]][link-code-quality]
+[![Total Downloads][ico-downloads]][link-downloads]
 
 ![](http://i.imgur.com/22KTxyH.png)
 
 ## What's Glue?
 Glue is an adhesive substance used for sticking objects or materials together ( ͡° ͜ʖ ͡°)
 
-Glue is also an helper package made to quickly bootstrap packages-based applications. At its core it's just a container and a quick PSR7 setup, on top of which are glued together service providers and middlewares.
+Glue is also an helper package made to quickly bootstrap packages-based applications.
+At its core it's just a container and a quick PSR7 setup, on top of which are glued together service providers and middlewares.
 
-This is _not_ a microframework (in the sense that it doesn't frame your work). If this is what you're looking for I recommend instead using [Silex], [Slim] or whatever you want. On the contrary, Glue is as its name indicate just a bit of glue to tie existing packages and middlewares together. It doesn't assume much, it won't get in your way, it's just a way to tie stuff together.
+This is _not_ a microframework (in the sense that it doesn't frame your work). If this is what you're looking for I recommend instead using [Silex], [Slim] or whatever you want.
+On the contrary, Glue is as its name indicate just a bit of glue to tie existing packages and middlewares together. It doesn't assume much, it won't get in your way, it's just a way to tie stuff together.
 
 ### What does it look like
 To be concise, Glue turns a common setup such as the following (container + router + PSR7):
@@ -43,24 +50,23 @@ $response = $relay(new Request, new Response());
 Into this:
 
 ```php
-$app = new Glue(new Configuration([
-    'providers' => [
+$app = (new Glue())
+    ->setProviders([
         SomeProvider::class,
         AnotherProvider::class,
         RoutingServiceProvider::class
-    ],
-    'middlewares' => [
+    ]);
+    ->setMiddlewares([
         SomeMiddleware::class,
-        madewithloveRouteMiddleware::class,
-    ],
-]));
+        LeagueRouteMiddleware::class,
+    ]);
 
 $app->get('/', 'SomeController::index');
 
 $app->run();
 ```
 
-As you can see Glue serves two purposes: eliminate recurring boilerplate in setting up packages-based applications, and provide service providers for common packages such as `madewithlove/route`. It is configurable and flexible, it won't get in your way, it's just here to help you not type the same things over and over again.
+As you can see Glue serves two purposes: eliminating recurring boilerplate in binding packages together, and providing service providers for common packages such as `league/route`. It is configurable and flexible, it won't get in your way, it's just here to help you not type the same things over and over again.
 
 ### What's in the box
 Glue provides several providers out of the box:

@@ -1,4 +1,6 @@
 # Table of contents
+
+- [Packages-based applications](/docs/packages-based-applications.md)
 - [Getting started](/docs/getting-started.md)
 - [Routing](/docs/routing.md)
 - [Command line](/docs/command-line.md)

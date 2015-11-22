@@ -41,6 +41,15 @@ interface ConfigurationInterface
     public function getPath($path);
 
     /**
+     * Set the paths for the application.
+     *
+     * @param array $paths
+     *
+     * @return self
+     */
+    public function setPaths(array $paths = []);
+
+    /**
      * Get the providers to bind with glue.
      *
      * @return array
@@ -48,11 +57,29 @@ interface ConfigurationInterface
     public function getProviders();
 
     /**
+     * Set the providers to apply.
+     *
+     * @param array $providers
+     *
+     * @return self
+     */
+    public function setProviders(array $providers = []);
+
+    /**
      * Get the middlewares to apply.
      *
      * @return array
      */
     public function getMiddlewares();
+
+    /**
+     * Set the middlewares to apply.
+     *
+     * @param array $middlewares
+     *
+     * @return self
+     */
+    public function setMiddlewares(array $middlewares = []);
 
     /**
      * @return array

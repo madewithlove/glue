@@ -33,7 +33,7 @@ class GlueTest extends TestCase
     public function testCanCreateWithConfiguration()
     {
         $config = [
-            'debug' => 'foobar',
+            'debug'     => 'foobar',
             'providers' => [
                 'foo',
                 'bar',
@@ -127,12 +127,25 @@ class GlueTest extends TestCase
         $container->add(SapiEmitter::class, $emitter);
 
         $glue = new Glue(new Configuration([
-            'debug' => false,
-            'providers' => [RoutingServiceProvider::class],
+            'debug'       => false,
+            'providers'   => [RoutingServiceProvider::class],
             'middlewares' => [LeagueRouteMiddleware::class],
         ]), $container);
 
         $glue->get('foobar', DummyController::class.'::index');
         $glue->run();
+    }
+
+    public function testCanDeclareConfigurationFluently()
+    {
+        $glue = new Glue(new Configuration());
+        $glue
+            ->setPaths(['cache' => 'storage/cache'])
+            ->setProviders([RoutingServiceProvider::class])
+            ->setMiddlewares([LeagueRouteMiddleware::class]);
+
+        $this->assertEquals(['cache' => 'storage/cache'], $glue->getPaths());
+        $this->assertEquals([LeagueRouteMiddleware::class], $glue->getMiddlewares());
+        $this->assertEquals([RoutingServiceProvider::class], $glue->getProviders());
     }
 }

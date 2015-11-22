@@ -84,6 +84,10 @@ class DefaultConfiguration extends AbstractConfiguration
     protected function configureNamespace()
     {
         $composer = $this->getRootPath().'/composer.json';
+        if (!file_exists($composer)) {
+            return;
+        }
+
         $composer = file_get_contents($composer);
         $composer = json_decode($composer, true);
 
