@@ -104,7 +104,7 @@ $app = new Madewithlove\Glue\Glue();
 $app->console();
 PHP
             ,
-            $web.DS.'/index.php' => <<<'PHP'
+            $web.DS.'index.php' => <<<'PHP'
 <?php
 require 'vendor/autoload.php';
 

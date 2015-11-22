@@ -96,7 +96,6 @@ class DefaultConfiguration extends AbstractConfiguration
     public function configureProviders()
     {
         $providers = [
-            'paths' => PathsServiceProvider::class,
             'commandbus' => CommandBusServiceProvider::class,
             'db' => DatabaseServiceProvider::class,
             'filesystem' => FilesystemServiceProvider::class,

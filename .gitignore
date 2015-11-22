@@ -2,6 +2,9 @@
 composer.lock
 vendor
 
+# Testing
+tests/_coverage
+
 # Gitbook
 node_modules
 _book

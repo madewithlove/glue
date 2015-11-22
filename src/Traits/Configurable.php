@@ -28,7 +28,7 @@ trait Configurable
     abstract public function getContainer();
 
     /**
-     * @return string
+     * @return ConfigurationInterface
      */
     public function getConfiguration()
     {
@@ -71,10 +71,13 @@ trait Configurable
 
         // Merge stuff manually cause PHP is bad at it
         foreach ($this->configuration->toArray() as $key => $value) {
+            $current = array_get($configuration, $key);
+
             if (is_array($value)) {
-                $configuration[$key] = array_merge($value, array_get($configuration, $key, []));
+                $current = $current ?: [];
+                $configuration[$key] = array_merge($value, $current);
             } else {
-                $configuration[$key] = array_get($configuration, $key) ?: $value;
+                $configuration[$key] = !is_null($current) ? $current : $value;
             }
         }
 

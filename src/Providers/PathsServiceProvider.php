@@ -22,6 +22,8 @@ class PathsServiceProvider extends AbstractValuesProvider
      */
     protected function getValues()
     {
-        return $this->container->get('config.paths');
+        return $this->container->has('config.paths')
+            ? $this->container->get('config.paths')
+            : [];
     }
 }

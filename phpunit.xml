@@ -13,4 +13,13 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory>src</directory>
+            <exclude>
+                <directory>src/Http/Middlewares</directory>
+                <directory>src/Http/Providers</directory>
+            </exclude>
+        </whitelist>
+    </filter>
 </phpunit>

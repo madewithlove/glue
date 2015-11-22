@@ -46,6 +46,6 @@ trait DispatchesCommands
      */
     protected function dispatchFromRequest($command, ServerRequestInterface $request)
     {
-        $this->dispatch($command, $request->getAttributes());
+        return $this->dispatch($command, $request->getAttributes());
     }
 }

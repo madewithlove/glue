@@ -15,11 +15,13 @@ use Interop\Container\ContainerInterface;
 use League\Container\Container;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
+use League\Container\ContainerInterface as LeagueContainerInterface;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Providers\ConfigurationServiceProvider;
+use Madewithlove\Glue\Providers\PathsServiceProvider;
 use Madewithlove\Glue\Traits\Configurable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -79,6 +81,17 @@ class Glue implements ContainerAwareInterface
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function setContainer(LeagueContainerInterface $container)
+    {
+        // Set our own container as delegate
+        $container->delegate($this->container);
+
+        $this->container = $container;
+    }
+
+    /**
      * Delegate calls to whater Router is bound.
      *
      * @param string $name
@@ -112,6 +125,7 @@ class Glue implements ContainerAwareInterface
 
         // Register providers
         $this->container->addServiceProvider(ConfigurationServiceProvider::class);
+        $this->container->addServiceProvider(PathsServiceProvider::class);
         foreach ($this->configuration->getProviders() as $provider) {
             $this->container->addServiceProvider($provider);
         }
