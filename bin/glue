@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+use Madewithlove\Glue\Glue;
+
+require __DIR__.'/../../../vendor/autoload.php';
+
+$glue = new Glue();
+$glue->console();
