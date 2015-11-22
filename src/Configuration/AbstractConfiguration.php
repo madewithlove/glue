@@ -38,6 +38,16 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
+    public function setDebug($debug)
+    {
+        $this->debug = $debug;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getPaths()
     {
         return (array) $this->paths;
@@ -106,7 +116,7 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     }
 
     /**
-     * Setup the configuration.
+     * {@inheritdoc}
      */
     public function configure()
     {

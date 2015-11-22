@@ -33,19 +33,13 @@ use Psr7Middlewares\Middleware\FormatNegotiator;
 class DefaultConfiguration extends AbstractConfiguration
 {
     /**
-     * DefaultConfiguration constructor.
-     *
      * @param array $attributes
      */
     public function __construct(array $attributes = [])
     {
-        parent::__construct(array_merge([
-            'debug' => true,
-            'rootPath' => $this->configureRootPath(),
-            'namespace' => $this->configureNamespace(),
-            'paths' => $this->configurePaths(),
-            'commands' => $this->configureCommands(),
-        ], $attributes));
+        $this->configure();
+
+        parent::__construct($attributes);
     }
 
     /**
@@ -54,20 +48,19 @@ class DefaultConfiguration extends AbstractConfiguration
     public function configure()
     {
         // Reset debug mode from env variables now that they're available
-        $this->debug = getenv('APP_ENV') ? getenv('APP_ENV') === 'local' : true;
-    }
+        $debug = $this->debug !== null
+            ? $this->debug
+            : !getenv('APP_ENV') || getenv('APP_ENV') === 'local';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function toArray()
-    {
-        $array = parent::toArray();
-
-        return array_merge($array, [
-            'providers' => $this->getProviders(),
-            'middlewares' => $this->getMiddlewares(),
-        ]);
+        $this->attributes = [
+            'debug' => $debug,
+            'rootPath' => $this->configureRootPath(),
+            'namespace' => $this->configureNamespace(),
+            'paths' => $this->configurePaths(),
+            'commands' => $this->configureCommands(),
+            'providers' => $this->configureProviders(),
+            'middlewares' => $this->configureMiddlewares(),
+        ];
     }
 
     /**
@@ -77,6 +70,7 @@ class DefaultConfiguration extends AbstractConfiguration
     {
         $folder = Utils::find('composer.json', getcwd());
         $folder = str_replace('composer.json', null, $folder);
+        $folder = rtrim($folder, DS);
 
         return $folder;
     }
@@ -133,7 +127,7 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * {@inheritdoc}
      */
-    public function getProviders()
+    protected function configureProviders()
     {
         $providers = [
             'commandbus' => CommandBusServiceProvider::class,
@@ -162,7 +156,7 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * {@inheritdoc}
      */
-    public function getMiddlewares()
+    protected function configureMiddlewares()
     {
         if ($this->isDebug()) {
             return [

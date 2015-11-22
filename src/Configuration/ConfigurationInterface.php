@@ -20,6 +20,13 @@ interface ConfigurationInterface extends Arrayable
     public function isDebug();
 
     /**
+     * @param bool $debug
+     *
+     * @return $this
+     */
+    public function setDebug($debug);
+
+    /**
      * Get the root path of the application.
      *
      * @return string
@@ -47,7 +54,7 @@ interface ConfigurationInterface extends Arrayable
      *
      * @param array $paths
      *
-     * @return self
+     * @return $this
      */
     public function setPaths(array $paths = []);
 
@@ -63,7 +70,7 @@ interface ConfigurationInterface extends Arrayable
      *
      * @param array $providers
      *
-     * @return self
+     * @return $this
      */
     public function setProviders(array $providers = []);
 
@@ -79,7 +86,7 @@ interface ConfigurationInterface extends Arrayable
      *
      * @param array $middlewares
      *
-     * @return self
+     * @return $this
      */
     public function setMiddlewares(array $middlewares = []);
 }

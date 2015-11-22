@@ -31,10 +31,12 @@ class DefaultConfigurationTest extends TestCase
     {
         $configuration = new DefaultConfiguration();
 
-        $configuration->debug = true;
+        $configuration->setDebug(true);
+        $configuration->configure();
         $this->assertContains(DebugBar::class, $configuration->getMiddlewares());
 
-        $configuration->debug = false;
+        $configuration->setDebug(false);
+        $configuration->configure();
         $this->assertNotContains(DebugBar::class, $configuration->getMiddlewares());
     }
 
@@ -42,10 +44,12 @@ class DefaultConfigurationTest extends TestCase
     {
         $configuration = new DefaultConfiguration();
 
-        $configuration->debug = true;
+        $configuration->setDebug(true);
+        $configuration->configure();
         $this->assertArrayHasKey('debugbar', $configuration->getProviders());
 
-        $configuration->debug = false;
+        $configuration->setDebug(false);
+        $configuration->configure();
         $this->assertArrayNotHasKey('debugbar', $configuration->getProviders());
     }
 
@@ -53,7 +57,17 @@ class DefaultConfigurationTest extends TestCase
     {
         $configuration = new DefaultConfiguration();
 
-        $configuration->debug = false;
+        $configuration->setDebug(false);
+        $configuration->configure();
         $this->assertArrayNotHasKey('debugbar', $configuration->toArray()['providers']);
+    }
+
+    public function testCanOverrideProperties()
+    {
+        $configuration = new DefaultConfiguration();
+        $configuration->setPaths(['foobar']);
+        $configuration->setDebug(false);
+
+        $this->assertEquals(['foobar'], $configuration->getPaths());
     }
 }
