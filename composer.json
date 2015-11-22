@@ -1,6 +1,6 @@
 {
     "name": "madewithlove/glue",
-    "description": "Some small helper classes and service providers for package-based applications",
+    "description": "Glue is a package to quickly bootstrap packages-based applications",
     "license": "MIT",
     "authors": [
         {
