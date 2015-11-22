@@ -35,18 +35,7 @@ class DebugbarServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(DebugBar::class, function () {
-            $debugbar = new StandardDebugBar();
-            $debugbar->addCollector(new QueryCollector());
-
-            // Bind QueryCollector to current connection
-            /* @var StandardDebugbar $debugbar */
-            $connection = $this->container->get(Manager::class)->connection();
-            $connection->listen(function ($query, $bindings, $time) use ($debugbar, $connection) {
-                $collector = $debugbar->getCollector('queries');
-                $collector->addQuery((string) $query, $bindings, $time, $connection);
-            });
-
-            return $debugbar;
+            return new StandardDebugBar();
         });
 
         $this->container->share(JavascriptRenderer::class, function () {

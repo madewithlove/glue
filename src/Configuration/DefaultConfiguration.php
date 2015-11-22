@@ -161,9 +161,9 @@ class DefaultConfiguration extends AbstractConfiguration
         if ($this->isDebug()) {
             return [
                 FormatNegotiator::class,
-                DebugBar::class,
                 WhoopsMiddleware::class,
                 LeagueRouteMiddleware::class,
+                DebugBar::class,
             ];
         }
 
