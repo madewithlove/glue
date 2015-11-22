@@ -4,7 +4,7 @@ use Symfony\CS\Finder\DefaultFinder;
 
 $finder = DefaultFinder::create()->in(['bin', 'src', 'tests']);
 $header = <<<EOF
-This file is part of Arrounded
+This file is part of Glue
 
 (c) Madewithlove <heroes@madewithlove.be>
 
