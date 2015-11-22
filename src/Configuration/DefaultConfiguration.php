@@ -67,7 +67,6 @@ class DefaultConfiguration extends AbstractConfiguration
         ]);
     }
 
-
     /**
      * @return string
      */
