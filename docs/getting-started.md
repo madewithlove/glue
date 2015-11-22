@@ -1,13 +1,32 @@
 # Basic usage
 
-## Creating an app
+## Getting started
 
-Glue is rather simple to bootstrap, simply create an `index.php` file in a directory of your choice (`/public` or `/web` per example).
-Then create a new instance of `Glue` and call `run` on it.
+### In an empty folder
+
+Glue is rather simple to setup, it includes a small bootstrapping utility to help you set things up.
+Start by requiring glue to your application:
+
+```bash
+$ composer init
+$ composer require madewithlove/glue
+```
+
+Then run the following command:
+
+```bash
+$ vendor/bin/glue bootstrap
+```
+
+### In an existing folder structure
+
+If you already have an existing structure, simply create a web-facing file (`public/index.php` or `web/index.php` or whatever). Create a new Glue application in it and call `run` on it:
 
 **public/index.php**
 ```php
-$app = new Glue();
+require '../vendor/autoload.php';
+
+$app = new Madewithlove\Glue\Glue();
 $app->run();
 ```
 
@@ -18,10 +37,16 @@ If none is passed, Glue will use the `DefaultConfiguration` class which provides
 
 ```php
 $app = new Glue(new Configuration([
-    'namespace'   => 'MyApp',
+    'namespace'   => 'Acme',
     'debug'       => getenv('APP_DEBUG'),
-    'providers'   => [SomeProvider::class],
-    'middlewares' => [SomeMiddleware::class],
+    'providers'   => [
+        Madewithlove\Glue\Http\Providers\RoutingServiceProvider::class,
+        Acme\My\Own\Provider::class
+    ],
+    'middlewares' => [
+        Madewithlove\Glue\Http\Middlewares\LeagueRouterMiddleware::class,
+        Psr7Middlewares\Middleware\FormatNegotiator::class,
+    ],
     'paths'       => [
         'views' => __DIR__.'/paths/to/views',
     ],
@@ -46,6 +71,7 @@ $app->configure([
         'view' => MyPlatesServiceProvider::class,
     ],
 ]);
+```
 
 Any configuration key passed to Glue will be bound on the container as `config.{key}`, per example if you need to share a configuration
 value amongst your application, simply pass it to the configuration:
@@ -55,8 +81,9 @@ value amongst your application, simply pass it to the configuration:
 $app->configure('my_key', 'some_value');
 ```
 
-Ultimately, the configuration if freeform and besides two keys (`debug` and `paths`) none of the values are required.
-You can create your configuration however you'd like in whatever format you'd like.
+Ultimately, the configuration is freeform and besides two keys (`debug` and `paths`) none of the values are _really_ required.
+You can create your configuration however you'd like in whatever format you'd like. Make it a JSON, or a YAML file, use a third-party package, whatever you want.
+Ultimately you just have to pass a `ConfigurationInterface` to Glue, with the base `Configuration` class accepting an array.
 
 ## Environment variables
 
@@ -68,11 +95,12 @@ By default Glue will attempt to load an `.env` file in the root path if found, s
 While Glue doesn't assume any directory structure, here are the paths configured by the `DefaultConfiguration`:
 
 ```
-'assets'     => $rootPath.'/public/builds',
-'migrations' => $rootPath.'/resources/migrations',
-'views'      => $rootPath.'/resources/views',
-'cache'      => $rootPath.'/storage/cache',
-'logs'       => $rootPath.'/storage/logs',
+'assets'     => 'public/builds',
+'web'        => 'public',
+'migrations' => 'resources/migrations',
+'views'      => 'resources/views',
+'cache'      => 'storage/cache',
+'logs'       => 'storage/logs',
 ```
 
 Those are of course only needed in case you use the related providers, if per example you don't use migrations, you won't need
@@ -88,6 +116,7 @@ $ php console glue:bootstrap
 ✓ Created storage/logs
 ✓ Created .env
 ✓ Created public/index.php
+✓ Created console
 ```
 
 ## Changing container
