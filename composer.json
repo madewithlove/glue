@@ -1,11 +1,23 @@
 {
     "name": "madewithlove/glue",
     "description": "Glue is a package to quickly bootstrap packages-based applications",
+    "homepage": "http://madewithlove.github.io/glue",
     "license": "MIT",
+    "keywords": [
+        "packages",
+        "psr7",
+        "container"
+    ],
     "authors": [
         {
             "name": "Madewithlove",
-            "email": "heroes@madewithlove.be"
+            "email": "heroes@madewithlove.be",
+            "role": "Organization"
+        },
+        {
+            "name": "Maxime Fabre",
+            "email": "maxime@madewithlove.be",
+            "role": "Developper"
         }
     ],
     "autoload": {
@@ -57,7 +69,7 @@
         "docs": [
             "gitbook install",
             "gitbook build",
-            "cd _book && git init && git checkout -b gh-pages && touch .nojekyll && git add --all && git commit -am 'Generate documentation' && git push git@github.com:madewithlove/glue.git gh-pages --force"
+            "cd _book && git init && git checkout -b gh-pages && touch .nojekyll && git add --all && git commit -am 'Rebuild documentation' && git push git@github.com:madewithlove/glue.git gh-pages --force"
         ]
     }
 }
