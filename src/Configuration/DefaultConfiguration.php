@@ -81,7 +81,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'logs'       => LogsServiceProvider::class,
             'request'    => RequestServiceProvider::class,
             'routing'    => RoutingServiceProvider::class,
-            'twig'       => TwigServiceProvider::class,
+            'view'       => TwigServiceProvider::class,
             'url'        => UrlGeneratorServiceProvider::class,
             'assets'     => WebpackServiceProvider::class,
         ];

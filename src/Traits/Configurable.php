@@ -56,6 +56,7 @@ trait Configurable
             $configuration = [$configuration => $value];
         }
 
-        $this->configuration = new Configuration(array_merge($this->configuration->toArray(), $configuration));
+        $configuration       = array_merge_recursive($this->configuration->toArray(), $configuration);
+        $this->configuration = new Configuration($configuration);
     }
 }

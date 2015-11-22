@@ -4,6 +4,7 @@ namespace Madewithlove\Glue\Traits;
 
 use League\Tactician\CommandBus;
 use Madewithlove\Glue\CommandBus\CommandInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 trait DispatchesCommands
 {
@@ -29,5 +30,14 @@ trait DispatchesCommands
         }
 
         return $this->getCommandBus()->handle($command);
+    }
+
+    /**
+     * @param CommandInterface|string $command
+     * @param ServerRequestInterface  $request
+     */
+    protected function dispatchFromRequest($command, ServerRequestInterface $request)
+    {
+        $this->dispatch($command, $request->getAttributes());
     }
 }

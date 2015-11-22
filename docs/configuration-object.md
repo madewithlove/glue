@@ -41,4 +41,4 @@ $app = new Glue(new MyConfiguration());
 $app->run();
 ```
 
-Ultimately, besides a few special keys, configuration is free of form and structure, it just needs to implement `ConfigurationInterface`. So, go wild.confi
+Ultimately, besides a few special keys, configuration is free of form and structure, it just needs to implement `ConfigurationInterface`. So, go wild.

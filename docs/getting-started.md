@@ -13,7 +13,7 @@ $app->run();
 
 ## Configuration
 
-You can configure the application by passing a `ConfigurationInterface` implementation to the constructor.
+You configure the application by passing a `ConfigurationInterface` implementation to the constructor.
 If none is passed, Glue will use the `DefaultConfiguration` class which provides some functionnality out of the box.
 
 ```php
@@ -28,30 +28,34 @@ $app = new Glue(new Configuration([
 ]));
 ```
 
-You can also override only certain parts of the configuration through the `configure` method:
+You can also override certain parts of the configuration through the `configure` method:
 
 ```php
-// This will use the DefaultConfiguration class and override `namespace` on it
-$app = new Glue();
-$app->configure([
-    'namespace' => 'MyApp',
-]);
+// This will override the `namespace` config value in `MyConfiguration`
+$app = new Glue(new MyConfiguration());
 
-// Or
+$app->configure(['namespace' => 'MyApp']); // or
 $app->configure('namespace', 'MyApp');
 ```
+
+This method uses a recursive merge strategy so you can override specific providers from the `DefaultConfiguration` this way:
+
+```php
+$app->configure([
+    'providers' => [
+        'view' => MyPlatesServiceProvider::class,
+    ],
+]);
 
 Any configuration key passed to Glue will be bound on the container as `config.{key}`, per example if you need to share a configuration
 value amongst your application, simply pass it to the configuration:
 
 ```php
 // Will make `$this->container->get('config.my_key')` available in providers and such
-$app->configure([
-    'my_key' => 'somevalue',
-]);
+$app->configure('my_key', 'some_value');
 ```
 
-Ultimately, the configuration if free form and besides one or two keys (`debug` and `paths`) none of the values are required.
+Ultimately, the configuration if freeform and besides two keys (`debug` and `paths`) none of the values are required.
 You can create your configuration however you'd like in whatever format you'd like.
 
 ## Environment variables
@@ -61,7 +65,7 @@ By default Glue will attempt to load an `.env` file in the root path if found, s
 
 ## Directory structure
 
-While Glue doesn't assume any directory structure, here are the paths configured by default:
+While Glue doesn't assume any directory structure, here are the paths configured by the `DefaultConfiguration`:
 
 ```
 'assets'     => $rootPath.'/public/builds',
