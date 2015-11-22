@@ -53,7 +53,7 @@ class TinkerCommand extends Command
     {
         $shell = new Shell();
         $shell->setScopeVariables([
-            'app'    => $this->container,
+            'app' => $this->container,
             'config' => $this->container->get(ConfigurationInterface::class),
         ]);
 
