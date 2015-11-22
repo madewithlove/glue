@@ -104,16 +104,13 @@ class Glue implements ContainerAwareInterface
         $this->boot();
 
         // Delegate to Configuration
-        if (method_exists($this->configuration, $name)) {
+        if (method_exists($this->configuration, $name) && !in_array($name, ['get'], true)) {
             return $this->configuration->$name(...$arguments);
         }
 
         // Delegate to Router
         if ($this->container->has('router')) {
-            $router = $this->container->get('router');
-            if (method_exists($router, $name)) {
-                $this->routes[] = $this->container->get('router')->$name(...$arguments);
-            }
+            $this->routes[] = $this->container->get('router')->$name(...$arguments);
         }
     }
 
