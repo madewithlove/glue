@@ -10,11 +10,9 @@
 
 namespace Madewithlove\Glue\Providers;
 
-use Barryvdh\Debugbar\DataCollector\QueryCollector;
 use DebugBar\DebugBar;
 use DebugBar\JavascriptRenderer;
 use DebugBar\StandardDebugBar;
-use Illuminate\Database\Capsule\Manager;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class DebugbarServiceProvider extends AbstractServiceProvider
