@@ -1,6 +1,8 @@
 # Glue
 [![Latest Version on Packagist][ico-version]][link-packagist] [![Software License][ico-license]](LICENSE.md) [![Build Status][ico-travis]][link-travis] [![Coverage Status][ico-scrutinizer]][link-scrutinizer] [![Quality Score][ico-code-quality]][link-code-quality] [![Total Downloads][ico-downloads]][link-downloads]
 
+![](http://i.imgur.com/22KTxyH.png)
+
 ## What's Glue?
 Glue is an adhesive substance used for sticking objects or materials together ( ͡° ͜ʖ ͡°)
 
