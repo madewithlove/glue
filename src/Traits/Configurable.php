@@ -65,7 +65,7 @@ trait Configurable
      */
     public function configure($configuration, $value = null)
     {
-        if ($value && !is_array($configuration)) {
+        if ($value && is_string($configuration)) {
             $configuration = [$configuration => $value];
         }
 
@@ -77,7 +77,7 @@ trait Configurable
                 $current = $current ?: [];
                 $configuration[$key] = array_merge($value, $current);
             } else {
-                $configuration[$key] = !is_null($current) ? $current : $value;
+                $configuration[$key] = $current !== null ? $current : $value;
             }
         }
 

@@ -79,7 +79,7 @@ class DefaultConfiguration extends AbstractConfiguration
     }
 
     /**
-     * @return string
+     * @return string|void
      */
     protected function configureNamespace()
     {
@@ -97,7 +97,7 @@ class DefaultConfiguration extends AbstractConfiguration
     }
 
     /**
-     * @return string[]
+     * @return array
      */
     public function configurePaths()
     {

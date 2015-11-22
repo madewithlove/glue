@@ -41,7 +41,7 @@ abstract class AbstractValuesProvider extends AbstractServiceProvider
             return $this->key.'.'.$key;
         }, $this->getProvided());
 
-        if (!is_null($alias)) {
+        if ($alias !== null) {
             return (in_array($alias, $provided, true));
         }
 

@@ -45,7 +45,7 @@ class BootstrapCommand extends Command
         parent::__construct();
 
         $this->configuration = $configuration;
-        $this->filesystem = $filesystem;
+        $this->filesystem    = $filesystem;
     }
 
     /**
@@ -67,36 +67,10 @@ class BootstrapCommand extends Command
     {
         $this->output = new SymfonyStyle($input, $output);
 
-        $this->createFolders();
-        $this->createFiles();
-    }
-
-    /**
-     * Create the configured folders.
-     */
-    protected function createFolders()
-    {
-        $paths = $this->configuration->getPaths();
-
-        foreach ($paths as $path) {
-            $path = $this->formatPath($path);
-
-            if (!$this->filesystem->has($path)) {
-                $this->filesystem->createDir($path);
-                $this->created($path);
-            }
-        }
-    }
-
-    /**
-     * Create the configured files.
-     */
-    protected function createFiles()
-    {
-        $web = $this->configuration->getPath('web');
+        $web   = $this->configuration->getPath('web');
         $files = [
-            '.env' => 'APP_ENV=local',
-            'console' => <<<'PHP'
+            '.env'              => 'APP_ENV=local',
+            'console'           => <<<'PHP'
 <?php
 require 'vendor/autoload.php';
 
@@ -114,21 +88,38 @@ PHP
             ,
         ];
 
-        foreach ($files as $path => $contents) {
-            $path = $this->formatPath($path);
+        // Create folders
+        foreach ($this->configuration->getPaths() as $path) {
+            $this->create($path);
+        }
 
-            if (!$this->filesystem->has($path)) {
-                $this->filesystem->put($path, $contents);
-                $this->created($path);
-            }
+        // Create files
+        foreach ($files as $path => $contents) {
+            $this->create($path, $contents);
         }
     }
 
     /**
-     * @param string $path
+     * Create a file or folder
+     *
+     * @param string      $path
+     * @param string|null $contents
      */
-    protected function created($path)
+    protected function create($path, $contents = null)
     {
+        // If the file already exists, quit
+        $path = $this->formatPath($path);
+        if ($this->filesystem->has($path)) {
+            return;
+        }
+
+        // Create the file or folder
+        if ($contents) {
+            $this->filesystem->put($path, $contents);
+        } else {
+            $this->filesystem->createDir($path);
+        }
+
         $this->output->writeln('<info>✓</info> Created <comment>'.$path.'</comment>');
     }
 
@@ -140,7 +131,7 @@ PHP
     protected function formatPath($path)
     {
         $rootPath = $this->configuration->getRootPath();
-        $path = str_replace($rootPath, null, $path);
+        $path     = str_replace($rootPath, null, $path);
 
         return $path;
     }
