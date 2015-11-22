@@ -1,12 +1,14 @@
 # Table of contents
 
-- [Packages-based applications](/docs/packages-based-applications.md)
-- [Getting started](/docs/getting-started.md)
-- [Routing](/docs/routing.md)
-- [Command line](/docs/command-line.md)
-- [The Configuration object](/docs/configuration-object.md)
+- Basic usage
+    - [Packages-based applications](/docs/basic/packages-based-applications.md)
+    - [Getting started](/docs/basic/getting-started.md)
+    - [Routing](/docs/basic/routing.md)
+    - [Command line](/docs/basic/command-line.md)
+- Advanced usage
+    - [The Configuration object](/docs/advanced/configuration-object.md)
 - Other informations
-  - [Changelog](CHANGELOG.md)
-  - [Contributing](CONTRIBUTING.md)
-  - [Code of conduct](CONDUCT.md)
-  - [License](LICENSE.md)
+    - [Changelog](CHANGELOG.md)
+    - [Contributing](CONTRIBUTING.md)
+    - [Code of conduct](CONDUCT.md)
+    - [License](LICENSE.md)

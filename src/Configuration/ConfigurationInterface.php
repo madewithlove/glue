@@ -10,7 +10,9 @@
 
 namespace Madewithlove\Glue\Configuration;
 
-interface ConfigurationInterface
+use Illuminate\Contracts\Support\Arrayable;
+
+interface ConfigurationInterface extends Arrayable
 {
     /**
      * @return bool
@@ -80,9 +82,4 @@ interface ConfigurationInterface
      * @return self
      */
     public function setMiddlewares(array $middlewares = []);
-
-    /**
-     * @return array
-     */
-    public function toArray();
 }

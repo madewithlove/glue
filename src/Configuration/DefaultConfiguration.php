@@ -33,16 +33,18 @@ class DefaultConfiguration extends AbstractConfiguration
 {
     /**
      * DefaultConfiguration constructor.
+     *
+     * @param array $attributes
      */
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct([
+        parent::__construct(array_merge([
             'debug' => true,
             'rootPath' => $this->configureRootPath(),
             'namespace' => $this->configureNamespace(),
             'paths' => $this->configurePaths(),
             'commands' => $this->configureCommands(),
-        ]);
+        ], $attributes));
     }
 
     /**

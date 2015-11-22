@@ -10,6 +10,7 @@
 
 namespace Madewithlove\Glue\Traits;
 
+use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Dummies\DummyConfiguration;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\TestCase;
@@ -65,5 +66,14 @@ class ConfigurableTest extends TestCase
                 'bar',
             ],
         ], $glue->getConfiguration()->toArray());
+    }
+
+    public function testKeepsOriginalInstanceOfConfiguration()
+    {
+        $configuration = new DefaultConfiguration();
+        $glue = new Glue($configuration);
+
+        $glue->configure('namespace', 'foobar');
+        $this->assertInstanceOf(DefaultConfiguration::class, $glue->getConfiguration());
     }
 }

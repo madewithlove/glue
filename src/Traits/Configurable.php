@@ -81,6 +81,7 @@ trait Configurable
             }
         }
 
-        $this->configuration = new Configuration($configuration);
+        $class = get_class($this->configuration);
+        $this->configuration = new $class($configuration);
     }
 }

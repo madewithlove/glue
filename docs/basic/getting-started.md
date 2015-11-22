@@ -16,6 +16,15 @@ Then run the following command:
 
 ```bash
 $ vendor/bin/glue bootstrap
+✓ Created public/builds
+✓ Created resources/factories
+✓ Created resources/migrations
+✓ Created resources/views
+✓ Created storage/cache
+✓ Created storage/logs
+✓ Created .env
+✓ Created public/index.php
+✓ Created console
 ```
 
 ### In an existing folder structure
@@ -32,8 +41,9 @@ $app->run();
 
 ## Configuration
 
+### Creating a Glue instance
+
 You configure the application by passing a `ConfigurationInterface` implementation to the constructor.
-If none is passed, Glue will use the `DefaultConfiguration` class which provides some functionnality out of the box.
 
 ```php
 $app = new Glue(new Configuration([
@@ -53,12 +63,20 @@ $app = new Glue(new Configuration([
 ]));
 ```
 
-You can also override certain parts of the configuration through the `configure` method:
+If none is passed, Glue will use the `DefaultConfiguration` class which provides some functionnality out of the box.
+
+Ultimately, the configuration is freeform and besides two keys (`debug` and `paths`) none of the values are _really_ required.
+You can create your configuration however you'd like in whatever format you'd like. Make it a JSON, or a YAML file, use a third-party package, whatever you want.
+Only constraint is you have to pass a `ConfigurationInterface` to Glue, with the base `Configuration` class accepting an array.
+
+### Modifying the configuration
+
+You can override certain parts of the configuration through the `configure` method:
 
 ```php
-// This will override the `namespace` config value in `MyConfiguration`
 $app = new Glue(new MyConfiguration());
 
+// This will override the `namespace` config value in `MyConfiguration`
 $app->configure(['namespace' => 'MyApp']); // or
 $app->configure('namespace', 'MyApp');
 ```
@@ -81,11 +99,18 @@ value amongst your application, simply pass it to the configuration:
 $app->configure('my_key', 'some_value');
 ```
 
-Ultimately, the configuration is freeform and besides two keys (`debug` and `paths`) none of the values are _really_ required.
-You can create your configuration however you'd like in whatever format you'd like. Make it a JSON, or a YAML file, use a third-party package, whatever you want.
-Ultimately you just have to pass a `ConfigurationInterface` to Glue, with the base `Configuration` class accepting an array.
+The `Glue` class also decorates the Configuration class so you can call methods on it directly. Check the [ConfigurationInterface] for a list of methods you can call.
 
-## Environment variables
+```php
+$app = new Glue(new Configuration());
+$app->setProviders([
+    SomeProvider::class,
+]);
+
+$app->setDebug(getenv('APP_ENV'));
+```
+
+### Environment variables
 
 Some configuration, like database credentials and such, are fetched through environment variables.
 By default Glue will attempt to load an `.env` file in the root path if found, so you can define things there too.
@@ -104,20 +129,8 @@ While Glue doesn't assume any directory structure, here are the paths configured
 ```
 
 Those are of course only needed in case you use the related providers, if per example you don't use migrations, you won't need
-the `migrations` path, and so on. You can quickly generate the folders **according to the passed configuration** by running the following command:
-
-```bash
-$ php console glue:bootstrap
-✓ Created public/builds
-✓ Created resources/factories
-✓ Created resources/migrations
-✓ Created resources/views
-✓ Created storage/cache
-✓ Created storage/logs
-✓ Created .env
-✓ Created public/index.php
-✓ Created console
-```
+the `migrations` path, and so on. You can define any paths you want, they will then be available on the container as `paths.{key}`.
+Per example to get the path to the cache, you'd do `$container->get('paths.cache')`
 
 ## Changing container
 
@@ -134,3 +147,5 @@ $app->setContainer($container);
 ```
 
 It has however to be an instance of `League\Container` as Glue relies heavily on its service provider feature.
+
+[ConfigurationInterface]: https://github.com/madewithlove/glue/blob/master/src/Configuration/ConfigurationInterface.php
