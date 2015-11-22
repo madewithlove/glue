@@ -28,6 +28,46 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     use ContainerAwareTrait;
 
     /**
+     * {@inheritdoc}
+     */
+    public function getPaths()
+    {
+        return (array) $this->paths;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath($path)
+    {
+        return array_get($this->getPaths(), $path);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRootPath()
+    {
+        return $this->rootPath;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProviders()
+    {
+        return (array) $this->providers;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMiddlewares()
+    {
+        return (array) $this->middlewares;
+    }
+
+    /**
      * Setup the configuration.
      */
     public function configure()

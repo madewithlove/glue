@@ -29,6 +29,7 @@ Glue binds several providers out of the box:
     - Debugbar with `maximebf/debugbar`
     - Small CLI with `symfony/console`
     - Filesystem with `league/flysystem`
+    - REPL with `psy/psysh`
 
 Any of these can be overidden or removed; this package doesn't enforce any structure or the use of any dependency in particular besides `league/container` (as the Glue class expects service provider capabilities), so you can make of it whatever you wish.
 

@@ -45,7 +45,7 @@ class BootstrapCommand extends Command
         parent::__construct();
 
         $this->configuration = $configuration;
-        $this->filesystem    = $filesystem;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -72,12 +72,12 @@ class BootstrapCommand extends Command
     }
 
     /**
-     * Create the configured folders
+     * Create the configured folders.
      */
     protected function createFolders()
     {
-        $paths    = (array) $this->configuration->paths;
-        $rootPath = $this->configuration->rootPath.DIRECTORY_SEPARATOR;
+        $paths = $this->configuration->getPaths();
+        $rootPath = rtrim($this->configuration->getRootPath().DS, DS);
 
         foreach ($paths as $path) {
             $path = str_replace($rootPath, null, $path);
@@ -89,12 +89,29 @@ class BootstrapCommand extends Command
     }
 
     /**
-     * Create the configured files
+     * Create the configured files.
      */
     protected function createFiles()
     {
+        $web = $this->configuration->getPath('web');
         $files = [
             '.env' => 'APP_ENV=local',
+            'console' => <<<'PHP'
+<?php
+require 'vendor/autoload.php';
+
+$app = new Madewithlove\Glue\Glue();
+$app->console();
+PHP
+,
+            $web.DS.'/index.php' => <<<'PHP'
+<?php
+require 'vendor/autoload.php';
+
+$app = new Madewithlove\Glue\Glue();
+$app->run();
+PHP
+,
         ];
 
         foreach ($files as $path => $contents) {

@@ -1,14 +1,10 @@
 #!/usr/bin/env php
 <?php
 use Madewithlove\Glue\Glue;
+use Madewithlove\Glue\Utils;
 
 // Look for vendor folder, wherever it is
-$vendor = __DIR__;
-while (!is_dir($vendor.DIRECTORY_SEPARATOR.'vendor')) {
-    $vendor .= '/..';
-}
-
-require $vendor.'/vendor/autoload.php';
+require Utils::find('vendor/autoload.php');
 
 $glue = new Glue();
 $glue->console();

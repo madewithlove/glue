@@ -27,6 +27,7 @@ use Madewithlove\Glue\Providers\DebugbarServiceProvider;
 use Madewithlove\Glue\Providers\FilesystemServiceProvider;
 use Madewithlove\Glue\Providers\LogsServiceProvider;
 use Madewithlove\Glue\Providers\PathsServiceProvider;
+use Madewithlove\Glue\Utils;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
 
@@ -37,7 +38,9 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function configure()
     {
-        $this->debug = getenv('APP_ENV') === 'local';
+        $environment = getenv('APP_ENV');
+
+        $this->debug = $environment ? $environment === 'local' : true;
         $this->rootPath = $this->configureRootPath();
         $this->namespace = $this->configureNamespace();
         $this->providers = $this->configureProviders();
@@ -51,12 +54,7 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     protected function configureRootPath()
     {
-        $folder = getcwd();
-        while (!file_exists($folder.'/composer.json')) {
-            $folder .= '/..';
-        }
-
-        return realpath($folder);
+        return str_replace('composer.json', null, Utils::find('composer.json'));
     }
 
     /**
@@ -64,16 +62,17 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     protected function configureNamespace()
     {
-        $composer = $this->rootPath.'/composer.json';
+        $composer = $this->getRootPath().'/composer.json';
         $composer = file_get_contents($composer);
         $composer = json_decode($composer, true);
 
-        $namespaces = array_keys(array_get($composer, 'autoload.psr-4', []));
+        $namespaces = array_get($composer, 'autoload.psr-4', []);
+        $namespaces = $namespaces ?: array_get($composer, 'autoload.psr-0', []);
         if (!$namespaces) {
             return;
         }
 
-        return trim($namespaces[0], '\\');
+        return trim(array_keys($namespaces)[0], '\\');
     }
 
     /**
@@ -110,13 +109,15 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function configurePaths()
     {
+        $rootPath = $this->getRootPath();
+
         return [
-            'assets' => $this->rootPath.'/public/builds',
-            'web' => $this->rootPath.'/public',
-            'migrations' => $this->rootPath.'/resources/migrations',
-            'views' => $this->rootPath.'/resources/views',
-            'cache' => $this->rootPath.'/storage/cache',
-            'logs' => $this->rootPath.'/storage/logs',
+            'assets' => $rootPath.'/public/builds',
+            'web' => $rootPath.'/public',
+            'migrations' => $rootPath.'/resources/migrations',
+            'views' => $rootPath.'/resources/views',
+            'cache' => $rootPath.'/storage/cache',
+            'logs' => $rootPath.'/storage/logs',
         ];
     }
 

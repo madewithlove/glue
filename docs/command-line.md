@@ -40,6 +40,33 @@ Available commands:
   migrate:status    Show migration status
 ```
 
+## Tinkering with the application
+
+Glue includes a REPL command by default which lets you access the container and configuration and any classes you might have in the current context:
+
+```bash
+$ php console tinker
+>>> ls
+Variables: $app, $config
+
+>>> $config->providers
+=> [
+     "paths" => "Madewithlove\Glue\Providers\PathsServiceProvider",
+     "commandbus" => "Madewithlove\Glue\Providers\CommandBusServiceProvider",
+     "db" => "Madewithlove\Glue\Providers\DatabaseServiceProvider",
+     "filesystem" => "Madewithlove\Glue\Providers\FilesystemServiceProvider",
+     "logs" => "Madewithlove\Glue\Providers\LogsServiceProvider",
+     "request" => "Madewithlove\Glue\Http\Providers\RequestServiceProvider",
+     "routing" => "Madewithlove\Glue\Http\Providers\RoutingServiceProvider",
+     "view" => "Madewithlove\Glue\Http\Providers\TwigServiceProvider",
+     "url" => "Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider",
+     "assets" => "Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider",
+     "console" => "Madewithlove\Glue\Console\ConsoleServiceProvider",
+     "migrations" => "Madewithlove\Glue\Console\PhinxServiceProvider",
+     "debugbar" => "Madewithlove\Glue\Providers\DebugbarServiceProvider",
+   ]
+```
+
 ## Adding commands
 
 To add commands, set the `commands` option:
@@ -50,18 +77,19 @@ $app->configure('commands', [
 ]);
 ```
 
-Glue uses `symfony/console` so created commands should be instances of `Symfony\Component\Console\Command\Command`. All commands are resolved through the container so you can inject dependencies in their constructor.
+Glue uses `symfony/console` so created commands should be instances of `Symfony\Component\Console\Command\Command`.
+All commands are resolved through the container so you can inject dependencies in their constructor.
 
 ## Using a different CLI
 
-You can of course override the console application by overriding the `console` binding in the container:
+You can of course override the console application by overriding the `console` binding in a service provider of your doing.
+The commands will still be available under the `config.commands` key in the container if your new CLI supports Symfony commands (eg. [Silly], etc).
 
 ```php
-$container = new Container;
-$container->share('console', function() {
-    return new League\CLImate\CLImate;
-});
-
 $app = new Glue();
-$app->setContainer($container);
+$app->configure('providers', [
+    'console' => CLImateServiceProvider::class,
+]);
 ```
+
+[Silly]: https://github.com/mnapoli/silly

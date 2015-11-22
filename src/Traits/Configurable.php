@@ -41,11 +41,16 @@ trait Configurable
     public function setConfiguration(ConfigurationInterface $configuration)
     {
         $this->configuration = $configuration;
+
+        // Bind container if needed
         if ($this->configuration instanceof ContainerAwareInterface) {
             $this->configuration->setContainer($this->getContainer());
         }
 
-        $this->configuration->configure();
+        // Boot configuration if asked to
+        if (method_exists($this->configuration, 'configure')) {
+            $this->configuration->configure();
+        }
     }
 
     //////////////////////////////////////////////////////////////////////

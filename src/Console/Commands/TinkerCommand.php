@@ -11,6 +11,7 @@
 namespace Madewithlove\Glue\Console\Commands;
 
 use Interop\Container\ContainerInterface;
+use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Psy\Shell;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -59,6 +60,7 @@ class TinkerCommand extends Command
     {
         $this->shell->setScopeVariables([
             'app' => $this->container,
+            'config' => $this->container->get(ConfigurationInterface::class),
         ]);
 
         $this->shell->run();

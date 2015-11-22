@@ -13,8 +13,41 @@ namespace Madewithlove\Glue\Configuration;
 interface ConfigurationInterface
 {
     /**
+     * Get the root path of the application.
+     *
+     * @return string
      */
-    public function configure();
+    public function getRootPath();
+
+    /**
+     * Get all configured paths.
+     *
+     * @return array
+     */
+    public function getPaths();
+
+    /**
+     * Get a particular path.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    public function getPath($path);
+
+    /**
+     * Get the providers to bind with glue.
+     *
+     * @return array
+     */
+    public function getProviders();
+
+    /**
+     * Get the middlewares to apply.
+     *
+     * @return array
+     */
+    public function getMiddlewares();
 
     /**
      * @return array

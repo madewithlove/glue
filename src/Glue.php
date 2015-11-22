@@ -26,6 +26,10 @@ use Psr\Http\Message\ServerRequestInterface;
 use Relay\RelayBuilder;
 use Zend\Diactoros\Response\SapiEmitter;
 
+if (!defined('DS')) {
+    define('DS', DIRECTORY_SEPARATOR);
+}
+
 /**
  * @mixin RouteCollection
  */
@@ -59,7 +63,7 @@ class Glue implements ContainerAwareInterface
         $this->setConfiguration($this->configuration ?: new DefaultConfiguration());
 
         // Load environment variables
-        $path = $this->configuration->rootPath ?: getcwd();
+        $path = $this->configuration->getRootPath() ?: getcwd();
         if (file_exists($path.'/.env')) {
             $dotenv = new Dotenv($path);
             $dotenv->load();
@@ -75,7 +79,7 @@ class Glue implements ContainerAwareInterface
     }
 
     /**
-     * Delegate calls to the Router.
+     * Delegate calls to whater Router is bound.
      *
      * @param string $name
      * @param array  $arguments
@@ -84,7 +88,7 @@ class Glue implements ContainerAwareInterface
     {
         $this->boot();
 
-        $this->routes[] = call_user_func_array([$this->container->get('router'), $name], $arguments);
+        $this->routes[] = $this->container->get('router')->$name(...$arguments);
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -108,8 +112,9 @@ class Glue implements ContainerAwareInterface
 
         // Register providers
         $this->container->addServiceProvider(ConfigurationServiceProvider::class);
-        $providers = (array) $this->configuration->providers;
-        array_walk($providers, [$this->container, 'addServiceProvider']);
+        foreach ($this->configuration->getProviders() as $provider) {
+            $this->container->addServiceProvider($provider);
+        }
     }
 
     /**
@@ -134,7 +139,7 @@ class Glue implements ContainerAwareInterface
         });
 
         // Process middlewares
-        $middlewares = (array) $this->configuration->middlewares;
+        $middlewares = (array) $this->configuration->getMiddlewares();
         $relay = $builder->newInstance($middlewares);
         $response = $relay($request, $response);
 
