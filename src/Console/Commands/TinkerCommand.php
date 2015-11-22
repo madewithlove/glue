@@ -39,7 +39,7 @@ class TinkerCommand extends Command
         parent::__construct();
 
         $this->container = $container;
-        $this->shell     = $shell;
+        $this->shell = $shell;
     }
 
     /**

@@ -39,7 +39,7 @@ class ConfigurationServiceProvider extends AbstractValuesProvider
 
         // Validate object
         $required = ['debug', 'paths'];
-        $missing  = array_diff($required, array_keys($values));
+        $missing = array_diff($required, array_keys($values));
         if ($missing) {
             throw new InvalidArgumentException('Missing configuration keys: '.implode(', ', $missing));
         }

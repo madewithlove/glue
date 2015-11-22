@@ -24,7 +24,7 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $routes = new RouteCollection();
-        $urls   = [
+        $urls = [
             $routes->get('users', 'History\Http\Controllers\FooController::index'),
             $routes->get('users/{user}', 'History\Http\Controllers\FooController::show'),
         ];

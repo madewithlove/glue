@@ -120,7 +120,7 @@ class Glue implements ContainerAwareInterface
             return;
         }
 
-        $request  = $this->container->get(ServerRequestInterface::class);
+        $request = $this->container->get(ServerRequestInterface::class);
         $response = $this->container->get(ResponseInterface::class);
 
         // Build Relay factory
@@ -130,8 +130,8 @@ class Glue implements ContainerAwareInterface
 
         // Process middlewares
         $middlewares = (array) $this->configuration->middlewares;
-        $relay       = $builder->newInstance($middlewares);
-        $response    = $relay($request, $response);
+        $relay = $builder->newInstance($middlewares);
+        $response = $relay($request, $response);
 
         (new SapiEmitter())->emit($response);
     }

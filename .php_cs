@@ -16,8 +16,6 @@ return Config::create()
              ->setRules([
                  'header_comment'                    => ['header' => $header],
                  '@Symfony'                          => true,
-                 'align_double_arrow'                => true,
-                 'align_equals'                      => true,
                  'ereg_to_preg'                      => true,
                  'function_typehint_space'           => true,
                  'multiline_spaces_before_semicolon' => true,

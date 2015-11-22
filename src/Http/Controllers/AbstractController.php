@@ -37,7 +37,7 @@ abstract class AbstractController
      */
     public function __construct(Twig_Environment $twig, CommandBus $commandBus)
     {
-        $this->twig       = $twig;
+        $this->twig = $twig;
         $this->commandBus = $commandBus;
     }
 

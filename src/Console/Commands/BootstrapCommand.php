@@ -40,7 +40,7 @@ class BootstrapCommand extends Command
         parent::__construct();
 
         $this->configuration = $configuration;
-        $this->filesystem    = $filesystem;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -63,7 +63,7 @@ class BootstrapCommand extends Command
         $output = new SymfonyStyle($input, $output);
 
         // Scaffold folders
-        $paths    = (array) $this->configuration->paths;
+        $paths = (array) $this->configuration->paths;
         $rootPath = $this->configuration->rootPath.DIRECTORY_SEPARATOR;
         foreach ($paths as $path) {
             $path = str_replace($rootPath, null, $path);

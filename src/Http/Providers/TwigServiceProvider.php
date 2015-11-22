@@ -38,10 +38,10 @@ class TwigServiceProvider extends AbstractServiceProvider
 
             $debug = $this->container->get('config.debug');
             $twig = new Twig_Environment($loader, [
-                'debug'            => $debug,
-                'auto_reload'      => $debug,
+                'debug' => $debug,
+                'auto_reload' => $debug,
                 'strict_variables' => false,
-                'cache'            => $this->container->get('paths.cache').'/twig',
+                'cache' => $this->container->get('paths.cache').'/twig',
             ]);
 
             if ($debug) {

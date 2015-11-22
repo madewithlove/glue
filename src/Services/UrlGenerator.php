@@ -37,7 +37,7 @@ class UrlGenerator
      */
     public function __construct($namespace, array $routes)
     {
-        $this->routes    = $routes;
+        $this->routes = $routes;
         $this->namespace = $namespace;
     }
 
