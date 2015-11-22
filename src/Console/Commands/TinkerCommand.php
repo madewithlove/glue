@@ -25,22 +25,15 @@ class TinkerCommand extends Command
     protected $container;
 
     /**
-     * @var Shell
-     */
-    protected $shell;
-
-    /**
      * TinkerCommand constructor.
      *
      * @param $container
-     * @param $shell
      */
-    public function __construct(ContainerInterface $container, Shell $shell)
+    public function __construct(ContainerInterface $container)
     {
         parent::__construct();
 
         $this->container = $container;
-        $this->shell = $shell;
     }
 
     /**
@@ -58,11 +51,12 @@ class TinkerCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->shell->setScopeVariables([
-            'app' => $this->container,
+        $shell = new Shell();
+        $shell->setScopeVariables([
+            'app'    => $this->container,
             'config' => $this->container->get(ConfigurationInterface::class),
         ]);
 
-        $this->shell->run();
+        $shell->run();
     }
 }
