@@ -1,13 +1,20 @@
 <?php
 use Symfony\CS\Config\Config;
 use Symfony\CS\Finder\DefaultFinder;
-use Symfony\CS\FixerInterface;
 
-$finder = DefaultFinder::create()->in(['src']);
+$finder = DefaultFinder::create()->in(['bin', 'src', 'tests']);
+$header = <<<EOF
+This file is part of Arrounded
+
+(c) Madewithlove <heroes@madewithlove.be>
+
+For the full copyright and license information, please view the LICENSE
+EOF;
 
 return Config::create()
              ->setRiskyAllowed(true)
              ->setRules([
+                 'header_comment'                    => ['header' => $header],
                  '@Symfony'                          => true,
                  'align_double_arrow'                => true,
                  'align_equals'                      => true,

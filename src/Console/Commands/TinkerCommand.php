@@ -40,7 +40,7 @@ class TinkerCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('glue:tinker')
+            ->setName('tinker')
             ->setDescription('Tinker with the application and its classes');
     }
 

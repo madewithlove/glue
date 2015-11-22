@@ -40,7 +40,7 @@ class BootstrapCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('glue:bootstrap')
+        $this->setName('bootstrap')
              ->setDescription('Bootstrap the configured folder structure');
     }
 

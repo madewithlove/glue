@@ -2,7 +2,13 @@
 <?php
 use Madewithlove\Glue\Glue;
 
-require __DIR__.'/../../../vendor/autoload.php';
+// Look for vendor folder, wherever it is
+$vendor = __DIR__;
+while (!is_dir($vendor.DIRECTORY_SEPARATOR.'vendor')) {
+    $vendor .= '/..';
+}
+
+require $vendor.'/vendor/autoload.php';
 
 $glue = new Glue();
 $glue->console();
