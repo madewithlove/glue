@@ -45,7 +45,7 @@ class BootstrapCommand extends Command
         parent::__construct();
 
         $this->configuration = $configuration;
-        $this->filesystem    = $filesystem;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -67,10 +67,10 @@ class BootstrapCommand extends Command
     {
         $this->output = new SymfonyStyle($input, $output);
 
-        $web   = $this->configuration->getPath('web');
+        $web = $this->configuration->getPath('web');
         $files = [
-            '.env'              => 'APP_ENV=local',
-            'console'           => <<<'PHP'
+            '.env' => 'APP_ENV=local',
+            'console' => <<<'PHP'
 <?php
 require 'vendor/autoload.php';
 
@@ -100,7 +100,7 @@ PHP
     }
 
     /**
-     * Create a file or folder
+     * Create a file or folder.
      *
      * @param string      $path
      * @param string|null $contents
@@ -131,7 +131,7 @@ PHP
     protected function formatPath($path)
     {
         $rootPath = $this->configuration->getRootPath();
-        $path     = str_replace($rootPath, null, $path);
+        $path = str_replace($rootPath, null, $path);
 
         return $path;
     }

@@ -67,6 +67,7 @@
         "test": "phpunit",
         "lint": "php-cs-fixer fix",
         "docs": [
+            "rm -rf _book",
             "gitbook install",
             "gitbook build",
             "cd _book && git init && git checkout -b gh-pages && touch .nojekyll && git add --all && git commit -am 'Rebuild documentation' && git push git@github.com:madewithlove/glue.git gh-pages --force"
