@@ -37,7 +37,7 @@ if (!defined('DS')) {
  * @mixin RouteCollection
  * @mixin AbstractConfiguration
  */
-class Glue implements ContainerAwareInterface
+class Glue
 {
     use ContainerAwareTrait;
     use Configurable;
@@ -58,9 +58,8 @@ class Glue implements ContainerAwareInterface
      */
     public function __construct(ConfigurationInterface $configuration = null, $container = null)
     {
-        $this->container = $this->sanitizeContainer($container);
-
-        // Setup configuration
+        // Setup container configuration
+        $this->setContainer($container);
         $this->setConfiguration($configuration ?: new DefaultConfiguration());
 
         // Load environment variables
@@ -84,10 +83,10 @@ class Glue implements ContainerAwareInterface
      *
      * @return Container
      */
-    public function sanitizeContainer($container = null)
+    public function setContainer($container = null)
     {
         // Setup container
-        $delegates       = [new ReflectionContainer()];
+        $delegates       = [$this->container, new ReflectionContainer()];
         $parentContainer = new Container();
         $parentContainer->share(ContainerInterface::class, $parentContainer);
 
@@ -100,22 +99,20 @@ class Glue implements ContainerAwareInterface
         }
 
         // Bind delegates
+        $delegates = array_filter($delegates);
         foreach ($delegates as $delegate) {
             $parentContainer->delegate($delegate);
         }
 
-        return $parentContainer;
+        $this->container = $parentContainer;
     }
 
     /**
-     * {@inheritdoc}
+     * @return Container
      */
-    public function setContainer(LeagueContainerInterface $container)
+    public function getContainer()
     {
-        // Set our own container as delegate
-        $container->delegate($this->container);
-
-        $this->container = $container;
+        return $this->container;
     }
 
     /**

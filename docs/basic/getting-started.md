@@ -146,6 +146,7 @@ $app = new Glue();
 $app->setContainer($container);
 ```
 
-It has however to be an instance of `League\Container` as Glue relies heavily on its service provider feature.
+The container can be any implementation of PSR11 or an [Acclimate] compatible container.
 
+[Acclimate]: https://github.com/jeremeamia/acclimate-container
 [ConfigurationInterface]: https://github.com/madewithlove/glue/blob/master/src/Configuration/ConfigurationInterface.php
