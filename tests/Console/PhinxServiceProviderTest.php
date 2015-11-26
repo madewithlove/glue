@@ -3,7 +3,7 @@
 /*
  * This file is part of Glue
  *
- * (c) Madewithlove <heroes@madewithlove.be>
+ * (c) madewithlove <heroes@madewithlove.be>
  *
  * For the full copyright and license information, please view the LICENSE
  */
@@ -30,8 +30,8 @@ class PhinxServiceProviderTest extends TestCase
             'packages' => [
                 PhinxServiceProvider::class => [
                     'paths' => ['migrations' => 'foobar'],
-                ]
-            ]
+                ],
+            ],
         ]));
 
         $glue->boot();

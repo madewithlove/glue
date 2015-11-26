@@ -3,7 +3,7 @@
 /*
  * This file is part of Glue
  *
- * (c) Madewithlove <heroes@madewithlove.be>
+ * (c) madewithlove <heroes@madewithlove.be>
  *
  * For the full copyright and license information, please view the LICENSE
  */
@@ -16,8 +16,8 @@ use League\Tactician\CommandBus;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Dummies\DummyController;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
-use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
 use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
+use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

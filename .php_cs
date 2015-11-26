@@ -6,7 +6,7 @@ $finder = DefaultFinder::create()->in(['bin', 'src', 'tests']);
 $header = <<<EOF
 This file is part of Glue
 
-(c) Madewithlove <heroes@madewithlove.be>
+(c) madewithlove <heroes@madewithlove.be>
 
 For the full copyright and license information, please view the LICENSE
 EOF;

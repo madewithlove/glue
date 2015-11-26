@@ -3,7 +3,7 @@
 /*
  * This file is part of Glue
  *
- * (c) Madewithlove <heroes@madewithlove.be>
+ * (c) madewithlove <heroes@madewithlove.be>
  *
  * For the full copyright and license information, please view the LICENSE
  */
@@ -38,7 +38,7 @@ class MonologServiceProvider extends AbstractServiceProvider
             $configuration = $configuration->getPackageConfiguration(__CLASS__);
 
             $logger = new Logger('app');
-            $path   = $configuration['path'].DS.$configuration['filename'];
+            $path = $configuration['path'].DS.$configuration['filename'];
             $logger->pushHandler(new StreamHandler($path, Logger::WARNING));
 
             return $logger;

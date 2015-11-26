@@ -3,7 +3,7 @@
 /*
  * This file is part of Glue
  *
- * (c) Madewithlove <heroes@madewithlove.be>
+ * (c) madewithlove <heroes@madewithlove.be>
  *
  * For the full copyright and license information, please view the LICENSE
  */
@@ -91,14 +91,14 @@ interface ConfigurationInterface extends Arrayable
     public function setMiddlewares(array $middlewares = []);
 
     /**
-     * Get the configuration for the various packages
+     * Get the configuration for the various packages.
      *
      * @return array
      */
     public function getPackagesConfiguration();
 
     /**
-     * Get the configuration of a package in particular
+     * Get the configuration of a package in particular.
      *
      * @param string $package
      *
@@ -107,14 +107,14 @@ interface ConfigurationInterface extends Arrayable
     public function getPackageConfiguration($package);
 
     /**
-     * Set configuration for all packages
+     * Set configuration for all packages.
      *
      * @param array $configurations
      */
     public function setPackagesConfiguration(array $configurations = []);
 
     /**
-     * Set configuration for a package
+     * Set configuration for a package.
      *
      * @param string $package
      * @param array  $configuration
