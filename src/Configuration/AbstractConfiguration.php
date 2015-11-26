@@ -15,14 +15,14 @@ use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 
 /**
- * @property $namespace   The namespace of your application
- * @property $rootPath    The path to the root of your application
- * @property $debug       Whether we're in debug mode or not
- * @property $providers   The providers to apply
- * @property $middlewares The middlewares to apply to the current route
- * @property $commands    The commands to register with the CLI
- * @property $paths       The paths in your application
- * @property $packages    The configuration for the various packages
+ * @property string   $namespace   The namespace of your application
+ * @property string   $rootPath    The path to the root of your application
+ * @property bool     $debug       Whether we're in debug mode or not
+ * @property string[] $providers   The providers to apply
+ * @property string[] $middlewares The middlewares to apply to the current route
+ * @property string[] $commands    The commands to register with the CLI
+ * @property array    $paths       The paths in your application
+ * @property array    $packages    The configuration for the various packages
  */
 abstract class AbstractConfiguration extends Fluent implements ConfigurationInterface, ContainerAwareInterface
 {
@@ -133,20 +133,23 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     }
 
     /**
-     * @param array $configurations
+     * {@inheritdoc}
      */
     public function setPackagesConfiguration(array $configurations = [])
     {
         $this->packages = $configurations;
+
+        return $this;
     }
 
     /**
-     * @param string $package
-     * @param array  $configuration
+     * {@inheritdoc}
      */
     public function setPackageConfiguration($package, array $configuration = [])
     {
         $this->packages = array_merge($this->packages, [$package => $configuration]);
+
+        return $this;
     }
 
     /**

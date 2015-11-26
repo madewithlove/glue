@@ -110,6 +110,8 @@ interface ConfigurationInterface extends Arrayable
      * Set configuration for all packages.
      *
      * @param array $configurations
+     *
+     * @return $this
      */
     public function setPackagesConfiguration(array $configurations = []);
 
@@ -118,6 +120,8 @@ interface ConfigurationInterface extends Arrayable
      *
      * @param string $package
      * @param array  $configuration
+     *
+     * @return $this
      */
     public function setPackageConfiguration($package, array $configuration = []);
 }

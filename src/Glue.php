@@ -78,8 +78,6 @@ class Glue
 
     /**
      * @param object|null $container
-     *
-     * @return Container
      */
     public function setContainer($container = null)
     {
@@ -110,6 +108,8 @@ class Glue
      *
      * @param string $name
      * @param array  $arguments
+     *
+     * @return mixed
      */
     public function __call($name, array $arguments)
     {
