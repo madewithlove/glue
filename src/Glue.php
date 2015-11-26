@@ -10,12 +10,11 @@
 
 namespace Madewithlove\Glue;
 
+use Acclimate\Container\ContainerAcclimator;
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
-use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
-use League\Container\ContainerInterface as LeagueContainerInterface;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
@@ -36,7 +35,7 @@ if (!defined('DS')) {
  * @mixin RouteCollection
  * @mixin AbstractConfiguration
  */
-class Glue implements ContainerAwareInterface
+class Glue
 {
     use ContainerAwareTrait;
     use Configurable;
@@ -55,14 +54,10 @@ class Glue implements ContainerAwareInterface
      * @param ConfigurationInterface|null $configuration
      * @param Container|null              $container
      */
-    public function __construct(ConfigurationInterface $configuration = null, Container $container = null)
+    public function __construct(ConfigurationInterface $configuration = null, $container = null)
     {
-        // Setup container
-        $this->container = $container ?: new Container();
-        $this->container->delegate(new ReflectionContainer());
-        $this->container->share(ContainerInterface::class, $this->container);
-
-        // Setup configuration
+        // Setup container configuration
+        $this->setContainer($container);
         $this->setConfiguration($configuration ?: new DefaultConfiguration());
 
         // Load environment variables
@@ -82,14 +77,32 @@ class Glue implements ContainerAwareInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @param object|null $container
+     *
+     * @return Container
      */
-    public function setContainer(LeagueContainerInterface $container)
+    public function setContainer($container = null)
     {
-        // Set our own container as delegate
-        $container->delegate($this->container);
+        // Setup container
+        $delegates = [$this->container, new ReflectionContainer()];
+        $parentContainer = new Container();
+        $parentContainer->share(ContainerInterface::class, $parentContainer);
 
-        $this->container = $container;
+        if ($container) {
+            // Unify container to PSR11
+            $acclimator = new ContainerAcclimator();
+            $container = $acclimator->acclimate($container);
+
+            array_unshift($delegates, $container);
+        }
+
+        // Bind delegates
+        $delegates = array_filter($delegates);
+        foreach ($delegates as $delegate) {
+            $parentContainer->delegate($delegate);
+        }
+
+        $this->container = $parentContainer;
     }
 
     /**

@@ -91,7 +91,7 @@ Glue provides several providers out of the box:
     - Filesystem with `league/flysystem`
     - REPL with `psy/psysh`
 
-Any of these can be overidden or removed; this package doesn't enforce any structure or the use of any dependency in particular besides `madewithlove/container` (as the Glue class expects service provider capabilities), so you can make of it whatever you wish.
+Any of these can be overidden or removed; this package doesn't enforce any structure or the use of any dependency in particular.
 
 Why? Because I do a lot of very small web applications, for myself or public ones, and I was tired of going through the same routine for the hundreth time.
 Then I thought others might have the same use case and here we are.
