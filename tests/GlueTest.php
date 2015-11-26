@@ -10,6 +10,7 @@
 
 namespace Madewithlove\Glue;
 
+use Illuminate\Container\Container as IlluminateContainer;
 use League\Container\Container;
 use League\Container\ServiceProvider\ServiceProviderInterface;
 use League\Tactician\CommandBus;
@@ -148,5 +149,17 @@ class GlueTest extends TestCase
         $this->assertEquals(['cache' => 'storage/cache'], $glue->getPaths());
         $this->assertEquals([LeagueRouteMiddleware::class], $glue->getMiddlewares());
         $this->assertEquals([LeagueRouteServiceProvider::class], $glue->getProviders());
+    }
+
+    public function testCanUserOtherContainers()
+    {
+        $container = new IlluminateContainer();
+        $container->singleton('foobar', function() {
+           return 'foobar';
+        });
+
+        $glue = new Glue(new Configuration(), $container);
+
+        $this->assertEquals('foobar', $glue->getContainer()->get('foobar'));
     }
 }

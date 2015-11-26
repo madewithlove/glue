@@ -10,6 +10,7 @@
 
 namespace Madewithlove\Glue;
 
+use Acclimate\Container\ContainerAcclimator;
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
@@ -55,12 +56,9 @@ class Glue implements ContainerAwareInterface
      * @param ConfigurationInterface|null $configuration
      * @param Container|null              $container
      */
-    public function __construct(ConfigurationInterface $configuration = null, Container $container = null)
+    public function __construct(ConfigurationInterface $configuration = null, $container = null)
     {
-        // Setup container
-        $this->container = $container ?: new Container();
-        $this->container->delegate(new ReflectionContainer());
-        $this->container->share(ContainerInterface::class, $this->container);
+        $this->container = $this->sanitizeContainer($container);
 
         // Setup configuration
         $this->setConfiguration($configuration ?: new DefaultConfiguration());
@@ -79,6 +77,34 @@ class Glue implements ContainerAwareInterface
         $this->container->add('routes', function () {
             return $this->routes;
         });
+    }
+
+    /**
+     * @param object|null $container
+     *
+     * @return Container
+     */
+    public function sanitizeContainer($container = null)
+    {
+        // Setup container
+        $delegates       = [new ReflectionContainer()];
+        $parentContainer = new Container();
+        $parentContainer->share(ContainerInterface::class, $parentContainer);
+
+        if ($container) {
+            // Unify container to PSR11
+            $acclimator = new ContainerAcclimator();
+            $container  = $acclimator->acclimate($container);
+
+            array_unshift($delegates, $container);
+        }
+
+        // Bind delegates
+        foreach ($delegates as $delegate) {
+            $parentContainer->delegate($delegate);
+        }
+
+        return $parentContainer;
     }
 
     /**
@@ -153,9 +179,9 @@ class Glue implements ContainerAwareInterface
             return;
         }
 
-        $request = $this->container->get(ServerRequestInterface::class);
+        $request  = $this->container->get(ServerRequestInterface::class);
         $response = $this->container->get(ResponseInterface::class);
-        $emitter = $this->container->get(SapiEmitter::class);
+        $emitter  = $this->container->get(SapiEmitter::class);
 
         // Get response middleware pipine
         /** @var callable $pipeline */
