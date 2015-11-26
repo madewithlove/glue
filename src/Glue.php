@@ -14,9 +14,7 @@ use Acclimate\Container\ContainerAcclimator;
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
 use League\Container\Container;
-use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
-use League\Container\ContainerInterface as LeagueContainerInterface;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
@@ -86,14 +84,14 @@ class Glue
     public function setContainer($container = null)
     {
         // Setup container
-        $delegates       = [$this->container, new ReflectionContainer()];
+        $delegates = [$this->container, new ReflectionContainer()];
         $parentContainer = new Container();
         $parentContainer->share(ContainerInterface::class, $parentContainer);
 
         if ($container) {
             // Unify container to PSR11
             $acclimator = new ContainerAcclimator();
-            $container  = $acclimator->acclimate($container);
+            $container = $acclimator->acclimate($container);
 
             array_unshift($delegates, $container);
         }
@@ -105,14 +103,6 @@ class Glue
         }
 
         $this->container = $parentContainer;
-    }
-
-    /**
-     * @return Container
-     */
-    public function getContainer()
-    {
-        return $this->container;
     }
 
     /**
@@ -176,9 +166,9 @@ class Glue
             return;
         }
 
-        $request  = $this->container->get(ServerRequestInterface::class);
+        $request = $this->container->get(ServerRequestInterface::class);
         $response = $this->container->get(ResponseInterface::class);
-        $emitter  = $this->container->get(SapiEmitter::class);
+        $emitter = $this->container->get(SapiEmitter::class);
 
         // Get response middleware pipine
         /** @var callable $pipeline */

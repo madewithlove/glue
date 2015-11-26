@@ -154,7 +154,7 @@ class GlueTest extends TestCase
     public function testCanUserOtherContainers()
     {
         $container = new IlluminateContainer();
-        $container->singleton('foobar', function() {
+        $container->singleton('foobar', function () {
            return 'foobar';
         });
 
