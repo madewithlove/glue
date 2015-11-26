@@ -12,7 +12,6 @@ namespace Madewithlove\Glue\Traits;
 
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerInterface;
-use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 
 trait Configurable
@@ -61,7 +60,7 @@ trait Configurable
      * Modify something in the configuration.
      *
      * @param string|array $configuration
-     * @param null         $value
+     * @param mixed|null   $value
      */
     public function configure($configuration, $value = null)
     {
@@ -69,7 +68,20 @@ trait Configurable
             $configuration = [$configuration => $value];
         }
 
-        // Merge stuff manually cause PHP is bad at it
+        $class = get_class($this->configuration);
+        $this->configuration = new $class($this->recursiveMerge($configuration));
+    }
+
+    /**
+     * Merge two arrays recursively manually
+     * because PHP is bad at it.
+     *
+     * @param array $configuration
+     *
+     * @return array
+     */
+    protected function recursiveMerge(array $configuration)
+    {
         foreach ($this->configuration->toArray() as $key => $value) {
             $current = array_get($configuration, $key);
 
@@ -81,7 +93,6 @@ trait Configurable
             }
         }
 
-        $class = get_class($this->configuration);
-        $this->configuration = new $class($configuration);
+        return $configuration;
     }
 }

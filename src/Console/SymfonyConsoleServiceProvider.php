@@ -37,13 +37,7 @@ class SymfonyConsoleServiceProvider extends AbstractServiceProvider
             $console->setVersion(Glue::VERSION);
 
             // Register commands
-            if ($this->container->has('config.commands')) {
-                $commands = $this->container->get('config.commands');
-                foreach ($commands as $command) {
-                    $command = is_string($command) ? $this->container->get($command) : $command;
-                    $console->add($command);
-                }
-            }
+            $this->registerCommands($console);
 
             return $console;
         });
@@ -51,5 +45,24 @@ class SymfonyConsoleServiceProvider extends AbstractServiceProvider
         $this->container->add('console', function () {
             return $this->container->get(Application::class);
         });
+    }
+
+    /**
+     * Register the configured commands with
+     * the Symfony application.
+     *
+     * @param Application $console
+     */
+    protected function registerCommands(Application $console)
+    {
+        if (!$this->container->has('config.commands')) {
+            return;
+        }
+
+        $commands = $this->container->get('config.commands');
+        foreach ($commands as $command) {
+            $command = is_string($command) ? $this->container->get($command) : $command;
+            $console->add($command);
+        }
     }
 }
