@@ -170,7 +170,7 @@ class Glue
         $response = $this->container->get(ResponseInterface::class);
         $emitter = $this->container->get(SapiEmitter::class);
 
-        // Get response middleware pipine
+        // Get response middleware pipeline
         /** @var callable $pipeline */
         $pipeline = $this->container->get('pipeline');
         $response = $pipeline($request, $response);
