@@ -13,7 +13,7 @@ namespace Madewithlove\Glue;
 class Utils
 {
     /**
-     * Look up the three until finding a file.
+     * Look up the tree until finding a file.
      *
      * @param string $file
      * @param string $from

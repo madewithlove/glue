@@ -43,6 +43,8 @@ trait DispatchesCommands
     /**
      * @param CommandInterface|string $command
      * @param ServerRequestInterface  $request
+     *
+     * @return mixed
      */
     protected function dispatchFromRequest($command, ServerRequestInterface $request)
     {

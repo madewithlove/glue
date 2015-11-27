@@ -104,7 +104,7 @@ class Glue
     }
 
     /**
-     * Delegate calls to whater Router is bound.
+     * Delegate calls to the router and configuration is bound.
      *
      * @param string $name
      * @param array  $arguments
