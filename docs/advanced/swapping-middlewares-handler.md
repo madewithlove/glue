@@ -31,3 +31,5 @@ $container->share('pipeline', function() {
 $app = new Glue();
 $app->setContainer($container);
 ```
+
+[Relay]: http://relayphp.com/
