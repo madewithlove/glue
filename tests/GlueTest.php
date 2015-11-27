@@ -170,13 +170,12 @@ class GlueTest extends TestCase
     {
         $this->expectOutputString('12');
 
-        $app = new Glue(new Configuration([
-            'providers' => [
-                FirstProvider::class,
-                ThirdProvider::class,
-                SecondProvider::class,
-            ],
-        ]));
+        $app = new Glue();
+        $app->setProviders([
+            FirstProvider::class,
+            ThirdProvider::class,
+            SecondProvider::class,
+        ]);
 
         $app->boot();
     }

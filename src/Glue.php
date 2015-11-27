@@ -114,8 +114,6 @@ class Glue
      */
     public function __call($name, array $arguments)
     {
-        $this->boot();
-
         // Delegate to Configuration
         if (method_exists($this->configuration, $name) && !in_array($name, ['get'], true)) {
             return $this->configuration->$name(...$arguments);
@@ -123,6 +121,7 @@ class Glue
 
         // Delegate to Router
         if ($this->container->has('router')) {
+            $this->boot();
             $this->routes[] = $this->container->get('router')->$name(...$arguments);
         }
     }
