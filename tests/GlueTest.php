@@ -23,10 +23,14 @@ use Madewithlove\Glue\Dummies\Providers\ThirdProvider;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
 use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
+use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
+use Zend\Diactoros\Stream;
 use Zend\Diactoros\Uri;
 
 class GlueTest extends TestCase
@@ -39,7 +43,7 @@ class GlueTest extends TestCase
     public function testCanCreateWithConfiguration()
     {
         $config = [
-            'debug' => 'foobar',
+            'debug'     => 'foobar',
             'providers' => [
                 'foo',
                 'bar',
@@ -125,8 +129,8 @@ class GlueTest extends TestCase
         $container->add(SapiEmitter::class, $emitter);
 
         $glue = new Glue(new Configuration([
-            'debug' => false,
-            'providers' => [LeagueRouteServiceProvider::class, RelayServiceProvider::class],
+            'debug'       => false,
+            'providers'   => [LeagueRouteServiceProvider::class, RelayServiceProvider::class],
             'middlewares' => [LeagueRouteMiddleware::class],
         ]), $container);
 
@@ -171,5 +175,35 @@ class GlueTest extends TestCase
         ]);
 
         $app->boot();
+    }
+
+    public function testCanUseDifferentMiddlewaresPipeline()
+    {
+        $container = new Container();
+        $container->add(SapiEmitter::class, function () {
+            $emitter = Mockery::mock(SapiEmitter::class);
+            $emitter->shouldReceive('emit')->once()->andReturnUsing(function (Response $response) {
+                $this->assertEquals(302, $response->getStatusCode());
+            });
+
+            return $emitter;
+        });
+
+        $container->add('pipeline', function () {
+            return function ($request, Response $response) {
+                return $response->withStatus(302);
+            };
+        });
+
+        $app = new Glue();
+        $app->setContainer($container);
+        $app->setProviders([
+            RequestServiceProvider::class,
+            MockRouterProvider::class,
+        ]);
+
+        $app->get('foo', 'bar');
+
+        $app->run();
     }
 }

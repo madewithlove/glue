@@ -8,6 +8,7 @@
 - Advanced usage
     - [The Configuration object](/docs/advanced/configuration-object.md)
     - [Providers configuration](/docs/advanced/providers-configuration.md)
+    - [Swapping middlewares handler](/docs/advanced/swapping-middlewares-handler.md)
 - Other informations
     - [Changelog](CHANGELOG.md)
     - [Contributing](CONTRIBUTING.md)
