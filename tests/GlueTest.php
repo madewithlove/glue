@@ -16,6 +16,9 @@ use League\Container\ServiceProvider\ServiceProviderInterface;
 use League\Tactician\CommandBus;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Dummies\DummyController;
+use Madewithlove\Glue\Dummies\Providers\FirstProvider;
+use Madewithlove\Glue\Dummies\Providers\SecondProvider;
+use Madewithlove\Glue\Dummies\Providers\ThirdProvider;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
 use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
@@ -161,5 +164,20 @@ class GlueTest extends TestCase
         $glue = new Glue(new Configuration(), $container);
 
         $this->assertEquals('foobar', $glue->getContainer()->get('foobar'));
+    }
+
+    public function testOrderOfProvidersDoesNotMatter()
+    {
+        $this->expectOutputString('12');
+
+        $app = new Glue(new Configuration([
+            'providers' => [
+                FirstProvider::class,
+                ThirdProvider::class,
+                SecondProvider::class,
+            ],
+        ]));
+
+        $app->boot();
     }
 }

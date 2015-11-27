@@ -16,6 +16,7 @@ use Interop\Container\ContainerInterface;
 use League\Container\Container;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
+use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
@@ -145,10 +146,31 @@ class Glue
             return $this->getConfiguration();
         });
 
-        // Register providers
+        $this->registerProviders();
+    }
+
+    /**
+     * Register the service providers with the container.
+     */
+    protected function registerProviders()
+    {
+        // Register core providers
         $this->container->addServiceProvider(ConfigurationServiceProvider::class);
         $this->container->addServiceProvider(PathsServiceProvider::class);
-        foreach ($this->configuration->getProviders() as $provider) {
+
+        // Split bootable and non-bootable providers
+        $providers = $this->configuration->getProviders();
+        $bootable = array_filter($providers, function ($provider) {
+            return (new $provider()) instanceof BootableServiceProviderInterface;
+        });
+
+        // Register all non bootable providers
+        foreach (array_diff($providers, $bootable) as $provider) {
+            $this->container->addServiceProvider($provider);
+        }
+
+        // Register the rest
+        foreach ($bootable as $provider) {
             $this->container->addServiceProvider($provider);
         }
     }

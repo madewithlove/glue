@@ -20,8 +20,8 @@ class SymfonyConsoleServiceProvider extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'console',
         Application::class,
+        'console',
     ];
 
     /**
