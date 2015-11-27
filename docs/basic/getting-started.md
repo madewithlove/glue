@@ -51,7 +51,7 @@ $app = new Glue(new Configuration([
     'debug'       => getenv('APP_DEBUG'),
     'providers'   => [
         Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider::class,
-        Acme\My\Own\Provider::class
+        Acme\My\Own\Provider::class,
     ],
     'middlewares' => [
         Madewithlove\Glue\Http\Middlewares\LeagueRouterMiddleware::class,
@@ -137,7 +137,7 @@ Per example to get the path to the cache, you'd do `$container->get('paths.cache
 The application also implements `ContainerAwareInterface` so you can swap the container at any time:
 
 ```php
-$container = new Container;
+$container = new Container();
 $container->share(Foobar::class, function() {
     return new Foobar;
 });
