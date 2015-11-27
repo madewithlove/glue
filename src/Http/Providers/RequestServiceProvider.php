@@ -34,13 +34,7 @@ class RequestServiceProvider extends AbstractServiceProvider
     public function register()
     {
         $this->container->share(ServerRequestInterface::class, function () {
-            return ServerRequestFactory::fromGlobals(
-                $_SERVER,
-                $_GET,
-                $_POST,
-                $_COOKIE,
-                $_FILES
-            );
+            return ServerRequestFactory::fromGlobals();
         });
 
         $this->container->share(ResponseInterface::class, function () {
