@@ -11,6 +11,7 @@
 namespace Madewithlove\Glue\Http\Providers;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
@@ -23,6 +24,7 @@ class RequestServiceProvider extends AbstractServiceProvider
      */
     protected $provides = [
         ServerRequestInterface::class,
+        RequestInterface::class,
         ResponseInterface::class,
     ];
 
@@ -35,6 +37,10 @@ class RequestServiceProvider extends AbstractServiceProvider
     {
         $this->container->share(ServerRequestInterface::class, function () {
             return ServerRequestFactory::fromGlobals();
+        });
+
+        $this->container->add(RequestInterface::class, function () {
+            return $this->container->get(ServerRequestInterface::class);
         });
 
         $this->container->share(ResponseInterface::class, function () {
