@@ -24,15 +24,11 @@ abstract class AbstractValuesProvider extends AbstractServiceProvider
      */
     public function provides($alias = null)
     {
-        $provided = array_map(function ($key) {
+        $this->provides = array_map(function ($key) {
             return $this->key.'.'.$key;
         }, $this->getProvided());
 
-        if ($alias !== null) {
-            return (in_array($alias, $provided, true));
-        }
-
-        return $provided;
+        return parent::provides($alias);
     }
 
     /**

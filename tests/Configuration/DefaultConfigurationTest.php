@@ -80,6 +80,9 @@ class DefaultConfigurationTest extends TestCase
            'foo' => 'bar',
         ]);
 
-        $this->assertEquals([TwigServiceProvider::class => ['foo' => 'bar']], $configuration->getPackagesConfiguration());
+        $expected = [TwigServiceProvider::class => ['foo' => 'bar']];
+        $configuration = $configuration->getPackagesConfiguration();
+
+        $this->assertEquals($expected, $configuration);
     }
 }

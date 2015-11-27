@@ -13,6 +13,7 @@ namespace Madewithlove\Glue\Console;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\TestCase;
+use Phinx\Console\Command\Migrate;
 use Symfony\Component\Console\Application;
 
 class PhinxServiceProviderTest extends TestCase
@@ -40,7 +41,9 @@ class PhinxServiceProviderTest extends TestCase
         /* @var Application $console */
         $this->assertArrayHasKey('migrate:migrate', $console->all());
 
-        $config = $console->get('migrate:migrate')->getConfig();
+        /** @var Migrate $command */
+        $command = $console->get('migrate:migrate');
+        $config  = $command->getConfig();
         $this->assertEquals('foobar', $config['paths']['migrations']);
     }
 }
