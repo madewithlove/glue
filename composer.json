@@ -42,6 +42,7 @@
         "league/flysystem": "^1.0",
         "league/route": "2.*@dev",
         "league/tactician": "^0.6.1",
+        "maximebf/debugbar": "^1.10",
         "monolog/monolog": "^1.17",
         "oscarotero/psr7-middlewares": "^3.7",
         "psy/psysh": "^0.6.1",
