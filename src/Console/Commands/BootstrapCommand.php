@@ -74,16 +74,20 @@ class BootstrapCommand extends Command
 <?php
 require 'vendor/autoload.php';
 
-$app = new Madewithlove\Glue\Glue();
-$app->console();
+call_user_func(function () {
+    $app = new Madewithlove\Glue\Glue();
+    $app->console();
+});
 PHP
             ,
             $web.DS.'index.php' => <<<'PHP'
 <?php
 require 'vendor/autoload.php';
 
-$app = new Madewithlove\Glue\Glue();
-$app->run();
+call_user_func(function () {
+    $app = new Madewithlove\Glue\Glue();
+    $app->run();
+});
 PHP
             ,
         ];
