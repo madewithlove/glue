@@ -27,10 +27,8 @@ use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\SapiEmitter;
-use Zend\Diactoros\Stream;
 use Zend\Diactoros\Uri;
 
 class GlueTest extends TestCase
@@ -43,7 +41,7 @@ class GlueTest extends TestCase
     public function testCanCreateWithConfiguration()
     {
         $config = [
-            'debug'     => 'foobar',
+            'debug' => 'foobar',
             'providers' => [
                 'foo',
                 'bar',
@@ -129,8 +127,8 @@ class GlueTest extends TestCase
         $container->add(SapiEmitter::class, $emitter);
 
         $glue = new Glue(new Configuration([
-            'debug'       => false,
-            'providers'   => [LeagueRouteServiceProvider::class, RelayServiceProvider::class],
+            'debug' => false,
+            'providers' => [LeagueRouteServiceProvider::class, RelayServiceProvider::class],
             'middlewares' => [LeagueRouteMiddleware::class],
         ]), $container);
 
