@@ -120,8 +120,8 @@ class Glue
         }
 
         // Delegate to Router
+        $this->boot();
         if ($this->container->has('router')) {
-            $this->boot();
             $this->routes[] = $this->container->get('router')->$name(...$arguments);
         }
     }

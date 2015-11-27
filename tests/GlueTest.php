@@ -17,6 +17,7 @@ use League\Tactician\CommandBus;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Dummies\DummyController;
 use Madewithlove\Glue\Dummies\Providers\FirstProvider;
+use Madewithlove\Glue\Dummies\Providers\MockRouterProvider;
 use Madewithlove\Glue\Dummies\Providers\SecondProvider;
 use Madewithlove\Glue\Dummies\Providers\ThirdProvider;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
@@ -52,16 +53,8 @@ class GlueTest extends TestCase
 
     public function testCanDelegateCallsToRouter()
     {
-        $router = Mockery::mock('Router');
-        $router->shouldReceive('get')->once()->andReturnUsing(function ($route) {
-            return $route;
-        });
-
-        $container = new Container();
-        $container->add('router', $router);
-
         $glue = new Glue(new Configuration());
-        $glue->setContainer($container);
+        $glue->setProviders([MockRouterProvider::class]);
 
         $glue->get('foobar');
 
