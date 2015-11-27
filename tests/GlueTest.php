@@ -35,7 +35,7 @@ class GlueTest extends TestCase
     public function testCanCreateWithConfiguration()
     {
         $config = [
-            'debug'     => 'foobar',
+            'debug' => 'foobar',
             'providers' => [
                 'foo',
                 'bar',
@@ -129,8 +129,8 @@ class GlueTest extends TestCase
         $container->add(SapiEmitter::class, $emitter);
 
         $glue = new Glue(new Configuration([
-            'debug'       => false,
-            'providers'   => [LeagueRouteServiceProvider::class, RelayServiceProvider::class],
+            'debug' => false,
+            'providers' => [LeagueRouteServiceProvider::class, RelayServiceProvider::class],
             'middlewares' => [LeagueRouteMiddleware::class],
         ]), $container);
 

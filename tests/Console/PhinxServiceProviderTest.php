@@ -43,7 +43,7 @@ class PhinxServiceProviderTest extends TestCase
 
         /** @var Migrate $command */
         $command = $console->get('migrate:migrate');
-        $config  = $command->getConfig();
+        $config = $command->getConfig();
         $this->assertEquals('foobar', $config['paths']['migrations']);
     }
 }
