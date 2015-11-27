@@ -55,7 +55,7 @@ $app = (new Glue())
         SomeProvider::class,
         AnotherProvider::class,
         LeagueRouteServiceProvider::class,
-    ]);
+    ])
     ->setMiddlewares([
         SomeMiddleware::class,
         LeagueRouteMiddleware::class,
