@@ -37,11 +37,11 @@ $relay = $builder->newInstance([
     SomeMiddleware::class,
     function($request, $response, $next) use ($router) {
         $next($request, $router->dispatch($request, $response));
-    }
+    },
 ]);
 
 // Create PSR7 stack
-$request = ServerRequestFactory::fromGlobals($_SERVER, $_GET, $_POST, $_COOKIE, $_FILES);
+$request = ServerRequestFactory::fromGlobals();
 $response = $relay(new Request, new Response());
 
 (new SapiEmitter())->emit($response);
@@ -54,8 +54,8 @@ $app = (new Glue())
     ->setProviders([
         SomeProvider::class,
         AnotherProvider::class,
-        LeagueRouteServiceProvider::class
-    ]);
+        LeagueRouteServiceProvider::class,
+    ])
     ->setMiddlewares([
         SomeMiddleware::class,
         LeagueRouteMiddleware::class,
