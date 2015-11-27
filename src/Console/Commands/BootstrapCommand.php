@@ -72,7 +72,7 @@ class BootstrapCommand extends Command
             '.env' => 'APP_ENV=local',
             'console' => <<<'PHP'
 <?php
-require 'vendor/autoload.php';
+require __DIR__.'/vendor/autoload.php';
 
 $app = new Madewithlove\Glue\Glue();
 $app->console();
@@ -80,7 +80,7 @@ PHP
             ,
             $web.DS.'index.php' => <<<'PHP'
 <?php
-require 'vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 $app = new Madewithlove\Glue\Glue();
 $app->run();
