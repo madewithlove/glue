@@ -82,7 +82,7 @@ PHP
             ,
             $web.DS.'index.php' => <<<'PHP'
 <?php
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 call_user_func(function () {
     $app = new Madewithlove\Glue\Glue();
