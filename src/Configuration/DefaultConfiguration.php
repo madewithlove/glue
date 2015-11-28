@@ -14,21 +14,19 @@ use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use League\Flysystem\Adapter\Local;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Console\PhinxServiceProvider;
-use Madewithlove\Glue\Console\SymfonyConsoleServiceProvider;
+use Madewithlove\Glue\Definitions\DebugbarDefinition;
 use Madewithlove\Glue\Definitions\FlysystemDefinition;
 use Madewithlove\Glue\Definitions\MonologDefinition;
+use Madewithlove\Glue\Definitions\SymfonyConsoleDefinition;
+use Madewithlove\Glue\Definitions\TacticianDefinition;
+use Madewithlove\Glue\Definitions\TwigDefinition;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider;
 use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
 use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
 use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
-use Madewithlove\Glue\Http\Providers\TwigServiceProvider;
 use Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider;
-use Madewithlove\Glue\Providers\CommandBusServiceProvider;
-use Madewithlove\Glue\Providers\DebugbarServiceProvider;
 use Madewithlove\Glue\Providers\EloquentServiceProvider;
-use Madewithlove\Glue\Providers\FlysystemServiceProvider;
-use Madewithlove\Glue\Providers\MonologServiceProvider;
 use Madewithlove\Glue\Utils;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
@@ -63,10 +61,9 @@ class DefaultConfiguration extends AbstractConfiguration
             'rootPath' => $this->configureRootPath(),
             'namespace' => $this->configureNamespace(),
             'paths' => $this->configurePaths(),
-            'commands' => $this->configureCommands(),
             'providers' => $this->configureProviders(),
             'middlewares' => $this->configureMiddlewares(),
-            'packages' => $this->configurePackagesConfiguration(),
+            'definitions' => $this->configureDefinitionProviders(),
         ];
     }
 
@@ -122,28 +119,14 @@ class DefaultConfiguration extends AbstractConfiguration
     }
 
     /**
-     * @return string[]
-     */
-    public function configureCommands()
-    {
-        return [
-            TinkerCommand::class,
-        ];
-    }
-
-    /**
      * {@inheritdoc}
      */
     protected function configureProviders()
     {
         $providers = [
-            'commandbus' => CommandBusServiceProvider::class,
             'db' => EloquentServiceProvider::class,
-            'filesystem' => FlysystemServiceProvider::class,
-            'logs' => MonologServiceProvider::class,
             'request' => RequestServiceProvider::class,
             'routing' => LeagueRouteServiceProvider::class,
-            'view' => TwigServiceProvider::class,
             'pipeline' => RelayServiceProvider::class,
             'url' => UrlGeneratorServiceProvider::class,
             'assets' => WebpackServiceProvider::class,
@@ -151,9 +134,7 @@ class DefaultConfiguration extends AbstractConfiguration
 
         if ($this->isDebug()) {
             $providers += [
-                'console' => SymfonyConsoleServiceProvider::class,
                 'migrations' => PhinxServiceProvider::class,
-                'debugbar' => DebugbarServiceProvider::class,
             ];
         }
 
@@ -182,22 +163,47 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * {@inheritdoc}
      */
-    public function getDefinitionProviders()
+    public function configureDefinitionProviders()
     {
         $views = $this->getPath('views');
 
-        return [
-            new FlysystemDefinition([
+        $providers = [
+            'bus' => new TacticianDefinition(),
+            'filesystem' => new FlysystemDefinition([
                 'default' => 'local',
                 'adapters' => [
                     'local' => new Local($this->getRootPath()),
                 ],
             ]),
-            new MonologDefinition([
+            'logging' => new MonologDefinition([
                 'path' => $this->getPath('logs'),
                 'filename' => date('Y-m-d').'.log',
             ]),
+            'console' => new SymfonyConsoleDefinition([
+                TinkerCommand::class,
+            ]),
+            'views' => new TwigDefinition([
+                'loader' => is_dir($views) ? new Twig_Loader_Filesystem($views) : new Twig_Loader_Array([]),
+                'environment' => [
+                    'debug' => $this->isDebug(),
+                    'auto_reload' => $this->isDebug(),
+                    'strict_variables' => false,
+                    'cache' => $this->getPath('cache').DS.'twig',
+                ],
+                'extensions' => array_filter([
+                    $this->isDebug() ? new Twig_Extension_Debug() : null,
+                ]),
+            ]),
         ];
+
+        if ($this->isDebug()) {
+            $providers = array_merge($providers, [
+                new DebugbarDefinition(),
+
+            ]);
+        }
+
+        return $providers;
 
         return [
             'phinx' => [
@@ -231,18 +237,6 @@ class DefaultConfiguration extends AbstractConfiguration
                         'prefix' => '',
                     ],
                 ],
-            ],
-            'twig' => [
-                'loader' => is_dir($views) ? new Twig_Loader_Filesystem($views) : new Twig_Loader_Array([]),
-                'environment' => [
-                    'debug' => $this->isDebug(),
-                    'auto_reload' => $this->isDebug(),
-                    'strict_variables' => false,
-                    'cache' => $this->getPath('cache').DS.'twig',
-                ],
-                'extensions' => array_filter([
-                    $this->isDebug() ? new Twig_Extension_Debug() : null,
-                ]),
             ],
         ];
     }

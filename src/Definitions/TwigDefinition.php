@@ -12,24 +12,24 @@ namespace Madewithlove\Glue\Definitions;
 
 use Assembly\AliasDefinition;
 use Assembly\ObjectDefinition;
-use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
+use Twig_Environment;
 
-class MonologDefinition implements DefinitionProviderInterface
+class TwigDefinition implements DefinitionProviderInterface
 {
     /**
      * @var array
      */
     protected $options = [
-        'path' => '',
-        'filename' => '',
+        'loader' => null,
+        'environment' => null,
+        'extensions' => [],
     ];
 
     /**
+     * TwigDefinition constructor.
+     *
      * @param array $options
      */
     public function __construct(array $options)
@@ -44,17 +44,16 @@ class MonologDefinition implements DefinitionProviderInterface
      */
     public function getDefinitions()
     {
-        $handler = new ObjectDefinition('monolog.handler', StreamHandler::class);
-        $handler->setConstructorArguments($this->options['path'].DS.$this->options['filename'], Logger::WARNING);
+        $twig = new ObjectDefinition(Twig_Environment::class, Twig_Environment::class);
+        $twig->setConstructorArguments($this->options['loader'], $this->options['environment']);
 
-        $logger = new ObjectDefinition(LoggerInterface::class, Logger::class);
-        $logger->setConstructorArguments('glue');
-        $logger->addMethodCall('pushHandler', new Reference('monolog.handler'));
+        foreach ($this->options['extensions'] as $extension) {
+            $twig->addMethodCall('addExtension', $extension);
+        }
 
         return [
-            LoggerInterface::class => $logger,
-            'monolog.handler' => $handler,
-            'monolog' => new AliasDefinition('monolog', LoggerInterface::class),
+            Twig_Environment::class => $twig,
+            'twig' => new AliasDefinition('twig', Twig_Environment::class),
         ];
     }
 }

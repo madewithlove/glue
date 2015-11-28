@@ -10,12 +10,14 @@
 
 namespace Madewithlove\Glue\Definitions;
 
+use Assembly\AliasDefinition;
 use Assembly\FactoryCallDefinition;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 
 class FlysystemDefinition implements DefinitionProviderInterface
@@ -50,15 +52,17 @@ class FlysystemDefinition implements DefinitionProviderInterface
             $adapter = new Filesystem($adapter);
         }
 
-        $mountManager = new ObjectDefinition('flysystem.mount-manager', MountManager::class);
+        $mountManager = new ObjectDefinition(MountManager::class, MountManager::class);
         $mountManager->setConstructorArguments($this->options['adapters']);
 
-        $default = new FactoryCallDefinition('flysystem', new Reference('flysystem.mount-manager'), 'getFilesystem');
+        $default = new FactoryCallDefinition(FilesystemInterface::class, new Reference('flysystem.mount-manager'), 'getFilesystem');
         $default->setArguments($this->options['default']);
 
         return [
-            'flysystem.mount-manager' => $mountManager,
-            'flysystem' => $default,
+            MountManager::class => $mountManager,
+            FilesystemInterface::class => $default,
+            'flysystem.mount-manager' => new AliasDefinition('flysystem.mount-manager', MountManager::class),
+            'flysystem' => new AliasDefinition('flysystem', FilesystemInterface::class),
         ];
     }
 }

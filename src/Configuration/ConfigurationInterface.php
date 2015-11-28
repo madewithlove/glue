@@ -99,6 +99,15 @@ interface ConfigurationInterface extends Arrayable
     public function getDefinitionProviders();
 
     /**
+     * Get a definition provider in particular.
+     *
+     * @param string $provider
+     *
+     * @return DefinitionProviderInterface
+     */
+    public function getDefinitionProvider($provider);
+
+    /**
      * Set the definition providers to register.
      *
      * @param DefinitionProviderInterface[] $providers
@@ -106,4 +115,14 @@ interface ConfigurationInterface extends Arrayable
      * @return $this
      */
     public function setDefinitionsProviders(array $providers = []);
+
+    /**
+     * Set a definition provider in particular.
+     *
+     * @param string                      $name
+     * @param DefinitionProviderInterface $provider
+     *
+     * @return $this
+     */
+    public function setDefinitionProvider($name, $provider);
 }

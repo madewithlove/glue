@@ -11,9 +11,9 @@
 namespace Madewithlove\Glue;
 
 use Acclimate\Container\ContainerAcclimator;
-use Assembly\Container\Container as Assembly;
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
+use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
@@ -21,7 +21,6 @@ use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
-
 use Madewithlove\Glue\Providers\ConfigurationServiceProvider;
 use Madewithlove\Glue\Providers\PathsServiceProvider;
 use Madewithlove\Glue\Traits\Configurable;
@@ -161,8 +160,13 @@ class Glue
 
         // Register definitions
         $definitionProviders = $this->configuration->getDefinitionProviders();
-        $assembler = new Assembly([], $definitionProviders);
-        $this->container->delegate($assembler);
+        foreach ($definitionProviders as &$definitionProvider) {
+            if ($definitionProvider instanceof ContainerAwareInterface) {
+                $definitionProvider->setContainer($this->container);
+            }
+
+            $this->container->addDefinitionProvider($definitionProvider);
+        }
 
         // Split bootable and non-bootable providers
         $providers = $this->configuration->getProviders();
