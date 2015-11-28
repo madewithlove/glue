@@ -98,7 +98,7 @@ interface ConfigurationInterface extends Arrayable
      *
      * @return $this
      */
-    public function setDefinitionsProviders(array $providers = []);
+    public function setDefinitionProviders(array $providers = []);
 
     /**
      * Set a definition provider in particular.

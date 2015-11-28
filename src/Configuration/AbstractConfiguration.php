@@ -109,7 +109,7 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
-    public function setDefinitionsProviders(array $providers = [])
+    public function setDefinitionProviders(array $providers = [])
     {
         $this->definitions = $providers;
 

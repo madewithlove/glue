@@ -54,7 +54,7 @@ class GlueTest extends TestCase
     public function testCanDelegateCallsToRouter()
     {
         $glue = new Glue(new Configuration());
-        $glue->setDefinitionsProviders([new MockRouterDefinition()]);
+        $glue->setDefinitionProviders([new MockRouterDefinition()]);
 
         $glue->get('foobar');
 
@@ -137,7 +137,7 @@ class GlueTest extends TestCase
         $glue = new Glue(new Configuration());
         $glue
             ->setPaths(['cache' => 'storage/cache'])
-            ->setDefinitionsProviders([new LeagueRouteDefinition()])
+            ->setDefinitionProviders([new LeagueRouteDefinition()])
             ->setMiddlewares([LeagueRouteMiddleware::class]);
 
         $this->assertEquals(['cache' => 'storage/cache'], $glue->getPaths());
@@ -177,7 +177,7 @@ class GlueTest extends TestCase
 
         $app = new Glue();
         $app->setContainer($container);
-        $app->setDefinitionsProviders([
+        $app->setDefinitionProviders([
             new ZendDiactorosDefinition(),
             new MockRouterDefinition(),
         ]);
