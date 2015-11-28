@@ -11,9 +11,12 @@
 namespace Madewithlove\Glue\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
+use League\Flysystem\Adapter\Local;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Console\PhinxServiceProvider;
 use Madewithlove\Glue\Console\SymfonyConsoleServiceProvider;
+use Madewithlove\Glue\Definitions\FlysystemDefinition;
+use Madewithlove\Glue\Definitions\MonologDefinition;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider;
 use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
@@ -179,12 +182,25 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * {@inheritdoc}
      */
-    protected function configurePackagesConfiguration()
+    public function getDefinitionProviders()
     {
         $views = $this->getPath('views');
 
         return [
-            PhinxServiceProvider::class => [
+            new FlysystemDefinition([
+                'default' => 'local',
+                'adapters' => [
+                    'local' => new Local($this->getRootPath()),
+                ],
+            ]),
+            new MonologDefinition([
+                'path' => $this->getPath('logs'),
+                'filename' => date('Y-m-d').'.log',
+            ]),
+        ];
+
+        return [
+            'phinx' => [
                 'paths' => [
                     'migrations' => $this->getPath('migrations'),
                 ],
@@ -202,11 +218,7 @@ class DefaultConfiguration extends AbstractConfiguration
                     ],
                 ],
             ],
-            MonologServiceProvider::class => [
-                'path' => $this->getPath('logs'),
-                'filename' => date('Y-m-d').'.log',
-            ],
-            EloquentServiceProvider::class => [
+            'eloquent' => [
                 'connections' => [
                     'default' => [
                         'driver' => 'mysql',
@@ -220,7 +232,7 @@ class DefaultConfiguration extends AbstractConfiguration
                     ],
                 ],
             ],
-            TwigServiceProvider::class => [
+            'twig' => [
                 'loader' => is_dir($views) ? new Twig_Loader_Filesystem($views) : new Twig_Loader_Array([]),
                 'environment' => [
                     'debug' => $this->isDebug(),

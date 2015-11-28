@@ -119,35 +119,17 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
-    public function getPackagesConfiguration()
+    public function getDefinitionProviders()
     {
-        return (array) $this->packages;
+        return (array) $this->definitions;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPackageConfiguration($package)
+    public function setDefinitionsProviders(array $providers = [])
     {
-        return array_get($this->getPackagesConfiguration(), $package);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setPackagesConfiguration(array $configurations = [])
-    {
-        $this->packages = $configurations;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setPackageConfiguration($package, array $configuration = [])
-    {
-        $this->packages = array_merge($this->packages, [$package => $configuration]);
+        $this->definitions = $providers;
 
         return $this;
     }

@@ -11,6 +11,7 @@
 namespace Madewithlove\Glue\Configuration;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Interop\Container\Definition\DefinitionProviderInterface;
 
 interface ConfigurationInterface extends Arrayable
 {
@@ -91,37 +92,18 @@ interface ConfigurationInterface extends Arrayable
     public function setMiddlewares(array $middlewares = []);
 
     /**
-     * Get the configuration for the various packages.
+     * Get the definition providers to register.
      *
-     * @return array
+     * @return DefinitionProviderInterface[]
      */
-    public function getPackagesConfiguration();
+    public function getDefinitionProviders();
 
     /**
-     * Get the configuration of a package in particular.
+     * Set the definition providers to register.
      *
-     * @param string $package
-     *
-     * @return array
-     */
-    public function getPackageConfiguration($package);
-
-    /**
-     * Set configuration for all packages.
-     *
-     * @param array $configurations
+     * @param DefinitionProviderInterface[] $providers
      *
      * @return $this
      */
-    public function setPackagesConfiguration(array $configurations = []);
-
-    /**
-     * Set configuration for a package.
-     *
-     * @param string $package
-     * @param array  $configuration
-     *
-     * @return $this
-     */
-    public function setPackageConfiguration($package, array $configuration = []);
+    public function setDefinitionsProviders(array $providers = []);
 }

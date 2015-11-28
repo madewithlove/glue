@@ -36,6 +36,7 @@
     "require": {
         "php": ">=5.6.0",
         "acclimate/container": "^1.0",
+        "container-interop/definition-interop": "^0.1.0",
         "franzl/whoops-middleware": "^0.2.0",
         "illuminate/database": "^5.1",
         "league/container": "^2.0.3",
@@ -43,6 +44,7 @@
         "league/route": "2.*@dev",
         "league/tactician": "^0.6.1",
         "maximebf/debugbar": "^1.10",
+        "mnapoli/assembly": "dev-master",
         "monolog/monolog": "^1.17",
         "oscarotero/psr7-middlewares": "^3.7",
         "psy/psysh": "^0.6.1",
@@ -60,6 +62,12 @@
         "mockery/mockery": "^0.9.4",
         "phpunit/phpunit": "^5.0.9"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:mnapoli/assembly.git"
+        }
+    ],
     "extra": {
         "branch-alias": {
             "dev-master": "0.1-dev"
@@ -74,5 +82,7 @@
             "gitbook build",
             "cd _book && git init && git checkout -b gh-pages && touch .nojekyll && git add --all && git commit -am 'Rebuild documentation' && git push git@github.com:madewithlove/glue.git gh-pages --force"
         ]
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
