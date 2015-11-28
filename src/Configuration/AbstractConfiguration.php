@@ -19,7 +19,6 @@ use League\Container\ContainerAwareTrait;
  * @property string                        $namespace   The namespace of your application
  * @property string                        $rootPath    The path to the root of your application
  * @property bool                          $debug       Whether we're in debug mode or not
- * @property string[]                      $providers   The providers to apply
  * @property string[]                      $middlewares The middlewares to apply to the current route
  * @property array                         $paths       The paths in your application
  * @property DefinitionProviderInterface[] $definitions The definition providers
