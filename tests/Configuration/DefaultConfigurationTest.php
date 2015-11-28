@@ -47,11 +47,11 @@ class DefaultConfigurationTest extends TestCase
 
         $configuration->setDebug(true);
         $configuration->configure();
-        $this->assertArrayHasKey('debugbar', $configuration->getProviders());
+        $this->assertArrayHasKey('debugbar', $configuration->getDefinitionProviders());
 
         $configuration->setDebug(false);
         $configuration->configure();
-        $this->assertArrayNotHasKey('debugbar', $configuration->getProviders());
+        $this->assertArrayNotHasKey('debugbar', $configuration->getDefinitionProviders());
     }
 
     public function testCanProperlySerialize()
@@ -70,19 +70,5 @@ class DefaultConfigurationTest extends TestCase
         $configuration->setDebug(false);
 
         $this->assertEquals(['foobar'], $configuration->getPaths());
-    }
-
-    public function testCanSetPackageConfiguration()
-    {
-        $configuration = new DefaultConfiguration();
-        $configuration->setPackagesConfiguration([]);
-        $configuration->setPackageConfiguration(TwigServiceProvider::class, [
-           'foo' => 'bar',
-        ]);
-
-        $expected = [TwigServiceProvider::class => ['foo' => 'bar']];
-        $configuration = $configuration->getPackagesConfiguration();
-
-        $this->assertEquals($expected, $configuration);
     }
 }

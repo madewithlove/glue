@@ -20,6 +20,7 @@ use Interop\Container\Definition\ObjectDefinitionInterface;
 use Interop\Container\Definition\ParameterDefinitionInterface;
 use Interop\Container\Definition\ReferenceInterface;
 use League\Container\Container as LeagueContainer;
+use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinitionInterface;
 use ReflectionClass;
 
 /**
@@ -31,6 +32,11 @@ class Container extends LeagueContainer
      * @var DefinitionInterface[]
      */
     protected $interopDefinitions = [];
+
+    /**
+     * @var ExtendDefinitionInterface[][]
+     */
+    protected $extensions = [];
 
     /**
      * @param string $alias
@@ -67,7 +73,11 @@ class Container extends LeagueContainer
     public function addDefinitionProvider(DefinitionProviderInterface $provider)
     {
         foreach ($provider->getDefinitions() as $definition) {
-            $this->interopDefinitions[$definition->getIdentifier()] = $definition;
+            if ($definition instanceof ExtendDefinitionInterface) {
+                $this->extensions[$definition->getExtended()][] = $definition;
+            } else {
+                $this->interopDefinitions[$definition->getIdentifier()] = $definition;
+            }
         }
     }
 
@@ -78,7 +88,6 @@ class Container extends LeagueContainer
      *
      * @throws InvalidDefinition
      * @throws UnsupportedDefinition
-     *
      * @return mixed
      */
     private function resolveDefinition(DefinitionInterface $definition)
@@ -93,29 +102,28 @@ class Container extends LeagueContainer
                 // Create the instance
                 $constructorArguments = $definition->getConstructorArguments();
                 $constructorArguments = array_map([$this, 'resolveReference'], $constructorArguments);
-                $service = $reflection->newInstanceArgs($constructorArguments);
+                $service              = $reflection->newInstanceArgs($constructorArguments);
 
-                // Set properties
-                foreach ($definition->getPropertyAssignments() as $propertyAssignment) {
-                    $propertyName = $propertyAssignment->getPropertyName();
-                    $service->$propertyName = $this->resolveReference($propertyAssignment->getValue());
+                // Set properties and call methods
+                $service = $this->callAssignments($service, $definition);
+                $service = $this->callMethods($service, $definition);
+
+                if (array_key_exists($definition->getIdentifier(), $this->extensions)) {
+                    foreach ($this->extensions[$definition->getIdentifier()] as $extension) {
+                        $service = $this->callAssignments($service, $extension);
+                        $service = $this->callMethods($service, $extension);
+                    }
                 }
 
-                // Call methods
-foreach ($definition->getMethodCalls() as $methodCall) {
-    $methodArguments = $methodCall->getArguments();
-    $methodArguments = array_map([$this, 'resolveReference'], $methodArguments);
-    call_user_func_array([$service, $methodCall->getMethodName()], $methodArguments);
-}
-
                 return $service;
+
             case $definition instanceof AliasDefinitionInterface:
                 return $this->get($definition->getTarget());
 
             case $definition instanceof FactoryCallDefinitionInterface:
-                $factory = $definition->getFactory();
+                $factory    = $definition->getFactory();
                 $methodName = $definition->getMethodName();
-                $arguments = $definition->getArguments();
+                $arguments  = $definition->getArguments();
 
                 if (is_string($factory)) {
                     return $factory::$methodName(...$arguments);
@@ -146,5 +154,38 @@ foreach ($definition->getMethodCalls() as $methodCall) {
         }
 
         return $value;
+    }
+
+    /**
+     * @param object                    $service
+     * @param ObjectDefinitionInterface $definition
+     *
+     * @return object
+     */
+    private function callMethods($service, ObjectDefinitionInterface $definition)
+    {
+        foreach ($definition->getMethodCalls() as $methodCall) {
+            $methodArguments = $methodCall->getArguments();
+            $methodArguments = array_map([$this, 'resolveReference'], $methodArguments);
+            call_user_func_array([$service, $methodCall->getMethodName()], $methodArguments);
+        }
+
+        return $service;
+    }
+
+    /**
+     * @param object                    $service
+     * @param ObjectDefinitionInterface $definition
+     *
+     * @return object
+     */
+    private function callAssignments($service, ObjectDefinitionInterface $definition)
+    {
+        foreach ($definition->getPropertyAssignments() as $propertyAssignment) {
+            $propertyName           = $propertyAssignment->getPropertyName();
+            $service->$propertyName = $this->resolveReference($propertyAssignment->getValue());
+        }
+
+        return $service;
     }
 }

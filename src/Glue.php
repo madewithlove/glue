@@ -167,22 +167,6 @@ class Glue
 
             $this->container->addDefinitionProvider($definitionProvider);
         }
-
-        // Split bootable and non-bootable providers
-        $providers = $this->configuration->getProviders();
-        $bootable = array_filter($providers, function ($provider) {
-            return (new $provider()) instanceof BootableServiceProviderInterface;
-        });
-
-        // Register all non bootable providers
-        foreach (array_diff($providers, $bootable) as $provider) {
-            $this->container->addServiceProvider($provider);
-        }
-
-        // Register the rest
-        foreach ($bootable as $provider) {
-            $this->container->addServiceProvider($provider);
-        }
     }
 
     /**

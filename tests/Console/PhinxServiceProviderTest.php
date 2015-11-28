@@ -11,6 +11,8 @@
 namespace Madewithlove\Glue\Console;
 
 use Madewithlove\Glue\Configuration\Configuration;
+use Madewithlove\Glue\Definitions\PhinxDefinition;
+use Madewithlove\Glue\Definitions\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\TestCase;
 use Phinx\Console\Command\Migrate;
@@ -24,14 +26,11 @@ class PhinxServiceProviderTest extends TestCase
             'paths' => [
               'migrations' => 'foobar',
             ],
-            'providers' => [
-                SymfonyConsoleServiceProvider::class,
-                PhinxServiceProvider::class,
-            ],
-            'packages' => [
-                PhinxServiceProvider::class => [
+            'definitions' => [
+              new SymfonyConsoleDefinition(),
+                new PhinxDefinition([
                     'paths' => ['migrations' => 'foobar'],
-                ],
+                ])
             ],
         ]));
 

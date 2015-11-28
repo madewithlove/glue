@@ -21,7 +21,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
 
-class ZendDiacotorosDefinition implements DefinitionProviderInterface
+class ZendDiactorosDefinition implements DefinitionProviderInterface
 {
     /**
      * Returns the definition to register in the container.

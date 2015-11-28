@@ -33,7 +33,7 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
     /**
      * @param string[]|Command[] $commands
      */
-    public function __construct($commands)
+    public function __construct($commands = [])
     {
         $this->commands = $commands;
     }

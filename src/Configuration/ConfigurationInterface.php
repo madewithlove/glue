@@ -60,22 +60,6 @@ interface ConfigurationInterface extends Arrayable
     public function setPaths(array $paths = []);
 
     /**
-     * Get the providers to bind with glue.
-     *
-     * @return array
-     */
-    public function getProviders();
-
-    /**
-     * Set the providers to apply.
-     *
-     * @param array $providers
-     *
-     * @return $this
-     */
-    public function setProviders(array $providers = []);
-
-    /**
      * Get the middlewares to apply.
      *
      * @return array

@@ -19,14 +19,15 @@ use Madewithlove\Glue\Definitions\EloquentDefinition;
 use Madewithlove\Glue\Definitions\FlysystemDefinition;
 use Madewithlove\Glue\Definitions\LeagueRouteDefinition;
 use Madewithlove\Glue\Definitions\MonologDefinition;
+use Madewithlove\Glue\Definitions\PhinxDefinition;
 use Madewithlove\Glue\Definitions\RelayDefinition;
 use Madewithlove\Glue\Definitions\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Definitions\TacticianDefinition;
 use Madewithlove\Glue\Definitions\TwigDefinition;
-use Madewithlove\Glue\Definitions\ZendDiacotorosDefinition;
+use Madewithlove\Glue\Definitions\UrlGeneratorDefinition;
+use Madewithlove\Glue\Definitions\WebpackDefinition;
+use Madewithlove\Glue\Definitions\ZendDiactorosDefinition;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
-use Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider;
-use Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider;
 use Madewithlove\Glue\Utils;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
@@ -121,25 +122,6 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * {@inheritdoc}
      */
-    protected function configureProviders()
-    {
-        $providers = [
-            'url' => UrlGeneratorServiceProvider::class,
-            'assets' => WebpackServiceProvider::class,
-        ];
-
-        if ($this->isDebug()) {
-            $providers += [
-                'migrations' => PhinxServiceProvider::class,
-            ];
-        }
-
-        return $providers;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function configureMiddlewares()
     {
         if ($this->isDebug()) {
@@ -164,7 +146,8 @@ class DefaultConfiguration extends AbstractConfiguration
         $views = $this->getPath('views');
 
         $providers = [
-            'request' => new ZendDiacotorosDefinition(),
+            'assets' => new WebpackDefinition($this->getPath('assets')),
+            'request' => new ZendDiactorosDefinition(),
             'bus' => new TacticianDefinition(),
             'pipeline' => new RelayDefinition($this->getMiddlewares()),
             'routing' => new LeagueRouteDefinition(),
@@ -205,36 +188,33 @@ class DefaultConfiguration extends AbstractConfiguration
                     $this->isDebug() ? new Twig_Extension_Debug() : null,
                 ]),
             ]),
+            'url' => new UrlGeneratorDefinition($this->namespace),
         ];
 
         if ($this->isDebug()) {
             $providers = array_merge($providers, [
-                new DebugbarDefinition(),
-
+                'debugbar' => new DebugbarDefinition(),
+                'migrations' => new PhinxDefinition([
+                    'paths' => [
+                        'migrations' => $this->getPath('migrations'),
+                    ],
+                    'environments' => [
+                        'default_migration_table' => 'phinxlog',
+                        'default_database' => 'default',
+                        'default' => [
+                            'adapter' => 'mysql',
+                            'host' => getenv('DB_HOST'),
+                            'name' => getenv('DB_DATABASE'),
+                            'user' => getenv('DB_USERNAME'),
+                            'pass' => getenv('DB_PASSWORD'),
+                            'port' => 3306,
+                            'charset' => 'utf8',
+                        ],
+                    ],
+                ])
             ]);
         }
 
         return $providers;
-
-        return [
-            'phinx' => [
-                'paths' => [
-                    'migrations' => $this->getPath('migrations'),
-                ],
-                'environments' => [
-                    'default_migration_table' => 'phinxlog',
-                    'default_database' => 'default',
-                    'default' => [
-                        'adapter' => 'mysql',
-                        'host' => getenv('DB_HOST'),
-                        'name' => getenv('DB_DATABASE'),
-                        'user' => getenv('DB_USERNAME'),
-                        'pass' => getenv('DB_PASSWORD'),
-                        'port' => 3306,
-                        'charset' => 'utf8',
-                    ],
-                ],
-            ],
-        ];
     }
 }
