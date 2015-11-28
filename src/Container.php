@@ -102,11 +102,11 @@ class Container extends LeagueContainer
                 }
 
                 // Call methods
-                foreach ($definition->getMethodCalls() as $methodCall) {
-                    $methodArguments = $methodCall->getArguments();
-                    $methodArguments = array_map([$this, 'resolveReference'], $methodArguments);
-                    call_user_func_array([$service, $methodCall->getMethodName()], $methodArguments);
-                }
+foreach ($definition->getMethodCalls() as $methodCall) {
+    $methodArguments = $methodCall->getArguments();
+    $methodArguments = array_map([$this, 'resolveReference'], $methodArguments);
+    call_user_func_array([$service, $methodCall->getMethodName()], $methodArguments);
+}
 
                 return $service;
             case $definition instanceof AliasDefinitionInterface:

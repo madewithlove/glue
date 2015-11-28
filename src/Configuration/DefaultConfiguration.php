@@ -15,18 +15,18 @@ use League\Flysystem\Adapter\Local;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Console\PhinxServiceProvider;
 use Madewithlove\Glue\Definitions\DebugbarDefinition;
+use Madewithlove\Glue\Definitions\EloquentDefinition;
 use Madewithlove\Glue\Definitions\FlysystemDefinition;
+use Madewithlove\Glue\Definitions\LeagueRouteDefinition;
 use Madewithlove\Glue\Definitions\MonologDefinition;
+use Madewithlove\Glue\Definitions\RelayDefinition;
 use Madewithlove\Glue\Definitions\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Definitions\TacticianDefinition;
 use Madewithlove\Glue\Definitions\TwigDefinition;
+use Madewithlove\Glue\Definitions\ZendDiacotorosDefinition;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider;
-use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
-use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
-use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
 use Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider;
-use Madewithlove\Glue\Providers\EloquentServiceProvider;
 use Madewithlove\Glue\Utils;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
@@ -124,10 +124,6 @@ class DefaultConfiguration extends AbstractConfiguration
     protected function configureProviders()
     {
         $providers = [
-            'db' => EloquentServiceProvider::class,
-            'request' => RequestServiceProvider::class,
-            'routing' => LeagueRouteServiceProvider::class,
-            'pipeline' => RelayServiceProvider::class,
             'url' => UrlGeneratorServiceProvider::class,
             'assets' => WebpackServiceProvider::class,
         ];
@@ -168,7 +164,22 @@ class DefaultConfiguration extends AbstractConfiguration
         $views = $this->getPath('views');
 
         $providers = [
+            'request' => new ZendDiacotorosDefinition(),
             'bus' => new TacticianDefinition(),
+            'pipeline' => new RelayDefinition($this->getMiddlewares()),
+            'routing' => new LeagueRouteDefinition(),
+            'db' => new EloquentDefinition([
+                'default' => [
+                    'driver' => 'mysql',
+                    'host' => getenv('DB_HOST'),
+                    'database' => getenv('DB_DATABASE'),
+                    'username' => getenv('DB_USERNAME'),
+                    'password' => getenv('DB_PASSWORD'),
+                    'charset' => 'utf8',
+                    'collation' => 'utf8_unicode_ci',
+                    'prefix' => '',
+                ],
+            ]),
             'filesystem' => new FlysystemDefinition([
                 'default' => 'local',
                 'adapters' => [
@@ -221,20 +232,6 @@ class DefaultConfiguration extends AbstractConfiguration
                         'pass' => getenv('DB_PASSWORD'),
                         'port' => 3306,
                         'charset' => 'utf8',
-                    ],
-                ],
-            ],
-            'eloquent' => [
-                'connections' => [
-                    'default' => [
-                        'driver' => 'mysql',
-                        'host' => getenv('DB_HOST'),
-                        'database' => getenv('DB_DATABASE'),
-                        'username' => getenv('DB_USERNAME'),
-                        'password' => getenv('DB_PASSWORD'),
-                        'charset' => 'utf8',
-                        'collation' => 'utf8_unicode_ci',
-                        'prefix' => '',
                     ],
                 ],
             ],

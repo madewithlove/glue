@@ -20,12 +20,13 @@ $glue = new Glue(new Configuration(['debug' => true]));
 
 $defaultConfiguration = (new DefaultConfiguration());
 $glue->setPaths($defaultConfiguration->getPaths());
-$glue->setDefinitionsProviders([
-    $defaultConfiguration->getDefinitionProvider('filesystem'),
-    new SymfonyConsoleDefinition([
-        BootstrapCommand::class,
-        TinkerCommand::class,
-    ]),
-]);
+$glue->setDefinitionsProviders($defaultConfiguration->getDefinitionProviders());
+//$glue->setDefinitionsProviders([
+//    $defaultConfiguration->getDefinitionProvider('filesystem'),
+//    new SymfonyConsoleDefinition([
+//        BootstrapCommand::class,
+//        TinkerCommand::class,
+//    ]),
+//]);
 
 $glue->console();
