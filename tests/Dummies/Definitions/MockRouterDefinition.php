@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Dummies\Providers;
+namespace Madewithlove\Glue\Dummies\Definitions;
 
 use Assembly\ParameterDefinition;
 use Interop\Container\Definition\DefinitionInterface;

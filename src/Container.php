@@ -46,7 +46,7 @@ class Container extends LeagueContainer
      */
     public function get($alias, array $args = [])
     {
-        if (array_key_exists($alias, $this->interopDefinitions)) {
+        if (!$this->hasShared($alias) && array_key_exists($alias, $this->interopDefinitions)) {
             $this->shared[$alias] = $this->resolveDefinition($this->interopDefinitions[$alias]);
         }
 
