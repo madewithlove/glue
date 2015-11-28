@@ -12,7 +12,7 @@
 Glue is an adhesive substance used for sticking objects or materials together ( ͡° ͜ʖ ͡°)
 
 **Glue** is also an helper package made to quickly bootstrap packages-based applications.
-At its core it's just a container and a quick PSR7 setup, on top of which are glued together service providers and middlewares.
+At its core it's just a container and a quick PSR7 setup, on top of which are glued together service definitions and middlewares.
 
 This is _not_ a microframework (in the sense that it doesn't frame your work). If this is what you're looking for I recommend instead using [Silex], [Slim] or whatever you want.
 On the contrary, Glue is as its name indicates just a bit of glue to tie existing packages and middlewares together. It doesn't assume much, it won't get in your way, it's just a way to tie stuff together.
@@ -51,10 +51,10 @@ Into this:
 
 ```php
 $app = (new Glue())
-    ->setProviders([
-        SomeProvider::class,
-        AnotherProvider::class,
-        LeagueRouteServiceProvider::class,
+    ->setDefinitionProviders([
+        SomeDefinition::class,
+        AnotherDefinition::class,
+        LeagueRouteDefinition::class,
     ])
     ->setMiddlewares([
         SomeMiddleware::class,
@@ -67,11 +67,13 @@ $app->get('/', 'SomeController::index');
 $app->run();
 ```
 
-As you can see Glue serves two purposes: eliminating recurring boilerplate in binding packages together, and providing service providers for common packages such as `league/route`.
+In order to be truly flexible, Glue accepts any PSR11 compatible container, and register its services through the [definition-interop] standard.
+
+As you can see Glue serves two purposes: eliminating recurring boilerplate in binding packages together, and providing definitions for common packages such as `league/route`.
 It is configurable and flexible, it won't get in your way, it's just here to help you not type the same things over and over again.
 
 ### What's in the box
-Glue provides several providers out of the box:
+Glue provides several definitions out of the box:
 - **Routing**
     - Base routing system with `league/route`
     - PSR7 stack with `zendframework/zend-diactoros`
@@ -127,6 +129,7 @@ If you discover any security related issues, please email heroes@madewithlove.be
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
+[definition-interop]: https://github.com/container-interop/definition-interop
 [documentation]: http://madewithlove.github.io/glue
 [silex]: http://silex.sensiolabs.org
 [slim]: http://www.slimframework.com

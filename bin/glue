@@ -15,9 +15,11 @@ require __DIR__.'/../src/Utils.php';
 // Look for vendor folder, wherever it is
 require Utils::find('vendor/autoload.php');
 
-$glue = new Glue(new Configuration(['debug' => true]));
+$glue = new Glue(new Configuration([
+    'debug' => true,
+]));
 
-$defaultConfiguration = (new DefaultConfiguration());
+$defaultConfiguration = new DefaultConfiguration();
 $glue->setPaths($defaultConfiguration->getPaths());
 $glue->setDefinitionProviders([
     $defaultConfiguration->getDefinitionProvider('filesystem'),
@@ -26,5 +28,6 @@ $glue->setDefinitionProviders([
         TinkerCommand::class,
     ]),
 ]);
+$glue->setDefinitionProviders($defaultConfiguration->getDefinitionProviders());
 
 $glue->console();

@@ -10,7 +10,7 @@ class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
 {
     public function __construct()
     {
-        $this->providers        = [SomeProvider::class];
+        $this->definitions      = [SomeDefinition::class];
         $this->someCustomConfig = 'foobar';
     }
 }
@@ -24,7 +24,7 @@ class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
 {
     public function __construct()
     {
-        $this->providers        = [SomeProvider::class];
+        $this->definitions      = [SomeDefinition::class];
         $this->someCustomConfig = 'foobar';
     }
 
@@ -43,7 +43,7 @@ class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
     public function __construct()
     {
         parent::__construct([
-            'providers'        => [SomeProvider::class],
+            'definitions'      => [SomeDefinition::class],
             'someCustomConfig' => 'foobar',
         ]);
     }
