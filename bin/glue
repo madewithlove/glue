@@ -2,11 +2,7 @@
 <?php
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
-use Madewithlove\Glue\Console\Commands\BootstrapCommand;
-use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Console\SymfonyConsoleServiceProvider;
-use Madewithlove\Glue\Definitions\FlysystemDefinition;
-use Madewithlove\Glue\Definitions\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\Providers\FlysystemServiceProvider;
 use Madewithlove\Glue\Utils;

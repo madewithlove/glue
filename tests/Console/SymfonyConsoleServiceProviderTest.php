@@ -12,7 +12,7 @@ namespace Madewithlove\Glue\Console;
 
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
-use Madewithlove\Glue\Definitions\SymfonyConsoleDefinition;
+use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\TestCase;
 use Symfony\Component\Console\Application;

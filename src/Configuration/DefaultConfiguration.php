@@ -13,19 +13,18 @@ namespace Madewithlove\Glue\Configuration;
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use League\Flysystem\Adapter\Local;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
-use Madewithlove\Glue\Console\PhinxServiceProvider;
+use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
+use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Definitions\DebugbarDefinition;
 use Madewithlove\Glue\Definitions\EloquentDefinition;
 use Madewithlove\Glue\Definitions\FlysystemDefinition;
 use Madewithlove\Glue\Definitions\LeagueRouteDefinition;
 use Madewithlove\Glue\Definitions\MonologDefinition;
-use Madewithlove\Glue\Definitions\PhinxDefinition;
 use Madewithlove\Glue\Definitions\RelayDefinition;
-use Madewithlove\Glue\Definitions\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Definitions\TacticianDefinition;
-use Madewithlove\Glue\Definitions\TwigDefinition;
-use Madewithlove\Glue\Definitions\UrlGeneratorDefinition;
-use Madewithlove\Glue\Definitions\WebpackDefinition;
+use Madewithlove\Glue\Definitions\Twig\TwigDefinition;
+use Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition;
+use Madewithlove\Glue\Definitions\Twig\WebpackDefinition;
 use Madewithlove\Glue\Definitions\ZendDiactorosDefinition;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\Utils;
@@ -211,7 +210,7 @@ class DefaultConfiguration extends AbstractConfiguration
                             'charset' => 'utf8',
                         ],
                     ],
-                ])
+                ]),
             ]);
         }
 

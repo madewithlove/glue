@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Definitions;
+namespace Madewithlove\Glue\Definitions\Console;
 
 use Assembly\AliasDefinition;
 use Assembly\ObjectDefinition;

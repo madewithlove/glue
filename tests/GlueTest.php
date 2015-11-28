@@ -11,25 +11,17 @@
 namespace Madewithlove\Glue;
 
 use Assembly\ParameterDefinition;
-use Assembly\Reference;
 use Illuminate\Container\Container as IlluminateContainer;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\Container;
-use League\Container\ServiceProvider\ServiceProviderInterface;
 use League\Tactician\CommandBus;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Definitions\LeagueRouteDefinition;
 use Madewithlove\Glue\Definitions\RelayDefinition;
 use Madewithlove\Glue\Definitions\ZendDiactorosDefinition;
 use Madewithlove\Glue\Dummies\DummyController;
-use Madewithlove\Glue\Dummies\Providers\FirstProvider;
 use Madewithlove\Glue\Dummies\Providers\MockRouterDefinition;
-use Madewithlove\Glue\Dummies\Providers\SecondProvider;
-use Madewithlove\Glue\Dummies\Providers\ThirdProvider;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
-use Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider;
-use Madewithlove\Glue\Http\Providers\RelayServiceProvider;
-use Madewithlove\Glue\Http\Providers\RequestServiceProvider;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -62,7 +54,7 @@ class GlueTest extends TestCase
     public function testCanDelegateCallsToRouter()
     {
         $glue = new Glue(new Configuration());
-        $glue->setDefinitionsProviders([new MockRouterDefinition]);
+        $glue->setDefinitionsProviders([new MockRouterDefinition()]);
 
         $glue->get('foobar');
 
@@ -145,12 +137,12 @@ class GlueTest extends TestCase
         $glue = new Glue(new Configuration());
         $glue
             ->setPaths(['cache' => 'storage/cache'])
-            ->setDefinitionsProviders([new LeagueRouteDefinition])
+            ->setDefinitionsProviders([new LeagueRouteDefinition()])
             ->setMiddlewares([LeagueRouteMiddleware::class]);
 
         $this->assertEquals(['cache' => 'storage/cache'], $glue->getPaths());
         $this->assertEquals([LeagueRouteMiddleware::class], $glue->getMiddlewares());
-        $this->assertEquals([new LeagueRouteDefinition], $glue->getDefinitionProviders());
+        $this->assertEquals([new LeagueRouteDefinition()], $glue->getDefinitionProviders());
     }
 
     public function testCanUserOtherContainers()
@@ -187,7 +179,7 @@ class GlueTest extends TestCase
         $app->setContainer($container);
         $app->setDefinitionsProviders([
             new ZendDiactorosDefinition(),
-            new MockRouterDefinition,
+            new MockRouterDefinition(),
         ]);
 
         $app->get('foo', 'bar');

@@ -1,8 +1,15 @@
 <?php
-namespace Madewithlove\Glue\Definitions;
 
-use Assembly\FactoryCallDefinition;
-use Assembly\Reference;
+/*
+ * This file is part of Glue
+ *
+ * (c) madewithlove <heroes@madewithlove.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ */
+
+namespace Madewithlove\Glue\Definitions\Console;
+
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;

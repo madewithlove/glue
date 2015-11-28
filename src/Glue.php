@@ -16,7 +16,6 @@ use Interop\Container\ContainerInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
-use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;

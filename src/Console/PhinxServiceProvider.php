@@ -12,9 +12,6 @@ namespace Madewithlove\Glue\Console;
 
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use League\Container\ServiceProvider\BootableServiceProviderInterface;
-use Madewithlove\Glue\Configuration\ConfigurationInterface;
-use Phinx\Config\Config;
-use Phinx\Console\Command;
 use Symfony\Component\Console\Application;
 
 class PhinxServiceProvider extends AbstractServiceProvider implements BootableServiceProviderInterface

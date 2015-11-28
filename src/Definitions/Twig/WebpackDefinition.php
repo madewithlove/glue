@@ -1,5 +1,14 @@
 <?php
-namespace Madewithlove\Glue\Definitions;
+
+/*
+ * This file is part of Glue
+ *
+ * (c) madewithlove <heroes@madewithlove.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ */
+
+namespace Madewithlove\Glue\Definitions\Twig;
 
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;

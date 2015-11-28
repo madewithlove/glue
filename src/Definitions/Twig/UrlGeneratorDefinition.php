@@ -1,5 +1,14 @@
 <?php
-namespace Madewithlove\Glue\Definitions;
+
+/*
+ * This file is part of Glue
+ *
+ * (c) madewithlove <heroes@madewithlove.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ */
+
+namespace Madewithlove\Glue\Definitions\Twig;
 
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
@@ -46,6 +55,7 @@ class UrlGeneratorDefinition implements DefinitionProviderInterface, ContainerAw
 
         return [
             UrlGenerator::class => $generator,
+            $function,
         ];
     }
 }

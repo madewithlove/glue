@@ -88,6 +88,7 @@ class Container extends LeagueContainer
      *
      * @throws InvalidDefinition
      * @throws UnsupportedDefinition
+     *
      * @return mixed
      */
     private function resolveDefinition(DefinitionInterface $definition)
@@ -102,7 +103,7 @@ class Container extends LeagueContainer
                 // Create the instance
                 $constructorArguments = $definition->getConstructorArguments();
                 $constructorArguments = array_map([$this, 'resolveReference'], $constructorArguments);
-                $service              = $reflection->newInstanceArgs($constructorArguments);
+                $service = $reflection->newInstanceArgs($constructorArguments);
 
                 // Set properties and call methods
                 $service = $this->callAssignments($service, $definition);
@@ -121,9 +122,9 @@ class Container extends LeagueContainer
                 return $this->get($definition->getTarget());
 
             case $definition instanceof FactoryCallDefinitionInterface:
-                $factory    = $definition->getFactory();
+                $factory = $definition->getFactory();
                 $methodName = $definition->getMethodName();
-                $arguments  = $definition->getArguments();
+                $arguments = $definition->getArguments();
 
                 if (is_string($factory)) {
                     return $factory::$methodName(...$arguments);
@@ -182,7 +183,7 @@ class Container extends LeagueContainer
     private function callAssignments($service, ObjectDefinitionInterface $definition)
     {
         foreach ($definition->getPropertyAssignments() as $propertyAssignment) {
-            $propertyName           = $propertyAssignment->getPropertyName();
+            $propertyName = $propertyAssignment->getPropertyName();
             $service->$propertyName = $this->resolveReference($propertyAssignment->getValue());
         }
 

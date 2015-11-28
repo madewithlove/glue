@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Configuration;
 
-use Madewithlove\Glue\Http\Providers\TwigServiceProvider;
 use Madewithlove\Glue\TestCase;
 use Psr7Middlewares\Middleware\DebugBar;
 
