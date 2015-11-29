@@ -32,16 +32,32 @@ class LeagueRouteDefinition implements DefinitionProviderInterface, ContainerAwa
      */
     public function getDefinitions()
     {
+        return [
+            StrategyInterface::class => $this->getStrategy(),
+            RouteCollection::class => $this->getRouter(),
+            'router' => new AliasDefinition('router', RouteCollection::class),
+        ];
+    }
+
+    /**
+     * @return ObjectDefinition
+     */
+    protected function getStrategy()
+    {
         $strategy = new ObjectDefinition(StrategyInterface::class, ParamStrategy::class);
         $strategy->addMethodCall('setContainer', $this->container);
 
+        return $strategy;
+    }
+
+    /**
+     * @return ObjectDefinition
+     */
+    protected function getRouter()
+    {
         $router = new ObjectDefinition(RouteCollection::class, RouteCollection::class);
         $router->addMethodCall('setStrategy', new Reference(StrategyInterface::class));
 
-        return [
-            StrategyInterface::class => $strategy,
-            RouteCollection::class => $router,
-            'router' => new AliasDefinition('router', RouteCollection::class),
-        ];
+        return $router;
     }
 }
