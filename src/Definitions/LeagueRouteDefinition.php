@@ -56,6 +56,7 @@ class LeagueRouteDefinition implements DefinitionProviderInterface, ContainerAwa
     protected function getRouter()
     {
         $router = new ObjectDefinition(RouteCollection::class, RouteCollection::class);
+        $router->setConstructorArguments($this->container);
         $router->addMethodCall('setStrategy', new Reference(StrategyInterface::class));
 
         return $router;
