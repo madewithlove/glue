@@ -10,18 +10,15 @@
 
 namespace Madewithlove\Glue;
 
+use Assembly\Container\DefinitionResolver;
 use Assembly\Container\InvalidDefinition;
 use Assembly\Container\UnsupportedDefinition;
-use Interop\Container\Definition\AliasDefinitionInterface;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
-use Interop\Container\Definition\FactoryCallDefinitionInterface;
 use Interop\Container\Definition\ObjectDefinitionInterface;
-use Interop\Container\Definition\ParameterDefinitionInterface;
 use Interop\Container\Definition\ReferenceInterface;
 use League\Container\Container as LeagueContainer;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinitionInterface;
-use ReflectionClass;
 
 /**
  * A definition-interop compatible version of league/container.
@@ -93,52 +90,18 @@ class Container extends LeagueContainer
      */
     private function resolveDefinition(DefinitionInterface $definition)
     {
-        switch (true) {
-            case $definition instanceof ParameterDefinitionInterface:
-                return $definition->getValue();
+        $resolver = new DefinitionResolver($this);
+        $service = $resolver->resolve($definition);
 
-            case $definition instanceof ObjectDefinitionInterface:
-                $reflection = new ReflectionClass($definition->getClassName());
-
-                // Create the instance
-                $constructorArguments = $definition->getConstructorArguments();
-                $constructorArguments = array_map([$this, 'resolveReference'], $constructorArguments);
-                $service = $reflection->newInstanceArgs($constructorArguments);
-
-                // Set properties and call methods
-                $service = $this->callAssignments($service, $definition);
-                $service = $this->callMethods($service, $definition);
-
-                if (array_key_exists($definition->getIdentifier(), $this->extensions)) {
-                    foreach ($this->extensions[$definition->getIdentifier()] as $extension) {
-                        $service = $this->callAssignments($service, $extension);
-                        $service = $this->callMethods($service, $extension);
-                    }
-                }
-
-                return $service;
-
-            case $definition instanceof AliasDefinitionInterface:
-                return $this->get($definition->getTarget());
-
-            case $definition instanceof FactoryCallDefinitionInterface:
-                $factory = $definition->getFactory();
-                $methodName = $definition->getMethodName();
-                $arguments = $definition->getArguments();
-
-                if (is_string($factory)) {
-                    return $factory::$methodName(...$arguments);
-                } elseif ($factory instanceof ReferenceInterface) {
-                    $factory = $this->get($factory->getTarget());
-
-                    return $factory->$methodName(...$arguments);
-                }
-
-                throw new InvalidDefinition(sprintf('Definition "%s" does not return a valid factory'));
-
-            default:
-                throw UnsupportedDefinition::fromDefinition($definition);
+        // Add extensions
+        if (array_key_exists($definition->getIdentifier(), $this->extensions)) {
+            foreach ($this->extensions[$definition->getIdentifier()] as $extension) {
+                $service = $this->callAssignments($service, $extension);
+                $service = $this->callMethods($service, $extension);
+            }
         }
+
+        return $service;
     }
 
     /**
