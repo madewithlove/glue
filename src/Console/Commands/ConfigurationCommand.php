@@ -16,6 +16,7 @@ use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use ReflectionClass;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -136,9 +137,11 @@ class ConfigurationCommand extends Command
                 'options' => implode(PHP_EOL, $parameters),
                 'bindings' => implode(PHP_EOL, $definitions),
             ];
+
+            $rows[] = new TableSeparator();
         }
 
-        $this->output->table(['Definition', 'Options', 'Bindings'], $rows);
+        $this->output->table(['Definition', 'Options', 'Bindings'], array_slice($rows, 0, -1));
     }
 
     /**
