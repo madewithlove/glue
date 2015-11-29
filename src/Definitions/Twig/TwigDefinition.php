@@ -12,29 +12,44 @@ namespace Madewithlove\Glue\Definitions\Twig;
 
 use Assembly\AliasDefinition;
 use Assembly\ObjectDefinition;
+use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use Twig_Environment;
+use Twig_Extension;
+use Twig_Loader_Array;
+use Twig_Loader_Filesystem;
+use Twig_LoaderInterface;
 
 class TwigDefinition implements DefinitionProviderInterface
 {
     /**
-     * @var array
+     * Path to the views or a list of views.
+     *
+     * @var string|string[]
      */
-    protected $options = [
-        'loader' => null,
-        'environment' => null,
-        'extensions' => [],
-    ];
+    protected $views;
 
     /**
-     * TwigDefinition constructor.
-     *
-     * @param array $options
+     * @var array
      */
-    public function __construct(array $options)
+    protected $options = [];
+
+    /**
+     * @var Twig_Extension[]
+     */
+    protected $extensions = [];
+
+    /**
+     * @param string|string[]  $views
+     * @param array            $options
+     * @param Twig_Extension[] $extensions
+     */
+    public function __construct($views, array $options = [], array $extensions = [])
     {
+        $this->views = $views;
         $this->options = $options;
+        $this->extensions = $extensions;
     }
 
     /**
@@ -44,14 +59,22 @@ class TwigDefinition implements DefinitionProviderInterface
      */
     public function getDefinitions()
     {
-        $twig = new ObjectDefinition(Twig_Environment::class, Twig_Environment::class);
-        $twig->setConstructorArguments($this->options['loader'], $this->options['environment']);
+        $isViewsFolder = is_string($this->views) && is_dir($this->views);
 
-        foreach ($this->options['extensions'] as $extension) {
-            $twig->addMethodCall('addExtension', $extension);
+        // Define loader
+        $loader = $isViewsFolder ? Twig_Loader_Filesystem::class : Twig_Loader_Array::class;
+        $loader = new ObjectDefinition(Twig_LoaderInterface::class, $loader);
+        $loader->setConstructorArguments($this->views ?: []);
+
+        $twig = new ObjectDefinition(Twig_Environment::class, Twig_Environment::class);
+        $twig->setConstructorArguments(new Reference(Twig_LoaderInterface::class), $this->options);
+
+        foreach ($this->extensions as $extension) {
+            $twig->addMethodCall('addExtension', new Reference($extension));
         }
 
         return [
+            Twig_LoaderInterface::class => $loader,
             Twig_Environment::class => $twig,
             'twig' => new AliasDefinition('twig', Twig_Environment::class),
         ];

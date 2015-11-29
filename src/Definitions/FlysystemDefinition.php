@@ -16,6 +16,7 @@ use Assembly\ObjectDefinition;
 use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
+use League\Flysystem\AdapterInterface;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
@@ -23,21 +24,23 @@ use League\Flysystem\MountManager;
 class FlysystemDefinition implements DefinitionProviderInterface
 {
     /**
-     * @var array
+     * @var string
      */
-    protected $options = [
-        'adapters' => [],
-        'default' => [],
-    ];
+    protected $default;
 
     /**
-     * FlysystemDefinition constructor.
-     *
-     * @param array $options
+     * @var AdapterInterface[]
      */
-    public function __construct(array $options = [])
+    protected $adapters = [];
+
+    /**
+     * @param string $default
+     * @param array  $adapters
+     */
+    public function __construct($default, array $adapters)
     {
-        $this->options = $options;
+        $this->default = $default;
+        $this->adapters = $adapters;
     }
 
     /**
@@ -47,16 +50,13 @@ class FlysystemDefinition implements DefinitionProviderInterface
      */
     public function getDefinitions()
     {
-        // Wrap adapters in Filesystem instances
-        foreach ($this->options['adapters'] as &$adapter) {
-            $adapter = new Filesystem($adapter);
-        }
-
         $mountManager = new ObjectDefinition(MountManager::class, MountManager::class);
-        $mountManager->setConstructorArguments($this->options['adapters']);
+        $mountManager->setConstructorArguments(array_map(function (AdapterInterface $adapter) {
+            return new Filesystem($adapter);
+        }, $this->adapters));
 
         $default = new FactoryCallDefinition(FilesystemInterface::class, new Reference('flysystem.mount-manager'), 'getFilesystem');
-        $default->setArguments($this->options['default']);
+        $default->setArguments($this->default);
 
         return [
             MountManager::class => $mountManager,

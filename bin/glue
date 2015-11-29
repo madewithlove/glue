@@ -3,11 +3,10 @@
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
+use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
-use Madewithlove\Glue\Console\SymfonyConsoleServiceProvider;
 use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Glue;
-use Madewithlove\Glue\Providers\FlysystemServiceProvider;
 use Madewithlove\Glue\Utils;
 
 require __DIR__.'/../src/Utils.php';
@@ -22,12 +21,12 @@ $glue = new Glue(new Configuration([
 $defaultConfiguration = new DefaultConfiguration();
 $glue->setPaths($defaultConfiguration->getPaths());
 $glue->setDefinitionProviders([
-    $defaultConfiguration->getDefinitionProvider('filesystem'),
-    new SymfonyConsoleDefinition([
+    'flysystem' => $defaultConfiguration->getDefinitionProvider('filesystem'),
+    'console' => new SymfonyConsoleDefinition([
         BootstrapCommand::class,
         TinkerCommand::class,
+        ConfigurationCommand::class,
     ]),
 ]);
-$glue->setDefinitionProviders($defaultConfiguration->getDefinitionProviders());
 
 $glue->console();

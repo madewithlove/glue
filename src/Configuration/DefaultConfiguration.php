@@ -12,6 +12,7 @@ namespace Madewithlove\Glue\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use League\Flysystem\Adapter\Local;
+use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
 use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
@@ -31,8 +32,6 @@ use Madewithlove\Glue\Utils;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
 use Twig_Extension_Debug;
-use Twig_Loader_Array;
-use Twig_Loader_Filesystem;
 
 class DefaultConfiguration extends AbstractConfiguration
 {
@@ -56,15 +55,12 @@ class DefaultConfiguration extends AbstractConfiguration
             ? $this->debug
             : !getenv('APP_ENV') || getenv('APP_ENV') === 'local';
 
-        $this->attributes = [
-            'debug' => $debug,
-            'rootPath' => $this->configureRootPath(),
-            'namespace' => $this->configureNamespace(),
-            'paths' => $this->configurePaths(),
-            'providers' => $this->configureProviders(),
-            'middlewares' => $this->configureMiddlewares(),
-            'definitions' => $this->configureDefinitionProviders(),
-        ];
+        $this->debug = $debug;
+        $this->rootPath = $this->configureRootPath();
+        $this->paths = $this->configurePaths();
+        $this->namespace = $this->configureNamespace();
+        $this->middlewares = $this->configureMiddlewares();
+        $this->definitions = $this->configureDefinitionProviders();
     }
 
     /**
@@ -142,8 +138,6 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function configureDefinitionProviders()
     {
-        $views = $this->getPath('views');
-
         $providers = [
             'assets' => new WebpackDefinition($this->getPath('assets')),
             'request' => new ZendDiactorosDefinition(),
@@ -162,31 +156,26 @@ class DefaultConfiguration extends AbstractConfiguration
                     'prefix' => '',
                 ],
             ]),
-            'filesystem' => new FlysystemDefinition([
-                'default' => 'local',
-                'adapters' => [
-                    'local' => new Local($this->getRootPath()),
-                ],
+            'filesystem' => new FlysystemDefinition('local', [
+                'local' => new Local($this->getRootPath()),
             ]),
-            'logging' => new MonologDefinition([
-                'path' => $this->getPath('logs'),
-                'filename' => date('Y-m-d').'.log',
-            ]),
+            'logging' => new MonologDefinition($this->getPath('logs'), date('Y-m-d').'.log'),
             'console' => new SymfonyConsoleDefinition([
                 TinkerCommand::class,
+                ConfigurationCommand::class,
             ]),
-            'views' => new TwigDefinition([
-                'loader' => is_dir($views) ? new Twig_Loader_Filesystem($views) : new Twig_Loader_Array([]),
-                'environment' => [
+            'views' => new TwigDefinition(
+                $this->getPath('views'),
+                [
                     'debug' => $this->isDebug(),
                     'auto_reload' => $this->isDebug(),
                     'strict_variables' => false,
                     'cache' => $this->getPath('cache').DS.'twig',
                 ],
-                'extensions' => array_filter([
-                    $this->isDebug() ? new Twig_Extension_Debug() : null,
-                ]),
-            ]),
+                array_filter([
+                    $this->isDebug() ? Twig_Extension_Debug::class : null,
+                ])
+            ),
             'url' => new UrlGeneratorDefinition($this->namespace),
         ];
 

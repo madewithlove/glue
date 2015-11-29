@@ -15,22 +15,21 @@ If however you just want to tweak one setting here and there, most definitions a
 class MonologDefinition implements DefinitionProviderInterface
 {
     /**
-     * @var array
+     * @var string
      */
-    protected $options = [
-        'path' => '',
-        'filename' => '',
-    ];
+    protected $path;
+
+    /**
+     * @var string
+     */
+    protected $filename;
 ```
 
 If per example you want to change the filename and path used by Monolog you can like this:
 
 ```php
 $app = new Glue();
-$app->setDefinitionProvider('logging', new MonologDefinition([
-    'path' => $app->getPath('logs'),
-    'filename' => date('Y-m-d H').'.log',
-]));
+$app->setDefinitionProvider('logging', new MonologDefinition('/logs', date('m-d').'.log'));
 ```
 
 You can see which definition is bound to which provider key through the `php console tinker` command:
@@ -55,3 +54,5 @@ Psy Shell v0.6.1 (PHP 5.6.16 — cli) by Justin Hileman
      "migrations" => Madewithlove\Glue\Definitions\Console\PhinxDefinition {#27},
    ]
 ```
+
+You can also see which options a definition exposes through the `php console config` command.

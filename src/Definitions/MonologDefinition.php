@@ -22,19 +22,23 @@ use Psr\Log\LoggerInterface;
 class MonologDefinition implements DefinitionProviderInterface
 {
     /**
-     * @var array
+     * @var string
      */
-    protected $options = [
-        'path' => '',
-        'filename' => '',
-    ];
+    protected $path;
 
     /**
-     * @param array $options
+     * @var string
      */
-    public function __construct(array $options)
+    protected $filename;
+
+    /**
+     * @param string $path
+     * @param string $filename
+     */
+    public function __construct($path, $filename)
     {
-        $this->options = $options;
+        $this->path = $path;
+        $this->filename = $filename;
     }
 
     /**
@@ -45,7 +49,7 @@ class MonologDefinition implements DefinitionProviderInterface
     public function getDefinitions()
     {
         $handler = new ObjectDefinition('monolog.handler', StreamHandler::class);
-        $handler->setConstructorArguments($this->options['path'].DS.$this->options['filename'], Logger::WARNING);
+        $handler->setConstructorArguments($this->path.DS.$this->filename, Logger::WARNING);
 
         $logger = new ObjectDefinition(LoggerInterface::class, Logger::class);
         $logger->setConstructorArguments('glue');
