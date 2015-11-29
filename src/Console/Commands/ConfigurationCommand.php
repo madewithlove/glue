@@ -123,17 +123,17 @@ class ConfigurationCommand extends Command
                     preg_match('/.*@(type|var) (.+)\n.*/', $doc, $type);
                     $type = $type[2];
 
-                    $parameters[] = $parameter->getName().': '.$type;
+                    $parameters[] = '<info>'.$parameter->getName().'</info>: '.$type;
                 }
             }
 
             $definitions = array_keys($definition->getDefinitions());
             foreach ($definitions as $key => $binding) {
-                $definitions[$key] = is_string($binding) ? ($key + 1).'. '.$binding : null;
+                $definitions[$key] = is_string($binding) ? ($key + 1).'. <comment>'.$binding.'</comment>' : null;
             }
 
             $rows[] = [
-                'definition' => get_class($definition),
+                'definition' => '<comment>'.get_class($definition).'</comment>',
                 'options' => implode(PHP_EOL, $parameters),
                 'bindings' => implode(PHP_EOL, $definitions),
             ];
