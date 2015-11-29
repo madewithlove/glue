@@ -31,6 +31,14 @@ class RelayDefinition implements DefinitionProviderInterface, ContainerAwareInte
     protected $middlewares = [];
 
     /**
+     * @param array $middlewares
+     */
+    public function __construct(array $middlewares)
+    {
+        $this->middlewares = $middlewares;
+    }
+
+    /**
      * Returns the definition to register in the container.
      *
      * @return DefinitionInterface[]
