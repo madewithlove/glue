@@ -81,7 +81,7 @@ class ConfigurationCommand extends Command
         $values = array_except($this->configuration->toArray(), ['definitions', 'middlewares']);
         $values = array_dot($values);
         foreach ($values as $key => &$value) {
-            $value = [$key, $value];
+            $value = ['<comment>'.$key.'</comment>', $value];
         }
 
         $this->output->table(['Key', 'Value'], $values);
@@ -151,6 +151,6 @@ class ConfigurationCommand extends Command
      */
     protected function title($title)
     {
-        $this->output->block($title, null, 'fg=black;bg=cyan', ' ', true);
+        $this->output->block($title, null, 'fg=black;bg=cyan', ' ', false);
     }
 }
