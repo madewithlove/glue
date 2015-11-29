@@ -1,58 +1,58 @@
 # Providers configuration
 
-If you want to configure some of the providers that come with Glue, most of the time I recommend you write your own provider and swap ours for yours:
+If you want to configure some of the providers that come with Glue, most of the time I recommend you write your own definition and swap ours for yours:
 
 ```php
 $app = new Glue();
-$app->configure('providers', [
-    'view' => MyTwigProvider::class,
+$app->configure('definitions', [
+    'view' => MyTwigDefinition::class,
 ]);
 ```
 
-If however you just want to tweak one setting here and there, the `ConfigurationInterface` defines the following methods for this:
+If however you just want to tweak one setting here and there, most definitions accepts various arguments to configure them in depth. You can look at the definitions themselves to see which options they accept:
 
 ```php
-public function getPackagesConfiguration();
-public function getPackageConfiguration($package);
-public function setPackagesConfiguration(array $configurations = []);
-public function setPackageConfiguration($package, array $configuration = []);
-```
+class MonologDefinition implements DefinitionProviderInterface
+{
+    /**
+     * @var string
+     */
+    protected $path;
 
-Where `$package` is the FQN of the provider you want to configure (per example `TwigServiceProvider::class`).
-You can dump the settings through the `tinker` command of the provided CLI:
-
-
-```bash
-$ php console tinker
->>> $config->getPackagesConfiguration()
-=> [
-     "Madewithlove\Glue\Providers\MonologServiceProvider" => [
-       "path" => "/my-app/storage/logs",
-       "filename" => "2015-11-22.log",
-     ],
-
+    /**
+     * @var string
+     */
+    protected $filename;
 ```
 
 If per example you want to change the filename and path used by Monolog you can like this:
 
 ```php
 $app = new Glue();
-$app->setPackageConfiguration(MonologServiceProvider::class, [
-    'path' => $app->getPath('logs'),
-    'filename' => date('Y-m-d H').'.log',
-]);
+$app->setDefinitionProvider('logging', new MonologDefinition('/logs', date('m-d').'.log'));
 ```
 
-How it works is, within the provider, the `ConfigurationInterface` instance is fetched and the configuration retrieved and used through `__CLASS__`:
+You can see which definition is bound to which provider key through the `php console tinker` command:
 
-```php
-$configuration = $this->container->get(ConfigurationInterface::class);
-$configuration = $configuration->getPackageConfiguration(__CLASS__);
-
-$logger = new Logger('app');
-$path   = $configuration['path'].DS.$configuration['filename'];
+```bash
+$ php console tinker
+Psy Shell v0.6.1 (PHP 5.6.16 — cli) by Justin Hileman
+>>> $config->definitions;
+=> [
+     "assets" => Madewithlove\Glue\Definitions\Twig\WebpackDefinition {#12},
+     "request" => Madewithlove\Glue\Definitions\ZendDiactorosDefinition {#13},
+     "bus" => Madewithlove\Glue\Definitions\TacticianDefinition {#14},
+     "pipeline" => Madewithlove\Glue\Definitions\RelayDefinition {#15},
+     "routing" => Madewithlove\Glue\Definitions\LeagueRouteDefinition {#16},
+     "db" => Madewithlove\Glue\Definitions\EloquentDefinition {#17},
+     "filesystem" => Madewithlove\Glue\Definitions\FlysystemDefinition {#18},
+     "logging" => Madewithlove\Glue\Definitions\MonologDefinition {#20},
+     "console" => Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition {#21},
+     "views" => Madewithlove\Glue\Definitions\Twig\TwigDefinition {#22},
+     "url" => Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition {#25},
+     "debugbar" => Madewithlove\Glue\Definitions\DebugbarDefinition {#26},
+     "migrations" => Madewithlove\Glue\Definitions\Console\PhinxDefinition {#27},
+   ]
 ```
 
-No black magic or anything, it's just an array that I use to build up the providers.
-
-You can use these convenience methods in your own providers as well by following the same logic.
+You can also see which options a definition exposes through the `php console config` command.

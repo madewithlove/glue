@@ -3,9 +3,10 @@
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
-use Madewithlove\Glue\Console\SymfonyConsoleServiceProvider;
+use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
+use Madewithlove\Glue\Console\Commands\TinkerCommand;
+use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Glue;
-use Madewithlove\Glue\Providers\FlysystemServiceProvider;
 use Madewithlove\Glue\Utils;
 
 require __DIR__.'/../src/Utils.php';
@@ -14,15 +15,18 @@ require __DIR__.'/../src/Utils.php';
 require Utils::find('vendor/autoload.php');
 
 $glue = new Glue(new Configuration([
-    'debug'     => true,
-    'paths'     => (new DefaultConfiguration())->getPaths(),
-    'providers' => [
-        FlysystemServiceProvider::class,
-        SymfonyConsoleServiceProvider::class,
-    ],
-    'commands'  => [
-        BootstrapCommand::class,
-    ],
+    'debug' => true,
 ]));
+
+$defaultConfiguration = new DefaultConfiguration();
+$glue->setPaths($defaultConfiguration->getPaths());
+$glue->setDefinitionProviders([
+    'flysystem' => $defaultConfiguration->getDefinitionProvider('filesystem'),
+    'console' => new SymfonyConsoleDefinition([
+        BootstrapCommand::class,
+        TinkerCommand::class,
+        ConfigurationCommand::class,
+    ]),
+]);
 
 $glue->console();

@@ -13,10 +13,9 @@ namespace Madewithlove\Glue;
 use Acclimate\Container\ContainerAcclimator;
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
-use League\Container\Container;
+use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
-use League\Container\ServiceProvider\BootableServiceProviderInterface;
 use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
@@ -33,6 +32,7 @@ if (!defined('DS')) {
 }
 
 /**
+ * @property Container $container
  * @mixin RouteCollection
  * @mixin AbstractConfiguration
  */
@@ -157,20 +157,14 @@ class Glue
         $this->container->addServiceProvider(ConfigurationServiceProvider::class);
         $this->container->addServiceProvider(PathsServiceProvider::class);
 
-        // Split bootable and non-bootable providers
-        $providers = $this->configuration->getProviders();
-        $bootable = array_filter($providers, function ($provider) {
-            return (new $provider()) instanceof BootableServiceProviderInterface;
-        });
+        // Register definitions
+        $definitionProviders = $this->configuration->getDefinitionProviders();
+        foreach ($definitionProviders as &$definitionProvider) {
+            if ($definitionProvider instanceof ContainerAwareInterface) {
+                $definitionProvider->setContainer($this->container);
+            }
 
-        // Register all non bootable providers
-        foreach (array_diff($providers, $bootable) as $provider) {
-            $this->container->addServiceProvider($provider);
-        }
-
-        // Register the rest
-        foreach ($bootable as $provider) {
-            $this->container->addServiceProvider($provider);
+            $this->container->addDefinitionProvider($definitionProvider);
         }
     }
 

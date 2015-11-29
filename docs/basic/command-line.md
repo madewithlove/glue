@@ -49,22 +49,21 @@ $ php console tinker
 >>> ls
 Variables: $app, $config
 
->>> $config->providers
+>>> $config->definitions
 => [
-     "paths" => "Madewithlove\Glue\Providers\PathsServiceProvider",
-     "commandbus" => "Madewithlove\Glue\Providers\CommandBusServiceProvider",
-     "db" => "Madewithlove\Glue\Providers\EloquentServiceProvider",
-     "filesystem" => "Madewithlove\Glue\Providers\FlysystemServiceProvider",
-     "logs" => "Madewithlove\Glue\Providers\MonologServiceProvider",
-     "request" => "Madewithlove\Glue\Http\Providers\RequestServiceProvider",
-     "routing" => "Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider",
-     "view" => "Madewithlove\Glue\Http\Providers\TwigServiceProvider",
-     "pipeline" => "Madewithlove\Glue\Http\Providers\RelayServiceProvider",
-     "url" => "Madewithlove\Glue\Http\Providers\UrlGeneratorServiceProvider",
-     "assets" => "Madewithlove\Glue\Http\Providers\Assets\WebpackServiceProvider",
-     "console" => "Madewithlove\Glue\Console\SymfonyConsoleServiceProvider",
-     "migrations" => "Madewithlove\Glue\Console\PhinxServiceProvider",
-     "debugbar" => "Madewithlove\Glue\Providers\DebugbarServiceProvider",
+     "assets" => Madewithlove\Glue\Definitions\Twig\WebpackDefinition {#12},
+     "request" => Madewithlove\Glue\Definitions\ZendDiactorosDefinition {#13},
+     "bus" => Madewithlove\Glue\Definitions\TacticianDefinition {#14},
+     "pipeline" => Madewithlove\Glue\Definitions\RelayDefinition {#15},
+     "routing" => Madewithlove\Glue\Definitions\LeagueRouteDefinition {#16},
+     "db" => Madewithlove\Glue\Definitions\EloquentDefinition {#17},
+     "filesystem" => Madewithlove\Glue\Definitions\FlysystemDefinition {#18},
+     "logging" => Madewithlove\Glue\Definitions\MonologDefinition {#20},
+     "console" => Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition {#21},
+     "views" => Madewithlove\Glue\Definitions\Twig\TwigDefinition {#22},
+     "url" => Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition {#25},
+     "debugbar" => Madewithlove\Glue\Definitions\DebugbarDefinition {#26},
+     "migrations" => Madewithlove\Glue\Definitions\Console\PhinxDefinition {#27},
    ]
 ```
 

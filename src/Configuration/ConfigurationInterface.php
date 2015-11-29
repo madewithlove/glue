@@ -11,6 +11,7 @@
 namespace Madewithlove\Glue\Configuration;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Interop\Container\Definition\DefinitionProviderInterface;
 
 interface ConfigurationInterface extends Arrayable
 {
@@ -59,22 +60,6 @@ interface ConfigurationInterface extends Arrayable
     public function setPaths(array $paths = []);
 
     /**
-     * Get the providers to bind with glue.
-     *
-     * @return array
-     */
-    public function getProviders();
-
-    /**
-     * Set the providers to apply.
-     *
-     * @param array $providers
-     *
-     * @return $this
-     */
-    public function setProviders(array $providers = []);
-
-    /**
      * Get the middlewares to apply.
      *
      * @return array
@@ -91,37 +76,37 @@ interface ConfigurationInterface extends Arrayable
     public function setMiddlewares(array $middlewares = []);
 
     /**
-     * Get the configuration for the various packages.
+     * Get the definition providers to register.
      *
-     * @return array
+     * @return DefinitionProviderInterface[]
      */
-    public function getPackagesConfiguration();
+    public function getDefinitionProviders();
 
     /**
-     * Get the configuration of a package in particular.
+     * Get a definition provider in particular.
      *
-     * @param string $package
+     * @param string $provider
      *
-     * @return array
+     * @return DefinitionProviderInterface
      */
-    public function getPackageConfiguration($package);
+    public function getDefinitionProvider($provider);
 
     /**
-     * Set configuration for all packages.
+     * Set the definition providers to register.
      *
-     * @param array $configurations
+     * @param DefinitionProviderInterface[] $providers
      *
      * @return $this
      */
-    public function setPackagesConfiguration(array $configurations = []);
+    public function setDefinitionProviders(array $providers = []);
 
     /**
-     * Set configuration for a package.
+     * Set a definition provider in particular.
      *
-     * @param string $package
-     * @param array  $configuration
+     * @param string                      $name
+     * @param DefinitionProviderInterface $provider
      *
      * @return $this
      */
-    public function setPackageConfiguration($package, array $configuration = []);
+    public function setDefinitionProvider($name, $provider);
 }

@@ -12,6 +12,7 @@ namespace Madewithlove\Glue\Console;
 
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
+use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\TestCase;
 use Symfony\Component\Console\Application;
@@ -21,8 +22,7 @@ class SymfonyConsoleServiceProviderTest extends TestCase
     public function testCanBindCommandsToConsole()
     {
         $glue = new Glue(new Configuration([
-            'providers' => [SymfonyConsoleServiceProvider::class],
-            'commands' => [TinkerCommand::class],
+            'definitions' => [new SymfonyConsoleDefinition([TinkerCommand::class])],
         ]));
 
         $glue->boot();

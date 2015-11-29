@@ -11,18 +11,17 @@
 namespace Madewithlove\Glue\Configuration;
 
 use Illuminate\Support\Fluent;
+use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 
 /**
- * @property string   $namespace   The namespace of your application
- * @property string   $rootPath    The path to the root of your application
- * @property bool     $debug       Whether we're in debug mode or not
- * @property string[] $providers   The providers to apply
- * @property string[] $middlewares The middlewares to apply to the current route
- * @property string[] $commands    The commands to register with the CLI
- * @property array    $paths       The paths in your application
- * @property array    $packages    The configuration for the various packages
+ * @property string                        $namespace   The namespace of your application
+ * @property string                        $rootPath    The path to the root of your application
+ * @property bool                          $debug       Whether we're in debug mode or not
+ * @property string[]                      $middlewares The middlewares to apply to the current route
+ * @property array                         $paths       The paths in your application
+ * @property DefinitionProviderInterface[] $definitions The definition providers
  */
 abstract class AbstractConfiguration extends Fluent implements ConfigurationInterface, ContainerAwareInterface
 {
@@ -83,24 +82,6 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
-    public function getProviders()
-    {
-        return (array) $this->providers;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setProviders(array $providers = [])
-    {
-        $this->providers = $providers;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getMiddlewares()
     {
         return (array) $this->middlewares;
@@ -119,35 +100,44 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
-    public function getPackagesConfiguration()
+    public function getDefinitionProviders()
     {
-        return (array) $this->packages;
+        return (array) $this->definitions;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getPackageConfiguration($package)
+    public function setDefinitionProviders(array $providers = [])
     {
-        return array_get($this->getPackagesConfiguration(), $package);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setPackagesConfiguration(array $configurations = [])
-    {
-        $this->packages = $configurations;
+        $this->definitions = $providers;
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * Get a definition provider in particular.
+     *
+     * @param string $provider
+     *
+     * @return DefinitionProviderInterface
      */
-    public function setPackageConfiguration($package, array $configuration = [])
+    public function getDefinitionProvider($provider)
     {
-        $this->packages = array_merge($this->packages, [$package => $configuration]);
+        return array_get($this->definitions, $provider);
+    }
+
+    /**
+     * Set a definition provider in particular.
+     *
+     * @param string                      $name
+     * @param DefinitionProviderInterface $provider
+     *
+     * @return $this
+     */
+    public function setDefinitionProvider($name, $provider)
+    {
+        $this->definitions[$name] = $provider;
 
         return $this;
     }
