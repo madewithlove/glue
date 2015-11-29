@@ -59,7 +59,7 @@ class DefaultConfigurationTest extends TestCase
 
         $configuration->setDebug(false);
         $configuration->configure();
-        $this->assertArrayNotHasKey('debugbar', $configuration->toArray()['providers']);
+        $this->assertArrayNotHasKey('debugbar', $configuration->toArray()['definitions']);
     }
 
     public function testCanOverrideProperties()
