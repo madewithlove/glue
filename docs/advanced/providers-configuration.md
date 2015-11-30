@@ -5,7 +5,7 @@ If you want to configure some of the providers that come with Glue, most of the 
 ```php
 $app = new Glue();
 $app->configure('definitions', [
-    'view' => MyTwigDefinition::class,
+    'view' => new MyTwigDefinition(),
 ]);
 ```
 

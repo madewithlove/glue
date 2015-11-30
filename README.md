@@ -52,9 +52,9 @@ Into this:
 ```php
 $app = (new Glue())
     ->setDefinitionProviders([
-        SomeDefinition::class,
-        AnotherDefinition::class,
-        LeagueRouteDefinition::class,
+        new SomeDefinition(),
+        new AnotherDefinition(),
+        new LeagueRouteDefinition(),
     ])
     ->setMiddlewares([
         SomeMiddleware::class,
