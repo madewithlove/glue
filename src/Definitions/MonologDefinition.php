@@ -15,6 +15,7 @@ use Assembly\ObjectDefinition;
 use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
+use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
@@ -48,16 +49,16 @@ class MonologDefinition implements DefinitionProviderInterface
      */
     public function getDefinitions()
     {
-        $handler = new ObjectDefinition('monolog.handler', StreamHandler::class);
+        $handler = new ObjectDefinition(HandlerInterface::class, StreamHandler::class);
         $handler->setConstructorArguments($this->path.DS.$this->filename, Logger::WARNING);
 
         $logger = new ObjectDefinition(LoggerInterface::class, Logger::class);
         $logger->setConstructorArguments('glue');
-        $logger->addMethodCall('pushHandler', new Reference('monolog.handler'));
+        $logger->addMethodCall('pushHandler', new Reference(HandlerInterface::class));
 
         return [
             LoggerInterface::class => $logger,
-            'monolog.handler' => $handler,
+            HandlerInterface::class => $handler,
             'monolog' => new AliasDefinition('monolog', LoggerInterface::class),
         ];
     }
