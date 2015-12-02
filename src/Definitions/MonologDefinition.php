@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Definitions;
 
-use Assembly\AliasDefinition;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
@@ -49,17 +48,17 @@ class MonologDefinition implements DefinitionProviderInterface
      */
     public function getDefinitions()
     {
-        $handler = new ObjectDefinition(HandlerInterface::class, StreamHandler::class);
+        $handler = new ObjectDefinition(StreamHandler::class);
         $handler->setConstructorArguments($this->path.DS.$this->filename, Logger::WARNING);
 
-        $logger = new ObjectDefinition(LoggerInterface::class, Logger::class);
+        $logger = new ObjectDefinition(Logger::class);
         $logger->setConstructorArguments('glue');
         $logger->addMethodCall('pushHandler', new Reference(HandlerInterface::class));
 
         return [
             LoggerInterface::class => $logger,
             HandlerInterface::class => $handler,
-            'monolog' => new AliasDefinition('monolog', LoggerInterface::class),
+            'monolog' => new Reference(LoggerInterface::class),
         ];
     }
 }

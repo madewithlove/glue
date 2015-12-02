@@ -45,7 +45,7 @@ class UrlGeneratorDefinition implements DefinitionProviderInterface, ContainerAw
      */
     public function getDefinitions()
     {
-        $generator = new ObjectDefinition(UrlGenerator::class, UrlGenerator::class);
+        $generator = new ObjectDefinition(UrlGenerator::class);
         $generator->setConstructorArguments($this->namespace, new Reference('routes'));
 
         $function = new ExtendDefinition(Twig_Environment::class);

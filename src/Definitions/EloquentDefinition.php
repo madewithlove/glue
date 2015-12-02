@@ -37,7 +37,7 @@ class EloquentDefinition implements DefinitionProviderInterface
      */
     public function getDefinitions()
     {
-        $manager = new ObjectDefinition(Manager::class, Manager::class);
+        $manager = new ObjectDefinition(Manager::class);
         foreach ($this->connections as $name => $connection) {
             $manager->addMethodCall('addConnection', $connection, $name);
         }

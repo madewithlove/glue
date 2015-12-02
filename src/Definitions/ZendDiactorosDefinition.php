@@ -10,9 +10,9 @@
 
 namespace Madewithlove\Glue\Definitions;
 
-use Assembly\AliasDefinition;
 use Assembly\FactoryCallDefinition;
 use Assembly\ObjectDefinition;
+use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use Psr\Http\Message\RequestInterface;
@@ -30,13 +30,13 @@ class ZendDiactorosDefinition implements DefinitionProviderInterface
      */
     public function getDefinitions()
     {
-        $request = new FactoryCallDefinition(ServerRequestInterface::class, ServerRequestFactory::class, 'fromGlobals');
-        $response = new ObjectDefinition(ResponseInterface::class, Response::class);
+        $request = new FactoryCallDefinition(ServerRequestFactory::class, 'fromGlobals');
+        $response = new ObjectDefinition(Response::class);
 
         return [
             ServerRequestInterface::class => $request,
             ResponseInterface::class => $response,
-            RequestInterface::class => new AliasDefinition(RequestInterface::class, ServerRequestInterface::class),
+            RequestInterface::class => new Reference(ServerRequestInterface::class),
         ];
     }
 }

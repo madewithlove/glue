@@ -44,7 +44,7 @@ class Container extends LeagueContainer
     public function get($alias, array $args = [])
     {
         if (!$this->hasShared($alias) && array_key_exists($alias, $this->interopDefinitions)) {
-            $this->shared[$alias] = $this->resolveDefinition($this->interopDefinitions[$alias]);
+            $this->shared[$alias] = $this->resolveDefinition($alias, $this->interopDefinitions[$alias]);
         }
 
         return parent::get($alias, $args);
@@ -69,11 +69,11 @@ class Container extends LeagueContainer
      */
     public function addDefinitionProvider(DefinitionProviderInterface $provider)
     {
-        foreach ($provider->getDefinitions() as $definition) {
+        foreach ($provider->getDefinitions() as $identifier => $definition) {
             if ($definition instanceof ExtendDefinitionInterface) {
                 $this->extensions[$definition->getExtended()][] = $definition;
             } else {
-                $this->interopDefinitions[$definition->getIdentifier()] = $definition;
+                $this->interopDefinitions[$identifier] = $definition;
             }
         }
     }
@@ -81,6 +81,7 @@ class Container extends LeagueContainer
     /**
      * Resolve a definition and return the resulting value.
      *
+     * @param string              $identifier
      * @param DefinitionInterface $definition
      *
      * @throws InvalidDefinition
@@ -88,14 +89,14 @@ class Container extends LeagueContainer
      *
      * @return mixed
      */
-    private function resolveDefinition(DefinitionInterface $definition)
+    private function resolveDefinition($identifier, DefinitionInterface $definition)
     {
         $resolver = new DefinitionResolver($this);
         $service = $resolver->resolve($definition);
 
         // Add extensions
-        if (array_key_exists($definition->getIdentifier(), $this->extensions)) {
-            foreach ($this->extensions[$definition->getIdentifier()] as $extension) {
+        if (array_key_exists($identifier, $this->extensions)) {
+            foreach ($this->extensions[$identifier] as $extension) {
                 $service = $this->callAssignments($service, $extension);
                 $service = $this->callMethods($service, $extension);
             }

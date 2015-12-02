@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Definitions;
 
-use Assembly\AliasDefinition;
 use Assembly\FactoryCallDefinition;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
@@ -45,18 +44,18 @@ class RelayDefinition implements DefinitionProviderInterface, ContainerAwareInte
      */
     public function getDefinitions()
     {
-        $relayFactory = new ObjectDefinition(RelayBuilder::class, RelayBuilder::class);
+        $relayFactory = new ObjectDefinition(RelayBuilder::class);
         $relayFactory->setConstructorArguments(function ($callable) {
             return is_string($callable) ? $this->container->get($callable) : $callable;
         });
 
-        $relay = new FactoryCallDefinition(Relay::class, new Reference(RelayBuilder::class), 'newInstance');
+        $relay = new FactoryCallDefinition(new Reference(RelayBuilder::class), 'newInstance');
         $relay->setArguments($this->middlewares);
 
         return [
             RelayBuilder::class => $relayFactory,
             Relay::class => $relay,
-            'pipeline' => new AliasDefinition('pipeline', Relay::class),
+            'pipeline' => new Reference(Relay::class),
         ];
     }
 }

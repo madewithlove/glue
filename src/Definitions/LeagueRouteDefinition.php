@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Definitions;
 
-use Assembly\AliasDefinition;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
@@ -35,7 +34,7 @@ class LeagueRouteDefinition implements DefinitionProviderInterface, ContainerAwa
         return [
             StrategyInterface::class => $this->getStrategy(),
             RouteCollection::class => $this->getRouter(),
-            'router' => new AliasDefinition('router', RouteCollection::class),
+            'router' => new Reference(RouteCollection::class),
         ];
     }
 
@@ -44,7 +43,7 @@ class LeagueRouteDefinition implements DefinitionProviderInterface, ContainerAwa
      */
     protected function getStrategy()
     {
-        $strategy = new ObjectDefinition(StrategyInterface::class, ParamStrategy::class);
+        $strategy = new ObjectDefinition(ParamStrategy::class);
         $strategy->addMethodCall('setContainer', $this->container);
 
         return $strategy;
@@ -55,7 +54,7 @@ class LeagueRouteDefinition implements DefinitionProviderInterface, ContainerAwa
      */
     protected function getRouter()
     {
-        $router = new ObjectDefinition(RouteCollection::class, RouteCollection::class);
+        $router = new ObjectDefinition(RouteCollection::class);
         $router->setConstructorArguments($this->container);
         $router->addMethodCall('setStrategy', new Reference(StrategyInterface::class));
 

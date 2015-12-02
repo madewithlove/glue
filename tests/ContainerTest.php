@@ -38,7 +38,7 @@ class ContainerTest extends TestCase
         $container = new Container();
 
         $container->addDefinitionProvider(new ArrayDefinitionProvider([
-            'foobar' => (new ParameterDefinition('foobar', $service)),
+            'foobar' => (new ParameterDefinition($service)),
             'extenstion' => (new ExtendDefinition('foobar'))->addMethodCall('someMethod', 'foobar'),
         ]));
 

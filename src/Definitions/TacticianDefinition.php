@@ -10,8 +10,8 @@
 
 namespace Madewithlove\Glue\Definitions;
 
-use Assembly\AliasDefinition;
 use Assembly\ObjectDefinition;
+use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;
@@ -39,12 +39,12 @@ class TacticianDefinition implements DefinitionProviderInterface, ContainerAware
             new HandleInflector()
         );
 
-        $bus = new ObjectDefinition(CommandBus::class, CommandBus::class);
+        $bus = new ObjectDefinition(CommandBus::class);
         $bus->setConstructorArguments([$handler]);
 
         return [
             CommandBus::class => $bus,
-            'bus' => new AliasDefinition('bus', CommandBus::class),
+            'bus' => new Reference(CommandBus::class),
         ];
     }
 }

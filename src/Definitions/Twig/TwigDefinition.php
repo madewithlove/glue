@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Definitions\Twig;
 
-use Assembly\AliasDefinition;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
@@ -63,10 +62,10 @@ class TwigDefinition implements DefinitionProviderInterface
 
         // Define loader
         $loader = $isViewsFolder ? Twig_Loader_Filesystem::class : Twig_Loader_Array::class;
-        $loader = new ObjectDefinition(Twig_LoaderInterface::class, $loader);
+        $loader = new ObjectDefinition($loader);
         $loader->setConstructorArguments($this->views ?: []);
 
-        $twig = new ObjectDefinition(Twig_Environment::class, Twig_Environment::class);
+        $twig = new ObjectDefinition(Twig_Environment::class);
         $twig->setConstructorArguments(new Reference(Twig_LoaderInterface::class), $this->options);
 
         foreach ($this->extensions as $extension) {
@@ -76,7 +75,7 @@ class TwigDefinition implements DefinitionProviderInterface
         return [
             Twig_LoaderInterface::class => $loader,
             Twig_Environment::class => $twig,
-            'twig' => new AliasDefinition('twig', Twig_Environment::class),
+            'twig' => new Reference(Twig_Environment::class),
         ];
     }
 }

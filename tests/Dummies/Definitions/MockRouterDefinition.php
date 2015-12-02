@@ -30,7 +30,7 @@ class MockRouterDefinition implements DefinitionProviderInterface
         });
 
         return [
-            'router' => new ParameterDefinition('router', $router),
+            'router' => new ParameterDefinition($router),
         ];
     }
 }

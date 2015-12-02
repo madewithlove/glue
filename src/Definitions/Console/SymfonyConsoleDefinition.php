@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Definitions\Console;
 
-use Assembly\AliasDefinition;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
@@ -45,7 +44,7 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
      */
     public function getDefinitions()
     {
-        $console = new ObjectDefinition(Application::class, Application::class);
+        $console = new ObjectDefinition(Application::class);
         $console->addMethodCall('setName', 'Glue');
         $console->addMethodCall('setVersion', Glue::VERSION);
 
@@ -56,7 +55,7 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
 
         return [
             Application::class => $console,
-            'console' => new AliasDefinition('console', Application::class),
+            'console' => new Reference(Application::class),
         ];
     }
 }
