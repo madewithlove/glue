@@ -16,7 +16,7 @@ use Assembly\Container\UnsupportedDefinition;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use Interop\Container\Definition\ObjectDefinitionInterface;
-use Interop\Container\Definition\ReferenceInterface;
+use Interop\Container\Definition\ReferenceDefinitionInterface;
 use League\Container\Container as LeagueContainer;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinitionInterface;
 
@@ -91,6 +91,20 @@ class Container extends LeagueContainer
      */
     private function resolveDefinition($identifier, DefinitionInterface $definition)
     {
+        return $this->resolve($identifier, $definition);
+    }
+
+    /**
+     * @param string              $identifier
+     * @param DefinitionInterface $definition
+     *
+     * @throws InvalidDefinition
+     * @throws UnsupportedDefinition
+     *
+     * @return mixed
+     */
+    private function resolve($identifier, DefinitionInterface $definition)
+    {
         $resolver = new DefinitionResolver($this);
         $service = $resolver->resolve($definition);
 
@@ -108,14 +122,16 @@ class Container extends LeagueContainer
     /**
      * Resolve a variable that can be a reference.
      *
-     * @param ReferenceInterface|mixed $value
+     * @param ReferenceDefinitionInterface|mixed $value
      *
      * @return mixed
      */
-    private function resolveReference($value)
+    private function resolveSubDefinition($value)
     {
-        if ($value instanceof ReferenceInterface) {
-            $value = $this->get($value->getTarget());
+        if (is_array($value)) {
+            return array_map([$this, 'resolveSubDefinition'], $value);
+        } elseif ($value instanceof DefinitionInterface) {
+            return (new DefinitionResolver($this))->resolve($value);
         }
 
         return $value;
@@ -131,7 +147,7 @@ class Container extends LeagueContainer
     {
         foreach ($definition->getMethodCalls() as $methodCall) {
             $methodArguments = $methodCall->getArguments();
-            $methodArguments = array_map([$this, 'resolveReference'], $methodArguments);
+            $methodArguments = array_map([$this, 'resolveSubDefinition'], $methodArguments);
             call_user_func_array([$service, $methodCall->getMethodName()], $methodArguments);
         }
 

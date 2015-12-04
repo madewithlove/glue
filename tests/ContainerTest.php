@@ -12,6 +12,7 @@ namespace Madewithlove\Glue;
 
 use Assembly\ArrayDefinitionProvider;
 use Assembly\ParameterDefinition;
+use Assembly\Reference;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
 use Madewithlove\Glue\Dummies\Definitions\DummyDefinition;
 use Mockery;
@@ -33,13 +34,14 @@ class ContainerTest extends TestCase
     public function testCanAddExtensionsToDefinition()
     {
         $service = Mockery::mock('foobar');
-        $service->shouldReceive('someMethod')->once()->with('foobar');
+        $service->shouldReceive('someMethod')->once()->with('bar');
 
         $container = new Container();
 
         $container->addDefinitionProvider(new ArrayDefinitionProvider([
             'foobar' => (new ParameterDefinition($service)),
-            'extenstion' => (new ExtendDefinition('foobar'))->addMethodCall('someMethod', 'foobar'),
+            'foo' => 'bar',
+            'extenstion' => (new ExtendDefinition('foobar'))->addMethodCall('someMethod', new Reference('foo')),
         ]));
 
         $container->get('foobar');
