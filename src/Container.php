@@ -153,7 +153,7 @@ class Container extends LeagueContainer
     {
         foreach ($definition->getPropertyAssignments() as $propertyAssignment) {
             $propertyName = $propertyAssignment->getPropertyName();
-            $service->$propertyName = $this->resolveReference($propertyAssignment->getValue());
+            $service->$propertyName = $this->resolveSubDefinition($propertyAssignment->getValue());
         }
 
         return $service;
