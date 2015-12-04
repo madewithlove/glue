@@ -13,7 +13,6 @@ namespace Madewithlove\Glue;
 use Acclimate\Container\ContainerAcclimator;
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
-use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
