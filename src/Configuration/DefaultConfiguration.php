@@ -105,6 +105,7 @@ class DefaultConfiguration extends AbstractConfiguration
         $rootPath = $this->getRootPath();
 
         return [
+            'root' => $rootPath,
             'assets' => $rootPath.'/public/builds',
             'web' => $rootPath.'/public',
             'migrations' => $rootPath.'/resources/migrations',
