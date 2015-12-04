@@ -160,7 +160,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'filesystem' => new FlysystemDefinition('local', [
                 'local' => new Local($this->getRootPath()),
             ]),
-            'logging' => new MonologDefinition($this->getPath('logs'), date('Y-m-d').'.log'),
+            'logging' => new MonologDefinition($this->getPath('logs'), 'glue.log'),
             'console' => new SymfonyConsoleDefinition([
                 TinkerCommand::class,
                 ConfigurationCommand::class,

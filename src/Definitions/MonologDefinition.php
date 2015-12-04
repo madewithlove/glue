@@ -15,7 +15,7 @@ use Assembly\Reference;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use Monolog\Handler\HandlerInterface;
-use Monolog\Handler\StreamHandler;
+use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 
@@ -48,8 +48,8 @@ class MonologDefinition implements DefinitionProviderInterface
      */
     public function getDefinitions()
     {
-        $handler = new ObjectDefinition(StreamHandler::class);
-        $handler->setConstructorArguments($this->path.DS.$this->filename, Logger::WARNING);
+        $handler = new ObjectDefinition(RotatingFileHandler::class);
+        $handler->setConstructorArguments($this->path.DS.$this->filename, 0, Logger::WARNING);
 
         $logger = new ObjectDefinition(Logger::class);
         $logger->setConstructorArguments('glue');
