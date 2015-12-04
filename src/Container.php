@@ -18,6 +18,7 @@ use Interop\Container\Definition\DefinitionProviderInterface;
 use Interop\Container\Definition\ObjectDefinitionInterface;
 use Interop\Container\Definition\ReferenceDefinitionInterface;
 use League\Container\Container as LeagueContainer;
+use League\Container\ContainerAwareInterface;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinitionInterface;
 
 /**
@@ -69,6 +70,10 @@ class Container extends LeagueContainer
      */
     public function addDefinitionProvider(DefinitionProviderInterface $provider)
     {
+        if ($provider instanceof ContainerAwareInterface) {
+            $provider->setContainer($this);
+        }
+
         foreach ($provider->getDefinitions() as $identifier => $definition) {
             if ($definition instanceof ExtendDefinitionInterface) {
                 $this->extensions[$definition->getExtended()][] = $definition;

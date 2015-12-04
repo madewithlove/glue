@@ -160,10 +160,6 @@ class Glue
         // Register definitions
         $definitionProviders = $this->configuration->getDefinitionProviders();
         foreach ($definitionProviders as &$definitionProvider) {
-            if ($definitionProvider instanceof ContainerAwareInterface) {
-                $definitionProvider->setContainer($this->container);
-            }
-
             $this->container->addDefinitionProvider($definitionProvider);
         }
     }
