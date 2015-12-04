@@ -109,24 +109,6 @@ class Container extends LeagueContainer
     }
 
     /**
-     * Resolve a variable that can be a reference.
-     *
-     * @param ReferenceDefinitionInterface|mixed $value
-     *
-     * @return mixed
-     */
-    private function resolveSubDefinition($value)
-    {
-        if (is_array($value)) {
-            return array_map([$this, 'resolveSubDefinition'], $value);
-        } elseif ($value instanceof DefinitionInterface) {
-            return (new DefinitionResolver($this))->resolve($value);
-        }
-
-        return $value;
-    }
-
-    /**
      * @param object                    $service
      * @param ObjectDefinitionInterface $definition
      *
@@ -157,5 +139,23 @@ class Container extends LeagueContainer
         }
 
         return $service;
+    }
+
+    /**
+     * Resolve a variable that can be a reference.
+     *
+     * @param ReferenceDefinitionInterface|mixed $value
+     *
+     * @return mixed
+     */
+    private function resolveSubDefinition($value)
+    {
+        if (is_array($value)) {
+            return array_map([$this, 'resolveSubDefinition'], $value);
+        } elseif ($value instanceof DefinitionInterface) {
+            return (new DefinitionResolver($this))->resolve($value);
+        }
+
+        return $value;
     }
 }
