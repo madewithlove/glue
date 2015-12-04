@@ -45,7 +45,7 @@ class Container extends LeagueContainer
     public function get($alias, array $args = [])
     {
         if (!$this->hasShared($alias) && array_key_exists($alias, $this->interopDefinitions)) {
-            $this->shared[$alias] = $this->resolveDefinition($alias, $this->interopDefinitions[$alias]);
+            $this->shared[$alias] = $this->resolve($alias, $this->interopDefinitions[$alias]);
         }
 
         return parent::get($alias, $args);
@@ -81,22 +81,6 @@ class Container extends LeagueContainer
                 $this->interopDefinitions[$identifier] = $definition;
             }
         }
-    }
-
-    /**
-     * Resolve a definition and return the resulting value.
-     *
-     * @param string              $identifier
-     * @param DefinitionInterface $definition
-     *
-     * @throws InvalidDefinition
-     * @throws UnsupportedDefinition
-     *
-     * @return mixed
-     */
-    private function resolveDefinition($identifier, DefinitionInterface $definition)
-    {
-        return $this->resolve($identifier, $definition);
     }
 
     /**
