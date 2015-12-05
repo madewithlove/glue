@@ -26,5 +26,4 @@ script:
 # Cache dependencies
 cache:
   directories:
-    - vendor
     - $HOME/.composer/cache
