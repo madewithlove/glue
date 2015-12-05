@@ -111,3 +111,67 @@ class MyProvider implements DefinitionProviderInterface
     }
 }
 ```
+
+## Options and dependencies
+
+If you need to make your definition configurable, as it is as its core a plain class you can add any constructor arguments you might want need to it:
+
+```php
+class MyProvider implements DefinitionProviderInterface
+{
+    protected $someOption;
+
+    public function __construct($someOption)
+    {
+        $this->someOption = $someOption;
+    }
+
+    public function getDefinitions()
+    {
+        $object = new ObjectDefinition(SomeClass::class);
+        $object->setConstructorArguments($this->someOption, 'bar');
+        $object->addMethodCall('setLogger', new Reference(LoggerInterface::class));
+
+        return [
+            SomeClass::class => $object,
+        ];
+    }
+}
+```
+
+If you need to retrieve something from the container and you _absolutely can't_ use references for it, you can also make your provider implement the `ContainerAwareInterface` and the relevant trait.
+The container will then automatically be available in your provider within Glue as `$this->container`:
+
+ ```php
+ use Assembly\ParameterDefinition;
+ use League\Container\ContainerAwareInterface;
+ use League\Container\ContainerAwareTrait;
+
+ class MyProvider implements DefinitionProviderInterface, ContainerAwareInterface
+ {
+     use ContainerAwareTrait;
+
+     protected $someOption;
+
+     public function __construct($someOption)
+     {
+         $this->someOption = $someOption;
+     }
+
+     public function getDefinitions()
+     {
+         $something = $this->container->get('something');
+         $thing = $something->getOtherThing('foobar');
+
+         $object = new ObjectDefinition(SomeClass::class);
+         $object->setConstructorArguments($this->someOption, $thing);
+         $object->addMethodCall('setLogger', new Reference(LoggerInterface::class));
+
+         return [
+             SomeClass::class => $object,
+         ];
+     }
+ }
+ ```
+
+
