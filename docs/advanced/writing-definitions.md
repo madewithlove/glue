@@ -143,7 +143,6 @@ If you need to retrieve something from the container and you _absolutely can't_ 
 The container will then automatically be available in your provider within Glue as `$this->container`:
 
  ```php
- use Assembly\ParameterDefinition;
  use League\Container\ContainerAwareInterface;
  use League\Container\ContainerAwareTrait;
 
@@ -174,4 +173,5 @@ The container will then automatically be available in your provider within Glue 
  }
  ```
 
+Keep in mind however this can be a *very dangerous practice* if you don't know what you're doing because your provider then needs to be registered _after_ whatever provider defines `something`. Only use it in last resort.
 
