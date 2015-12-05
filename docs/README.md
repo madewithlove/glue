@@ -7,6 +7,7 @@
     - [Command line](/docs/basic/command-line.md)
 - Advanced usage
     - [The Configuration object](/docs/advanced/configuration-object.md)
+    - [Writing definitions](/docs/advanced/writing-definitions.md)
     - [Providers configuration](/docs/advanced/providers-configuration.md)
     - [Swapping middlewares handler](/docs/advanced/swapping-middlewares-handler.md)
 - Other informations
