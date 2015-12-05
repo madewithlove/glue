@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
+
+body,
+.book .book-header,
+.book .book-summary {
+    font-family: "Lato", "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 16px;
+}
+
+.book {
+    display: flex;
+}
+
+.book .book-summary,
+.book .book-body,
+.book .book-summary ul.summary,
+.book .book-body, .book .book-body .body-inner,
+.book .book-body .page-wrapper .page-inner {
+    max-width: none;
+    position: static;
+    width: 100%;
+}
+
+.book .book-summary {
+    background-color: #37A7F8;
+    background-image: url('glue.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    min-width: 300px;
+    overflow: hidden;
+    padding-top: 175px;
+    width: 20%;
+}
+
+.book .book-body .page-wrapper .page-inner {
+    width: 50%;
+}
+
+.book .book-summary ul.summary li span {
+    opacity: 0.5;
+}
+
+.book .book-summary ul.summary li a,
+.book .book-summary ul.summary li span,
+.book .book-summary ul.summary li a:hover,
+.book .book-summary ul.summary li.active > a {
+    color: white;
+}
+
+.book .book-summary ul.summary li a,
+.book .book-summary ul.summary li {
+    transition: background 0.3s;
+}
+
+.book .book-summary ul.summary li a:hover,
+.book .book-summary ul.summary li.active {
+    background: rgba(255, 255, 255, 0.2);
+}

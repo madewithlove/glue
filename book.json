@@ -12,6 +12,9 @@
         "ungrey",
         "-highlight"
     ],
+    "styles": {
+      "website": "docs/styles.css"
+    },
     "pluginsConfig": {
         "edit-link": {
             "base": "https://github.com/madewithlove/glue/tree/master",
