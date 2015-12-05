@@ -114,7 +114,7 @@ class MyProvider implements DefinitionProviderInterface
 
 ## Options and dependencies
 
-If you need to make your definition configurable, as it is as its core a plain class you can add any constructor arguments you might want need to it:
+If you need to make your definition configurable, as it is at its core a plain class, you can add any constructor arguments you might want need to it:
 
 ```php
 class MyProvider implements DefinitionProviderInterface
