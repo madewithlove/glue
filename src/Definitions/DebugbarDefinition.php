@@ -29,11 +29,7 @@ class DebugbarDefinition implements DefinitionProviderInterface
     public function getDefinitions()
     {
         $debugbar = new ObjectDefinition(StandardDebugBar::class);
-        $renderer = new FactoryCallDefinition(
-            JavascriptRenderer::class,
-            new Reference(DebugBar::class),
-            'getJavascriptRenderer'
-        );
+        $renderer = new FactoryCallDefinition(new Reference(DebugBar::class), 'getJavascriptRenderer');
 
         return [
             DebugBar::class => $debugbar,
