@@ -69,12 +69,12 @@ Variables: $app, $config
 
 ## Adding commands
 
-To add commands, set the `commands` option:
+To add commands, pass them as constructor arguments to the `SymfonyConsoleDefinition`:
 
 ```php
-$app->configure('commands', [
+$app->setDefinitionProvider('console', new SymfonyConsoleDefinition([
     SomeCommand::class,
-]);
+]));
 ```
 
 Glue uses `symfony/console` so created commands should be instances of `Symfony\Component\Console\Command\Command`.
@@ -82,14 +82,12 @@ All commands are resolved through the container so you can inject dependencies i
 
 ## Using a different CLI
 
-You can of course override the console application by overriding the `console` binding in a service provider of your doing.
-The commands will still be available under the `config.commands` key in the container if your new CLI supports Symfony commands (eg. [Silly], etc).
+You can of course override the console application by overriding the `console` binding in a definition provider of your doing.
 
 ```php
 $app = new Glue();
-$app->configure('providers', [
-    'console' => CLImateServiceProvider::class,
+$app->setDefinitionProvider('console', new ClimateDefinition([
+    SomeCommand::class,
+    OtherCommand::class
 ]);
 ```
-
-[Silly]: https://github.com/mnapoli/silly
