@@ -32,12 +32,12 @@ class MonologDefinition implements DefinitionProviderInterface
     protected $filename;
 
     /**
-     * @param string $path
+     * @param string|null $path
      * @param string $filename
      */
-    public function __construct($path, $filename)
+    public function __construct($path = null, $filename = 'glue.log')
     {
-        $this->path = $path;
+        $this->path = $path ?: getcwd();
         $this->filename = $filename;
     }
 

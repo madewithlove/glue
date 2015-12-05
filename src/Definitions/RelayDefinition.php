@@ -32,7 +32,7 @@ class RelayDefinition implements DefinitionProviderInterface, ContainerAwareInte
     /**
      * @param array $middlewares
      */
-    public function __construct(array $middlewares)
+    public function __construct(array $middlewares = [])
     {
         $this->middlewares = $middlewares;
     }

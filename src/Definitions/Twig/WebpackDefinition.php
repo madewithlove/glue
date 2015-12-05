@@ -23,8 +23,6 @@ class WebpackDefinition implements DefinitionProviderInterface
     protected $path;
 
     /**
-     * WebpackDefinition constructor.
-     *
      * @param string $path
      */
     public function __construct($path)

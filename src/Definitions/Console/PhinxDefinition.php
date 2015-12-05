@@ -31,7 +31,7 @@ class PhinxDefinition implements DefinitionProviderInterface, ContainerAwareInte
     /**
      * @param array $configuration
      */
-    public function __construct(array $configuration)
+    public function __construct(array $configuration = [])
     {
         $this->configuration = $configuration;
     }

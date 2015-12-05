@@ -44,7 +44,7 @@ class TwigDefinition implements DefinitionProviderInterface
      * @param array            $options
      * @param Twig_Extension[] $extensions
      */
-    public function __construct($views, array $options = [], array $extensions = [])
+    public function __construct($views = [], array $options = [], array $extensions = [])
     {
         $this->views = $views;
         $this->options = $options;

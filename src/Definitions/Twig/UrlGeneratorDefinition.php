@@ -31,9 +31,9 @@ class UrlGeneratorDefinition implements DefinitionProviderInterface, ContainerAw
     protected $namespace;
 
     /**
-     * @param string $namespace
+     * @param string|null $namespace
      */
-    public function __construct($namespace)
+    public function __construct($namespace = null)
     {
         $this->namespace = $namespace;
     }
