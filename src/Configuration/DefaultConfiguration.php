@@ -12,8 +12,6 @@ namespace Madewithlove\Glue\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use League\Flysystem\Adapter\Local;
-use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
-use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
 use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Definitions\DebugbarDefinition;

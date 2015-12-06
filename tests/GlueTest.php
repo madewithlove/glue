@@ -13,7 +13,6 @@ namespace Madewithlove\Glue;
 use Assembly\ParameterDefinition;
 use Illuminate\Container\Container as IlluminateContainer;
 use Interop\Container\Definition\DefinitionProviderInterface;
-use League\Container\Container;
 use League\Tactician\CommandBus;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Definitions\LeagueRouteDefinition;

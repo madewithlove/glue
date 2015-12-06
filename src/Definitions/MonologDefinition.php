@@ -33,7 +33,7 @@ class MonologDefinition implements DefinitionProviderInterface
 
     /**
      * @param string|null $path
-     * @param string $filename
+     * @param string      $filename
      */
     public function __construct($path = null, $filename = 'glue.log')
     {

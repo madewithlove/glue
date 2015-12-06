@@ -42,7 +42,7 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
 
     /**
      * Create a new instance of SymfonyConsoleDefintion
-     * with Glue's default commands
+     * with Glue's default commands.
      *
      * @param array $commands
      *

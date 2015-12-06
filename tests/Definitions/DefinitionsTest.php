@@ -1,16 +1,29 @@
 <?php
+
+/*
+ * This file is part of Glue
+ *
+ * (c) madewithlove <heroes@madewithlove.be>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ */
+
 namespace Madewithlove\Glue\Definitions;
 
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Flysystem\Adapter\Local;
+use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Container;
 use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
 use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
+use Madewithlove\Glue\Definitions\Glue\ConfigurationDefinition;
+use Madewithlove\Glue\Definitions\Glue\PathsDefinition;
 use Madewithlove\Glue\Definitions\Twig\TwigDefinition;
 use Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition;
 use Madewithlove\Glue\Definitions\Twig\WebpackDefinition;
+use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\TestCase;
 use Symfony\Component\Console\Application;
 use Twig_Environment;
@@ -74,7 +87,11 @@ class DefinitionsTest extends TestCase
      */
     public function provideDefinitions()
     {
+        $glue = new Glue();
+
         return [
+            [new PathsDefinition(new DefaultConfiguration())],
+            [new ConfigurationDefinition(new DefaultConfiguration())],
             [new FlysystemDefinition('local', ['local' => new Local(__DIR__)])],
             [new DebugbarDefinition()],
             [new LeagueRouteDefinition()],
