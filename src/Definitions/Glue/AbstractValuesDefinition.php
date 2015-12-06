@@ -8,11 +8,12 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Providers;
+namespace Madewithlove\Glue\Definitions\Glue;
 
-use League\Container\ServiceProvider\AbstractServiceProvider;
+use Assembly\ParameterDefinition;
+use Interop\Container\Definition\DefinitionProviderInterface;
 
-abstract class AbstractValuesProvider extends AbstractServiceProvider
+abstract class AbstractValuesDefinition implements DefinitionProviderInterface
 {
     /**
      * @var string
@@ -20,28 +21,19 @@ abstract class AbstractValuesProvider extends AbstractServiceProvider
     protected $key;
 
     /**
-     * {@inheritdoc}
-     */
-    public function provides($alias = null)
-    {
-        $this->provides = array_map(function ($key) {
-            return $this->key.'.'.$key;
-        }, $this->getProvided());
-
-        return parent::provides($alias);
-    }
-
-    /**
      * Use the register method to register items with the container via the
      * protected $this->container property or the `getContainer` method
      * from the ContainerAwareTrait.
      */
-    public function register()
+    public function getDefinitions()
     {
         $values = $this->getValues();
+        $definitions = [];
         foreach ($values as $key => $value) {
-            $this->container->add($this->key.'.'.$key, $value);
+            $definitions[$this->key.'.'.$key] = new ParameterDefinition($value);
         }
+
+        return $definitions;
     }
 
     /**

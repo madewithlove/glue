@@ -18,7 +18,7 @@ use Madewithlove\Glue\TestCase;
 use Phinx\Console\Command\Migrate;
 use Symfony\Component\Console\Application;
 
-class PhinxServiceProviderTest extends TestCase
+class PhinxDefinitionTest extends TestCase
 {
     public function testCanMirrorPhinxCommands()
     {

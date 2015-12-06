@@ -8,11 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Providers;
+namespace Madewithlove\Glue\Definitions\Glue;
 
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 
-class ConfigurationServiceProvider extends AbstractValuesProvider
+class ConfigurationDefinition extends AbstractValuesDefinition
 {
     /**
      * @var string
@@ -20,13 +20,16 @@ class ConfigurationServiceProvider extends AbstractValuesProvider
     protected $key = 'config';
 
     /**
-     * {@inheritdoc}
+     * @var ConfigurationInterface
      */
-    protected function getProvided()
+    protected $configuration;
+
+    /**
+     * @param ConfigurationInterface $configuration
+     */
+    public function __construct(ConfigurationInterface $configuration)
     {
-        return array_merge(parent::getProvided(), [
-            ConfigurationInterface::class,
-        ]);
+        $this->configuration = $configuration;
     }
 
     /**
@@ -34,6 +37,6 @@ class ConfigurationServiceProvider extends AbstractValuesProvider
      */
     protected function getValues()
     {
-        return $this->container->get(ConfigurationInterface::class)->toArray();
+        return $this->configuration->toArray();
     }
 }

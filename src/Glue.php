@@ -19,8 +19,8 @@ use League\Route\RouteCollection;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
-use Madewithlove\Glue\Providers\ConfigurationServiceProvider;
-use Madewithlove\Glue\Providers\PathsServiceProvider;
+use Madewithlove\Glue\Definitions\Glue\ConfigurationDefinition;
+use Madewithlove\Glue\Definitions\Glue\PathsDefinition;
 use Madewithlove\Glue\Traits\Configurable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -153,8 +153,8 @@ class Glue
     protected function registerProviders()
     {
         // Register core providers
-        $this->container->addServiceProvider(ConfigurationServiceProvider::class);
-        $this->container->addServiceProvider(PathsServiceProvider::class);
+        $this->container->addDefinitionProvider(new ConfigurationDefinition($this->configuration));
+        $this->container->addDefinitionProvider(new PathsDefinition($this->configuration));
 
         // Register definitions
         $definitionProviders = $this->configuration->getDefinitionProviders();

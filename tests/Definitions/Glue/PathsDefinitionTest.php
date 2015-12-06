@@ -8,21 +8,25 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Providers;
+namespace Madewithlove\Glue\Definitions\Glue;
 
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\TestCase;
 
-class ConfigServiceProviderTest extends TestCase
+class PathsDefinitionTest extends TestCase
 {
-    public function testCanBindConfiguration()
+    public function testCanBindPaths()
     {
         $glue = new Glue(new Configuration([
-            'foo' => 'bar',
+            'providers' => [
+            ],
+            'paths' => [
+                'foo' => 'bar',
+            ],
         ]));
 
         $glue->boot();
-        $this->assertEquals('bar', $glue->getContainer()->get('config.foo'));
+        $this->assertEquals('bar', $glue->getContainer()->get('paths.foo'));
     }
 }
