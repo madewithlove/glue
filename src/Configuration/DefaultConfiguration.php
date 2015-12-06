@@ -161,10 +161,7 @@ class DefaultConfiguration extends AbstractConfiguration
                 'local' => new Local($this->getRootPath()),
             ]),
             'logging' => new MonologDefinition($this->getPath('logs'), 'glue.log'),
-            'console' => new SymfonyConsoleDefinition([
-                TinkerCommand::class,
-                ConfigurationCommand::class,
-            ]),
+            'console' => SymfonyConsoleDefinition::withDefaultCommands(),
             'views' => new TwigDefinition(
                 $this->getPath('views'),
                 [

@@ -16,6 +16,9 @@ use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
+use Madewithlove\Glue\Console\Commands\BootstrapCommand;
+use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
+use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Glue;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -35,6 +38,23 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
     public function __construct($commands = [])
     {
         $this->commands = $commands;
+    }
+
+    /**
+     * Create a new instance of SymfonyConsoleDefintion
+     * with Glue's default commands
+     *
+     * @param array $commands
+     *
+     * @return SymfonyConsoleDefinition
+     */
+    public static function withDefaultCommands(array $commands = [])
+    {
+        return new self(array_merge($commands, [
+            BootstrapCommand::class,
+            TinkerCommand::class,
+            ConfigurationCommand::class,
+        ]));
     }
 
     /**

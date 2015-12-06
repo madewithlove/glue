@@ -80,6 +80,14 @@ $app->setDefinitionProvider('console', new SymfonyConsoleDefinition([
 Glue uses `symfony/console` so created commands should be instances of `Symfony\Component\Console\Command\Command`.
 All commands are resolved through the container so you can inject dependencies in their constructor.
 
+If you want to use the default definition **with** the default commands provided by Glue, you can use the factory method `withDefaultCommands`:
+
+```php
+$app->setDefinitionProvider('console', SymfonyConsoleDefinition::withDefaultCommands([
+    SomeCommand::class,
+]));
+```
+
 ## Using a different CLI
 
 You can of course override the console application by overriding the `console` binding in a definition provider of your doing.
