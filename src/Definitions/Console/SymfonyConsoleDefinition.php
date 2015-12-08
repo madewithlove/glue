@@ -12,7 +12,6 @@ namespace Madewithlove\Glue\Definitions\Console;
 
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
@@ -58,9 +57,7 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
     }
 
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {
@@ -70,7 +67,8 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
 
         // Register commands
         foreach ($this->commands as $command) {
-            $console->addMethodCall('add', new Reference($command));
+            $command = is_string($command) ? new Reference($command) : $command;
+            $console->addMethodCall('add', $command);
         }
 
         return [

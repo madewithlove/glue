@@ -25,8 +25,6 @@ class PathsDefinition extends AbstractValuesDefinition
     protected $configuration;
 
     /**
-     * PathsDefinition constructor.
-     *
      * @param ConfigurationInterface $configuration
      */
     public function __construct(ConfigurationInterface $configuration)

@@ -12,7 +12,6 @@ namespace Madewithlove\Glue\Definitions\Twig;
 
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use Twig_Environment;
 use Twig_Extension;
@@ -52,9 +51,7 @@ class TwigDefinition implements DefinitionProviderInterface
     }
 
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {

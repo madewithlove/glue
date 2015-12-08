@@ -12,7 +12,6 @@ namespace Madewithlove\Glue\Definitions;
 
 use Assembly\ObjectDefinition;
 use Illuminate\Database\Capsule\Manager;
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 
 class EloquentDefinition implements DefinitionProviderInterface
@@ -31,9 +30,7 @@ class EloquentDefinition implements DefinitionProviderInterface
     }
 
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {

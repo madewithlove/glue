@@ -13,7 +13,6 @@ namespace Madewithlove\Glue\Definitions;
 use Assembly\FactoryCallDefinition;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Filesystem;
@@ -43,9 +42,7 @@ class FlysystemDefinition implements DefinitionProviderInterface
     }
 
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {

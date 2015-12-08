@@ -12,7 +12,6 @@ namespace Madewithlove\Glue\Definitions;
 
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
@@ -27,9 +26,7 @@ class TacticianDefinition implements DefinitionProviderInterface, ContainerAware
     use ContainerAwareTrait;
 
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {

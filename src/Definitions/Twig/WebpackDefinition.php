@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Definitions\Twig;
 
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
 use Twig_Environment;
@@ -31,9 +30,7 @@ class WebpackDefinition implements DefinitionProviderInterface
     }
 
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {

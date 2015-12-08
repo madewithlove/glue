@@ -13,7 +13,6 @@ namespace Madewithlove\Glue\Definitions;
 use Assembly\FactoryCallDefinition;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -24,9 +23,7 @@ use Zend\Diactoros\ServerRequestFactory;
 class ZendDiactorosDefinition implements DefinitionProviderInterface
 {
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {

@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Definitions\Console;
 
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
@@ -37,9 +36,7 @@ class PhinxDefinition implements DefinitionProviderInterface, ContainerAwareInte
     }
 
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {

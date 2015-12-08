@@ -12,7 +12,6 @@ namespace Madewithlove\Glue\Definitions;
 
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
-use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use Monolog\Handler\HandlerInterface;
 use Monolog\Handler\RotatingFileHandler;
@@ -42,9 +41,7 @@ class MonologDefinition implements DefinitionProviderInterface
     }
 
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
     public function getDefinitions()
     {
