@@ -20,8 +20,6 @@ use Madewithlove\Definitions\ValuesDefinition;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
-use Madewithlove\Glue\Definitions\Glue\ConfigurationDefinition;
-use Madewithlove\Glue\Definitions\Glue\PathsDefinition;
 use Madewithlove\Glue\Traits\Configurable;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

@@ -18,7 +18,6 @@ use Interop\Container\Definition\DefinitionProviderInterface;
 use Interop\Container\Definition\ObjectDefinitionInterface;
 use Interop\Container\Definition\ReferenceDefinitionInterface;
 use League\Container\Container as LeagueContainer;
-use League\Container\ContainerAwareInterface;
 use League\Container\ImmutableContainerAwareInterface;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinitionInterface;
 

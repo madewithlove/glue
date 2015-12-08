@@ -10,16 +10,10 @@
 
 namespace Madewithlove\Glue\Definitions\Console;
 
-use Assembly\ObjectDefinition;
-use Assembly\Reference;
-use Interop\Container\Definition\DefinitionProviderInterface;
-use League\Container\ContainerAwareInterface;
-use League\Container\ContainerAwareTrait;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Glue;
-use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 
 class SymfonyConsoleDefinition extends \Madewithlove\Definitions\Console\SymfonyConsoleDefinition
