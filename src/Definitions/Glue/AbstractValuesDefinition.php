@@ -40,12 +40,4 @@ abstract class AbstractValuesDefinition implements DefinitionProviderInterface
      * @return array
      */
     abstract protected function getValues();
-
-    /**
-     * @return array
-     */
-    protected function getProvided()
-    {
-        return array_keys($this->getValues());
-    }
 }

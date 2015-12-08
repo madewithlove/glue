@@ -185,4 +185,15 @@ class GlueTest extends TestCase
 
         $app->run();
     }
+
+    public function testCanLoadDotenvFiles()
+    {
+        $path = realpath(__DIR__.'/..').'/.env';
+        file_put_contents($path, 'FOO=bar');
+
+        new Glue();
+
+        unlink($path);
+        $this->assertEquals('bar', $_ENV['FOO']);
+    }
 }

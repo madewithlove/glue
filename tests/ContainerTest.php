@@ -41,9 +41,10 @@ class ContainerTest extends TestCase
         $container->addDefinitionProvider(new ArrayDefinitionProvider([
             'foobar' => (new ParameterDefinition($service)),
             'foo' => 'bar',
-            'extenstion' => (new ExtendDefinition('foobar'))->addMethodCall('someMethod', new Reference('foo')),
+            'extenstion' => (new ExtendDefinition('foobar'))->addPropertyAssignment('foo', 'bar')->addMethodCall('someMethod', new Reference('foo')),
         ]));
 
         $container->get('foobar');
+        $this->assertEquals('bar', $service->foo);
     }
 }
