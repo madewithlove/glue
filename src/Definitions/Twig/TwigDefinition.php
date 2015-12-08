@@ -66,7 +66,8 @@ class TwigDefinition implements DefinitionProviderInterface
         $twig->setConstructorArguments(new Reference(Twig_LoaderInterface::class), $this->options);
 
         foreach ($this->extensions as $extension) {
-            $twig->addMethodCall('addExtension', new Reference($extension));
+            $extension = is_string($extension) ? new Reference($extension) : $extension;
+            $twig->addMethodCall('addExtension', $extension);
         }
 
         return [
