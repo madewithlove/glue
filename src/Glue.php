@@ -16,6 +16,7 @@ use Interop\Container\ContainerInterface;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
+use Madewithlove\Definitions\ValuesDefinition;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
@@ -153,8 +154,8 @@ class Glue
     protected function registerProviders()
     {
         // Register core providers
-        $this->container->addDefinitionProvider(new ConfigurationDefinition($this->configuration));
-        $this->container->addDefinitionProvider(new PathsDefinition($this->configuration));
+        $this->container->addDefinitionProvider(new ValuesDefinition('paths', $this->configuration->getPaths()));
+        $this->container->addDefinitionProvider(new ValuesDefinition('config', $this->configuration->toArray()));
 
         // Register definitions
         $definitionProviders = $this->configuration->getDefinitionProviders();

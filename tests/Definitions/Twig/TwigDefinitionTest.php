@@ -11,6 +11,7 @@
 namespace Madewithlove\Glue\Definitions\Twig;
 
 use League\Container\ReflectionContainer;
+use Madewithlove\Definitions\Templating\TwigDefinition;
 use Madewithlove\Glue\Container;
 use Madewithlove\Glue\TestCase;
 use Twig_Environment;

@@ -13,14 +13,19 @@ namespace Madewithlove\Glue\Definitions;
 use Interop\Container\Definition\DefinitionInterface;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Flysystem\Adapter\Local;
+use Madewithlove\Definitions\CommandBus\TacticianDefinition;
+use Madewithlove\Definitions\Development\DebugbarDefinition;
+use Madewithlove\Definitions\Development\MonologDefinition;
+use Madewithlove\Definitions\Filesystem\FlysystemDefinition;
+use Madewithlove\Definitions\Http\LeagueRouteDefinition;
+use Madewithlove\Definitions\Http\RelayDefinition;
+use Madewithlove\Definitions\Http\ZendDiactorosDefinition;
+use Madewithlove\Definitions\Templating\TwigDefinition;
+use Madewithlove\Definitions\ValuesDefinition;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Container;
 use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
 use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
-use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
-use Madewithlove\Glue\Definitions\Glue\ConfigurationDefinition;
-use Madewithlove\Glue\Definitions\Glue\PathsDefinition;
-use Madewithlove\Glue\Definitions\Twig\TwigDefinition;
 use Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition;
 use Madewithlove\Glue\Definitions\Twig\WebpackDefinition;
 use Madewithlove\Glue\Glue;
@@ -88,10 +93,11 @@ class DefinitionsTest extends TestCase
     public function provideDefinitions()
     {
         $glue = new Glue();
+        $configuration = new DefaultConfiguration();
 
         return [
-            [new PathsDefinition(new DefaultConfiguration())],
-            [new ConfigurationDefinition(new DefaultConfiguration())],
+            [new ValuesDefinition('paths', $configuration->getPaths())],
+            [new ValuesDefinition('config', $configuration->toArray())],
             [new FlysystemDefinition('local', ['local' => new Local(__DIR__)])],
             [new DebugbarDefinition()],
             [new LeagueRouteDefinition()],

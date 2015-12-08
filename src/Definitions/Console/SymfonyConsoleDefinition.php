@@ -22,10 +22,8 @@ use Madewithlove\Glue\Glue;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 
-class SymfonyConsoleDefinition implements DefinitionProviderInterface, ContainerAwareInterface
+class SymfonyConsoleDefinition extends \Madewithlove\Definitions\Console\SymfonyConsoleDefinition
 {
-    use ContainerAwareTrait;
-
     /**
      * @var Command[]|string[]
      */
@@ -36,7 +34,7 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
      */
     public function __construct($commands = [])
     {
-        $this->commands = $commands;
+        parent::__construct('Glue', Glue::VERSION, $commands);
     }
 
     /**
@@ -54,26 +52,5 @@ class SymfonyConsoleDefinition implements DefinitionProviderInterface, Container
             TinkerCommand::class,
             ConfigurationCommand::class,
         ]));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDefinitions()
-    {
-        $console = new ObjectDefinition(Application::class);
-        $console->addMethodCall('setName', 'Glue');
-        $console->addMethodCall('setVersion', Glue::VERSION);
-
-        // Register commands
-        foreach ($this->commands as $command) {
-            $command = is_string($command) ? new Reference($command) : $command;
-            $console->addMethodCall('add', $command);
-        }
-
-        return [
-            Application::class => $console,
-            'console' => new Reference(Application::class),
-        ];
     }
 }
