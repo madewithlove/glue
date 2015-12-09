@@ -15,14 +15,16 @@ use Assembly\Reference;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
+use League\Container\ImmutableContainerAwareInterface;
+use League\Container\ImmutableContainerAwareTrait;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
 use Madewithlove\Glue\Services\UrlGenerator;
 use Twig_Environment;
 use Twig_SimpleFunction;
 
-class UrlGeneratorDefinition implements DefinitionProviderInterface, ContainerAwareInterface
+class UrlGeneratorDefinition implements DefinitionProviderInterface, ImmutableContainerAwareInterface
 {
-    use ContainerAwareTrait;
+    use ImmutableContainerAwareTrait;
 
     /**
      * @var string
