@@ -40,7 +40,7 @@
         "illuminate/database": "^5.1",
         "league/container": "^2.0.3",
         "league/flysystem": "^1.0",
-        "league/route": "2.0.x@dev",
+        "league/route": "2.0.0-RC1",
         "league/tactician": "^0.6.1",
         "madewithlove/definitions": "^0.1.1",
         "maximebf/debugbar": "^1.10",
