@@ -42,7 +42,7 @@
         "league/flysystem": "^1.0",
         "league/route": "2.0.x@dev",
         "league/tactician": "^0.6.1",
-        "madewithlove/definitions": "^0.1.0@dev",
+        "madewithlove/definitions": "^0.2.0@dev",
         "maximebf/debugbar": "^1.10",
         "mnapoli/assembly": "dev-master",
         "monolog/monolog": "^1.17",
@@ -64,7 +64,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.1-dev"
+            "dev-master": "0.3-dev"
         }
     },
     "scripts": {
