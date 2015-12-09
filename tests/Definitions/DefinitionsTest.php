@@ -10,9 +10,6 @@
 
 namespace Madewithlove\Glue\Definitions;
 
-use Interop\Container\Definition\DefinitionInterface;
-use Interop\Container\Definition\DefinitionProviderInterface;
-use League\Flysystem\Adapter\Local;
 use Madewithlove\Definitions\Definitions\Templating\TwigDefinition;
 use Madewithlove\Glue\Container;
 use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
