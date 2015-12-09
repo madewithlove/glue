@@ -42,9 +42,9 @@
         "league/flysystem": "^1.0",
         "league/route": "2.0.x@dev",
         "league/tactician": "^0.6.1",
-        "madewithlove/definitions": "^0.2.0@dev",
+        "madewithlove/definitions": "^0.1.1",
         "maximebf/debugbar": "^1.10",
-        "mnapoli/assembly": "dev-master",
+        "mnapoli/assembly": "^0.2.0",
         "monolog/monolog": "^1.17",
         "oscarotero/psr7-middlewares": "^3.8",
         "psy/psysh": "^0.6.1",
@@ -77,6 +77,5 @@
             "cd _book && git init && git checkout -b gh-pages && touch .nojekyll && git add --all && git commit -am 'Rebuild documentation' && git push git@github.com:madewithlove/glue.git gh-pages --force"
         ]
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "minimum-stability": "stable"
 }
