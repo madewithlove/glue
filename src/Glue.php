@@ -16,7 +16,7 @@ use Interop\Container\ContainerInterface;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
-use Madewithlove\Definitions\ValuesDefinition;
+use Madewithlove\Definitions\Definitions\ValuesDefinition;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;

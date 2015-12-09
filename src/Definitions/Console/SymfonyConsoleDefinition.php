@@ -16,7 +16,7 @@ use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Glue;
 use Symfony\Component\Console\Command\Command;
 
-class SymfonyConsoleDefinition extends \Madewithlove\Definitions\Console\SymfonyConsoleDefinition
+class SymfonyConsoleDefinition extends \Madewithlove\Definitions\Definitions\Console\SymfonyConsoleDefinition
 {
     /**
      * @var Command[]|string[]
