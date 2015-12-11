@@ -29,7 +29,7 @@ class DemoDefinition implements DefinitionProviderInterface
     }
 
     /**
-     * @return string
+     * @return HtmlResponse
      */
     public function welcomeScreen()
     {
