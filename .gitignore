@@ -3,6 +3,7 @@ composer.lock
 vendor
 
 # Testing
+index.php
 tests/_coverage
 
 # Gitbook
