@@ -169,12 +169,6 @@ class Glue
     {
         $this->boot();
 
-        // If we haven't defined any routes
-        // then don't do anything
-        if (!$this->routes) {
-            return;
-        }
-
         $request = $this->container->get(ServerRequestInterface::class);
         $response = $this->container->get(ResponseInterface::class);
         $emitter = $this->container->get(SapiEmitter::class);

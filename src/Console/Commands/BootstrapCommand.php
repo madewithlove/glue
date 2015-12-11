@@ -80,9 +80,14 @@ PHP
             ,
             $web.DS.'index.php' => <<<'PHP'
 <?php
-require __DIR__.'/../vendor/autoload.php';
+use Madewithlove\Glue\Definitions\DemoDefinition;
+use Madewithlove\Glue\Glue;
 
-$app = new Madewithlove\Glue\Glue();
+require 'vendor/autoload.php';
+
+$app = new Glue();
+$app->setDefinitionProvider('demo', new DemoDefinition());
+
 $app->run();
 PHP
             ,

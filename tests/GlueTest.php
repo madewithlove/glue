@@ -87,18 +87,6 @@ class GlueTest extends TestCase
         $this->assertEquals('foobar', $glue->console());
     }
 
-    public function testDoesntRunIfNoRoutes()
-    {
-        $emitter = Mockery::mock(SapiEmitter::class);
-        $emitter->shouldNotReceive('emit');
-
-        $container = new Container();
-        $container->add(SapiEmitter::class, $emitter);
-
-        $glue = new Glue(new Configuration(), $container);
-        $glue->run();
-    }
-
     public function testCanRunApp()
     {
         $request = Mockery::mock(ServerRequestInterface::class);

@@ -13,8 +13,6 @@ namespace Madewithlove\Glue\Definitions\Twig;
 use Assembly\ObjectDefinition;
 use Assembly\Reference;
 use Interop\Container\Definition\DefinitionProviderInterface;
-use League\Container\ContainerAwareInterface;
-use League\Container\ContainerAwareTrait;
 use League\Container\ImmutableContainerAwareInterface;
 use League\Container\ImmutableContainerAwareTrait;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
