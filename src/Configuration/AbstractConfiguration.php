@@ -10,16 +10,10 @@
 
 namespace Madewithlove\Glue\Configuration;
 
-use Illuminate\Database\Capsule\Manager;
 use Illuminate\Support\Fluent;
 use Interop\Container\Definition\DefinitionProviderInterface;
-use League\Container\ContainerAwareInterface;
-use League\Container\ContainerAwareTrait;
 use League\Container\ImmutableContainerAwareInterface;
 use League\Container\ImmutableContainerAwareTrait;
-use League\FactoryMuffin\Factory;
-use Madewithlove\Definitions\Definitions\Database\EloquentDefinition;
-use Madewithlove\Definitions\Definitions\Database\FactoryMuffinDefinition;
 
 /**
  * @property string                        $namespace   The namespace of your application

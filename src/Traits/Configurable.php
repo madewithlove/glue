@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\Traits;
 
-use League\Container\ContainerAwareInterface;
 use League\Container\ContainerInterface;
 use League\Container\ImmutableContainerAwareInterface;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;

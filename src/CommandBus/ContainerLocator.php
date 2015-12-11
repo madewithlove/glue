@@ -10,7 +10,6 @@
 
 namespace Madewithlove\Glue\CommandBus;
 
-use Interop\Container\ContainerInterface;
 use League\Container\ImmutableContainerAwareInterface;
 use League\Container\ImmutableContainerAwareTrait;
 use League\Tactician\Exception\MissingHandlerException;

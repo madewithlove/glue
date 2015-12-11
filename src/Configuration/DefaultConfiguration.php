@@ -10,16 +10,10 @@
 
 namespace Madewithlove\Glue\Configuration;
 
-use Assembly\ArrayDefinitionProvider;
-use Assembly\ObjectDefinition;
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use Illuminate\Database\Capsule\Manager;
 use League\FactoryMuffin\Factory;
 use League\Flysystem\Adapter\Local;
-use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
-use League\Tactician\Handler\Locator\HandlerLocator;
-use League\Tactician\Handler\MethodNameInflector\HandleInflector;
-use League\Tactician\Tests\Handler\MethodNameInflector\HandleInflectorTest;
 use Madewithlove\Definitions\Definitions\CommandBus\TacticianDefinition;
 use Madewithlove\Definitions\Definitions\Database\EloquentDefinition;
 use Madewithlove\Definitions\Definitions\Database\FactoryMuffinDefinition;
@@ -30,7 +24,6 @@ use Madewithlove\Definitions\Definitions\Http\LeagueRouteDefinition;
 use Madewithlove\Definitions\Definitions\Http\RelayDefinition;
 use Madewithlove\Definitions\Definitions\Http\ZendDiactorosDefinition;
 use Madewithlove\Definitions\Definitions\Templating\TwigDefinition;
-use Madewithlove\Glue\CommandBus\ContainerLocator;
 use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
 use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Definitions\ContainerLocatorDefinition;
@@ -228,7 +221,7 @@ class DefaultConfiguration extends AbstractConfiguration
         ];
 
         foreach ($bootableDefinitions as $definition => $booted) {
-            if (in_array($definition, $definitions)) {
+            if (in_array($definition, $definitions, true)) {
                 $this->container->get($booted);
             }
         }
