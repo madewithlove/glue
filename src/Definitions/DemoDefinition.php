@@ -33,8 +33,8 @@ class DemoDefinition implements DefinitionProviderInterface
      */
     public function welcomeScreen()
     {
-        return new HtmlResponse(<<<'HTML'
-<!doctype html>
+        return new HtmlResponse(<<<HTML
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -49,7 +49,7 @@ class DemoDefinition implements DefinitionProviderInterface
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-content: center;;
+            align-content: center;
             background-color: #37A7F8;
         }
 
