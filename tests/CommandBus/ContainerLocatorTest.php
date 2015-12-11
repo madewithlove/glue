@@ -33,7 +33,7 @@ class ContainerLocatorTest extends TestCase
         $bus = new CommandBus([
             new CommandHandlerMiddleware(
                 new ClassNameExtractor(),
-                new ContainerLocator($container),
+                (new ContainerLocator())->setContainer($container),
                 new HandleInflector()
             ),
         ]);
