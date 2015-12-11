@@ -93,3 +93,18 @@ class MyConfiguration implements ConfigurationInterface
     // etc.
 }
 ```
+
+## Boot event
+
+The configurations can facultatively have a `boot` method that is called once all definitions are bound and the application is about done booting.
+All you need to do is add the method and do whatever you want in it:
+
+```php
+class MyConfiguration implements ConfigurationInterface
+{
+    public function boot()
+    {
+        $this->container->get('db')->query('something');
+    }
+}
+```

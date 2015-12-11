@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.3.0] - 2015-12-11
+
+### Added
+- Added `DemoDefinition` with a default landing page
+- Added `AbstractConfiguration::boot` as an event when the application starts
+- Updated definitions
+
+### Fixed
+- Fixed Tactician not using `ContainerLocator` anymore
+
 ## [0.2.2] - 2015-12-09
 ### Fixed
 - Changed `league/route` constraint to use RC
