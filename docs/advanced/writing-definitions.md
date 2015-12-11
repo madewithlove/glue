@@ -139,16 +139,16 @@ class MyProvider implements DefinitionProviderInterface
 }
 ```
 
-If you need to retrieve something from the container and you _absolutely can't_ use references for it, you can also make your provider implement the `ContainerAwareInterface` and the relevant trait.
+If you need to retrieve something from the container and you _absolutely can't_ use references for it, you can also make your provider implement the `ImmutableContainerAwareInterface` and the relevant trait.
 The container will then automatically be available in your provider within Glue as `$this->container`:
 
  ```php
- use League\Container\ContainerAwareInterface;
- use League\Container\ContainerAwareTrait;
+ use League\Container\ImmutableContainerAwareInterface;
+ use League\Container\ImmutableContainerAwareTrait;
 
- class MyProvider implements DefinitionProviderInterface, ContainerAwareInterface
+ class MyProvider implements DefinitionProviderInterface, ImmutableContainerAwareInterface
  {
-     use ContainerAwareTrait;
+     use ImmutableContainerAwareTrait;
 
      protected $someOption;
 
