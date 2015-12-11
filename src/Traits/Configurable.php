@@ -12,6 +12,7 @@ namespace Madewithlove\Glue\Traits;
 
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerInterface;
+use League\Container\ImmutableContainerAwareInterface;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 
 trait Configurable
@@ -42,7 +43,7 @@ trait Configurable
         $this->configuration = $configuration;
 
         // Bind container if needed
-        if ($this->configuration instanceof ContainerAwareInterface) {
+        if ($this->configuration instanceof ImmutableContainerAwareInterface) {
             $this->configuration->setContainer($this->getContainer());
         }
 

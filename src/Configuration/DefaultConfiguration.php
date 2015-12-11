@@ -13,6 +13,8 @@ namespace Madewithlove\Glue\Configuration;
 use Assembly\ArrayDefinitionProvider;
 use Assembly\ObjectDefinition;
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
+use Illuminate\Database\Capsule\Manager;
+use League\FactoryMuffin\Factory;
 use League\Flysystem\Adapter\Local;
 use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
 use League\Tactician\Handler\Locator\HandlerLocator;
@@ -20,6 +22,7 @@ use League\Tactician\Handler\MethodNameInflector\HandleInflector;
 use League\Tactician\Tests\Handler\MethodNameInflector\HandleInflectorTest;
 use Madewithlove\Definitions\Definitions\CommandBus\TacticianDefinition;
 use Madewithlove\Definitions\Definitions\Database\EloquentDefinition;
+use Madewithlove\Definitions\Definitions\Database\FactoryMuffinDefinition;
 use Madewithlove\Definitions\Definitions\Development\DebugbarDefinition;
 use Madewithlove\Definitions\Definitions\Development\MonologDefinition;
 use Madewithlove\Definitions\Definitions\Filesystem\FlysystemDefinition;
@@ -114,6 +117,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'root' => $rootPath,
             'assets' => $rootPath.'/public/builds',
             'web' => $rootPath.'/public',
+            'factories' => $rootPath.'/resources/factories',
             'migrations' => $rootPath.'/resources/migrations',
             'views' => $rootPath.'/resources/views',
             'cache' => $rootPath.'/storage/cache',
@@ -164,6 +168,7 @@ class DefaultConfiguration extends AbstractConfiguration
                     'prefix' => '',
                 ],
             ]),
+            'factories' => new FactoryMuffinDefinition($this->getPath('factories')),
             'filesystem' => new FlysystemDefinition('local', [
                 'local' => new Local($this->getRootPath()),
             ]),
@@ -209,5 +214,23 @@ class DefaultConfiguration extends AbstractConfiguration
         }
 
         return $providers;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function boot()
+    {
+        $definitions = array_map('get_class', $this->definitions);
+        $bootableDefinitions = [
+            EloquentDefinition::class => Manager::class,
+            FactoryMuffinDefinition::class => Factory::class,
+        ];
+
+        foreach ($bootableDefinitions as $definition => $booted) {
+            if (in_array($definition, $definitions)) {
+                $this->container->get($booted);
+            }
+        }
     }
 }

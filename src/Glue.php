@@ -144,6 +144,11 @@ class Glue
         });
 
         $this->registerProviders();
+
+        // Run boot event from configuration
+        if (method_exists($this->configuration, 'boot')) {
+            $this->configuration->boot();
+        }
     }
 
     /**

@@ -10,10 +10,16 @@
 
 namespace Madewithlove\Glue\Configuration;
 
+use Illuminate\Database\Capsule\Manager;
 use Illuminate\Support\Fluent;
 use Interop\Container\Definition\DefinitionProviderInterface;
 use League\Container\ContainerAwareInterface;
 use League\Container\ContainerAwareTrait;
+use League\Container\ImmutableContainerAwareInterface;
+use League\Container\ImmutableContainerAwareTrait;
+use League\FactoryMuffin\Factory;
+use Madewithlove\Definitions\Definitions\Database\EloquentDefinition;
+use Madewithlove\Definitions\Definitions\Database\FactoryMuffinDefinition;
 
 /**
  * @property string                        $namespace   The namespace of your application
@@ -23,9 +29,9 @@ use League\Container\ContainerAwareTrait;
  * @property array                         $paths       The paths in your application
  * @property DefinitionProviderInterface[] $definitions The definition providers
  */
-abstract class AbstractConfiguration extends Fluent implements ConfigurationInterface, ContainerAwareInterface
+abstract class AbstractConfiguration extends Fluent implements ConfigurationInterface, ImmutableContainerAwareInterface
 {
-    use ContainerAwareTrait;
+    use ImmutableContainerAwareTrait;
 
     /**
      * {@inheritdoc}
@@ -147,9 +153,17 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     }
 
     /**
-     * {@inheritdoc}
+     * Do things when Dotenv variables are loaded etc.
      */
     public function configure()
+    {
+        // ...
+    }
+
+    /**
+     * Do things when the application boots.
+     */
+    public function boot()
     {
         // ...
     }
