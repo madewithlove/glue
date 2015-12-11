@@ -10,8 +10,14 @@
 
 namespace Madewithlove\Glue\Configuration;
 
+use Assembly\ArrayDefinitionProvider;
+use Assembly\ObjectDefinition;
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use League\Flysystem\Adapter\Local;
+use League\Tactician\Handler\CommandNameExtractor\ClassNameExtractor;
+use League\Tactician\Handler\Locator\HandlerLocator;
+use League\Tactician\Handler\MethodNameInflector\HandleInflector;
+use League\Tactician\Tests\Handler\MethodNameInflector\HandleInflectorTest;
 use Madewithlove\Definitions\Definitions\CommandBus\TacticianDefinition;
 use Madewithlove\Definitions\Definitions\Database\EloquentDefinition;
 use Madewithlove\Definitions\Definitions\Development\DebugbarDefinition;
@@ -21,8 +27,10 @@ use Madewithlove\Definitions\Definitions\Http\LeagueRouteDefinition;
 use Madewithlove\Definitions\Definitions\Http\RelayDefinition;
 use Madewithlove\Definitions\Definitions\Http\ZendDiactorosDefinition;
 use Madewithlove\Definitions\Definitions\Templating\TwigDefinition;
+use Madewithlove\Glue\CommandBus\ContainerLocator;
 use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
 use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
+use Madewithlove\Glue\Definitions\ContainerLocatorDefinition;
 use Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition;
 use Madewithlove\Glue\Definitions\Twig\WebpackDefinition;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
@@ -141,6 +149,7 @@ class DefaultConfiguration extends AbstractConfiguration
             'assets' => new WebpackDefinition($this->getPath('assets')),
             'request' => new ZendDiactorosDefinition(),
             'bus' => new TacticianDefinition(),
+            new ContainerLocatorDefinition(),
             'pipeline' => new RelayDefinition($this->getMiddlewares()),
             'routing' => new LeagueRouteDefinition(),
             'db' => new EloquentDefinition([

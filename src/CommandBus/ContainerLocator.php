@@ -11,6 +11,8 @@
 namespace Madewithlove\Glue\CommandBus;
 
 use Interop\Container\ContainerInterface;
+use League\Container\ImmutableContainerAwareInterface;
+use League\Container\ImmutableContainerAwareTrait;
 use League\Tactician\Exception\MissingHandlerException;
 use League\Tactician\Handler\Locator\HandlerLocator;
 
@@ -19,20 +21,9 @@ use League\Tactician\Handler\Locator\HandlerLocator;
  * name from the command and resolve it
  * from a container.
  */
-class ContainerLocator implements HandlerLocator
+class ContainerLocator implements HandlerLocator, ImmutableContainerAwareInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
+    use ImmutableContainerAwareTrait;
 
     /**
      * Retrieves the handler for a specified command.
