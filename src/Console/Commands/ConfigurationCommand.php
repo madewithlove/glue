@@ -11,7 +11,7 @@
 namespace Madewithlove\Glue\Console\Commands;
 
 use League\Container\Container;
-use League\Container\ContainerAwareInterface;
+use League\Container\ImmutableContainerAwareInterface;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use ReflectionClass;
@@ -106,7 +106,7 @@ class ConfigurationCommand extends Command
 
         $rows = [];
         foreach ($this->configuration->getDefinitionProviders() as $definition) {
-            if ($definition instanceof ContainerAwareInterface) {
+            if ($definition instanceof ImmutableContainerAwareInterface) {
                 $definition->setContainer(new Container());
             }
 

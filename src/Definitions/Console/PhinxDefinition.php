@@ -11,16 +11,16 @@
 namespace Madewithlove\Glue\Definitions\Console;
 
 use Interop\Container\Definition\DefinitionProviderInterface;
-use League\Container\ContainerAwareInterface;
-use League\Container\ContainerAwareTrait;
+use League\Container\ImmutableContainerAwareInterface;
+use League\Container\ImmutableContainerAwareTrait;
 use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
 use Phinx\Config\Config;
 use Phinx\Console\Command;
 use Symfony\Component\Console\Application;
 
-class PhinxDefinition implements DefinitionProviderInterface, ContainerAwareInterface
+class PhinxDefinition implements DefinitionProviderInterface, ImmutableContainerAwareInterface
 {
-    use ContainerAwareTrait;
+    use ImmutableContainerAwareTrait;
 
     /**
      * @var array
