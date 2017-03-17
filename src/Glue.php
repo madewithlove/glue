@@ -16,11 +16,12 @@ use Interop\Container\ContainerInterface;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
-use Madewithlove\Definitions\Definitions\ValuesDefinition;
 use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Traits\Configurable;
+use Madewithlove\ServiceProviders\Utilities\ParametersServiceProvider;
+use Madewithlove\ServiceProviders\Utilities\PrefixedProvider;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\SapiEmitter;
@@ -157,13 +158,13 @@ class Glue
     protected function registerProviders()
     {
         // Register core providers
-        $this->container->addDefinitionProvider(new ValuesDefinition('paths', $this->configuration->getPaths()));
-        $this->container->addDefinitionProvider(new ValuesDefinition('config', $this->configuration->toArray()));
+        $this->container->addServiceProvider(new PrefixedProvider('paths', new ParametersServiceProvider($this->configuration->getPaths())));
+        $this->container->addServiceProvider(new PrefixedProvider('config', new ParametersServiceProvider($this->configuration->toArray())));
 
         // Register definitions
-        $definitionProviders = $this->configuration->getDefinitionProviders();
+        $definitionProviders = $this->configuration->getServiceProviders();
         foreach ($definitionProviders as &$definitionProvider) {
-            $this->container->addDefinitionProvider($definitionProvider);
+            $this->container->addServiceProvider($definitionProvider);
         }
     }
 

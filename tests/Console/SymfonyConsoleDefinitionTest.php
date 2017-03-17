@@ -13,9 +13,9 @@ namespace Madewithlove\Glue\Console;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Container;
-use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Dummies\DummyConsoleCommand;
 use Madewithlove\Glue\Glue;
+use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\TestCase;
 use Symfony\Component\Console\Application;
 
@@ -37,7 +37,7 @@ class SymfonyConsoleDefinitionTest extends TestCase
     public function testCanCreateWithDefaultCommands()
     {
         $glue = new Glue();
-        $glue->setDefinitionProvider(
+        $glue->setServiceProvider(
             'console',
             SymfonyConsoleDefinition::withDefaultCommands([
                 DummyConsoleCommand::class,

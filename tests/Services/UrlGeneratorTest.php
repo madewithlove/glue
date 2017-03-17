@@ -12,9 +12,9 @@ namespace Madewithlove\Glue\Services;
 
 use InvalidArgumentException;
 use League\Route\RouteCollection;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 
-class UrlGeneratorTest extends PHPUnit_Framework_TestCase
+class UrlGeneratorTest extends TestCase
 {
     /**
      * @var UrlGenerator
@@ -41,7 +41,7 @@ class UrlGeneratorTest extends PHPUnit_Framework_TestCase
 
     public function testThrowsExceptionOnInvalidRoute()
     {
-        $this->setExpectedException(InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->generator->to('foo.sdfsdf');
     }
 }

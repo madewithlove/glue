@@ -10,16 +10,9 @@
 
 namespace Madewithlove\Glue;
 
-use Assembly\Container\DefinitionResolver;
-use Assembly\Container\InvalidDefinition;
-use Assembly\Container\UnsupportedDefinition;
-use Interop\Container\Definition\DefinitionInterface;
-use Interop\Container\Definition\DefinitionProviderInterface;
-use Interop\Container\Definition\ObjectDefinitionInterface;
-use Interop\Container\Definition\ReferenceDefinitionInterface;
+use Interop\Container\ServiceProviderInterface;
 use League\Container\Container as LeagueContainer;
-use League\Container\ImmutableContainerAwareInterface;
-use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinitionInterface;
+use Madewithlove\ServiceProviders\Bridges\LeagueContainerDecorator;
 
 /**
  * A definition-interop compatible version of league/container.
@@ -27,135 +20,16 @@ use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinitionInterface;
 class Container extends LeagueContainer
 {
     /**
-     * @var DefinitionInterface[]
-     */
-    protected $interopDefinitions = [];
-
-    /**
-     * @var ExtendDefinitionInterface[][]
-     */
-    protected $extensions = [];
-
-    /**
-     * @param string $alias
-     * @param array  $args
+     * @param ServiceProviderInterface|\League\Container\ServiceProvider\ServiceProviderInterface|string $provider
      *
-     * @return mixed|object
+     * @return $this|void
      */
-    public function get($alias, array $args = [])
+    public function addServiceProvider($provider)
     {
-        if (!$this->hasShared($alias) && array_key_exists($alias, $this->interopDefinitions)) {
-            $this->shared[$alias] = $this->resolve($alias, $this->interopDefinitions[$alias]);
+        if ($provider instanceof ServiceProviderInterface) {
+            $provider = new LeagueContainerDecorator($provider);
         }
 
-        return parent::get($alias, $args);
-    }
-
-    /**
-     * @param string $alias
-     *
-     * @return bool
-     */
-    public function has($alias)
-    {
-        if (array_key_exists($alias, $this->interopDefinitions)) {
-            return true;
-        }
-
-        return parent::has($alias);
-    }
-
-    /**
-     * @param DefinitionProviderInterface $provider
-     */
-    public function addDefinitionProvider(DefinitionProviderInterface $provider)
-    {
-        if ($provider instanceof ImmutableContainerAwareInterface) {
-            $provider->setContainer($this);
-        }
-
-        foreach ($provider->getDefinitions() as $identifier => $definition) {
-            if ($definition instanceof ExtendDefinitionInterface) {
-                $this->extensions[$definition->getExtended()][] = $definition;
-            } else {
-                $this->interopDefinitions[$identifier] = $definition;
-            }
-        }
-    }
-
-    /**
-     * @param string              $identifier
-     * @param DefinitionInterface $definition
-     *
-     * @throws InvalidDefinition
-     * @throws UnsupportedDefinition
-     *
-     * @return mixed
-     */
-    private function resolve($identifier, DefinitionInterface $definition)
-    {
-        $resolver = new DefinitionResolver($this);
-        $service = $resolver->resolve($definition);
-
-        // Add extensions
-        if (array_key_exists($identifier, $this->extensions)) {
-            foreach ($this->extensions[$identifier] as $extension) {
-                $service = $this->callAssignments($service, $extension);
-                $service = $this->callMethods($service, $extension);
-            }
-        }
-
-        return $service;
-    }
-
-    /**
-     * @param object                    $service
-     * @param ObjectDefinitionInterface $definition
-     *
-     * @return object
-     */
-    private function callMethods($service, ObjectDefinitionInterface $definition)
-    {
-        foreach ($definition->getMethodCalls() as $methodCall) {
-            $methodArguments = $methodCall->getArguments();
-            $methodArguments = array_map([$this, 'resolveSubDefinition'], $methodArguments);
-            call_user_func_array([$service, $methodCall->getMethodName()], $methodArguments);
-        }
-
-        return $service;
-    }
-
-    /**
-     * @param object                    $service
-     * @param ObjectDefinitionInterface $definition
-     *
-     * @return object
-     */
-    private function callAssignments($service, ObjectDefinitionInterface $definition)
-    {
-        foreach ($definition->getPropertyAssignments() as $propertyAssignment) {
-            $propertyName = $propertyAssignment->getPropertyName();
-            $service->$propertyName = $this->resolveSubDefinition($propertyAssignment->getValue());
-        }
-
-        return $service;
-    }
-
-    /**
-     * Resolve a variable that can be a reference.
-     *
-     * @param ReferenceDefinitionInterface|mixed $value
-     *
-     * @return mixed
-     */
-    private function resolveSubDefinition($value)
-    {
-        if (is_array($value)) {
-            return array_map([$this, 'resolveSubDefinition'], $value);
-        } elseif ($value instanceof DefinitionInterface) {
-            return (new DefinitionResolver($this))->resolve($value);
-        }
-
-        return $value;
+        return parent::addServiceProvider($provider);
     }
 }

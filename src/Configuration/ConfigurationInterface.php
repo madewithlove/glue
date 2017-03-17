@@ -11,7 +11,7 @@
 namespace Madewithlove\Glue\Configuration;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Interop\Container\Definition\DefinitionProviderInterface;
+use Interop\Container\ServiceProviderInterface;
 
 interface ConfigurationInterface extends Arrayable
 {
@@ -78,35 +78,35 @@ interface ConfigurationInterface extends Arrayable
     /**
      * Get the definition providers to register.
      *
-     * @return DefinitionProviderInterface[]
+     * @return ServiceProviderInterface[]
      */
-    public function getDefinitionProviders();
+    public function getServiceProviders();
 
     /**
      * Get a definition provider in particular.
      *
      * @param string $provider
      *
-     * @return DefinitionProviderInterface
+     * @return ServiceProviderInterface
      */
-    public function getDefinitionProvider($provider);
+    public function getServiceProvider($provider);
 
     /**
      * Set the definition providers to register.
      *
-     * @param DefinitionProviderInterface[] $providers
+     * @param ServiceProviderInterface[] $providers
      *
      * @return $this
      */
-    public function setDefinitionProviders(array $providers = []);
+    public function setServiceProviders(array $providers = []);
 
     /**
      * Set a definition provider in particular.
      *
-     * @param string                      $name
-     * @param DefinitionProviderInterface $provider
+     * @param string                   $name
+     * @param ServiceProviderInterface $provider
      *
      * @return $this
      */
-    public function setDefinitionProvider($name, $provider);
+    public function setServiceProvider($name, ServiceProviderInterface $provider);
 }

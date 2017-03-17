@@ -10,19 +10,16 @@
 
 namespace Madewithlove\Glue\Dummies\Definitions;
 
-use Assembly\ParameterDefinition;
-use Interop\Container\Definition\DefinitionInterface;
-use Interop\Container\Definition\DefinitionProviderInterface;
+use Interop\Container\ServiceProviderInterface;
+use Madewithlove\ServiceProviders\Utilities\Parameter;
 use Mockery;
 
-class MockRouterDefinition implements DefinitionProviderInterface
+class MockRouterServiceProvider implements ServiceProviderInterface
 {
     /**
-     * Returns the definition to register in the container.
-     *
-     * @return DefinitionInterface[]
+     * {@inheritdoc}
      */
-    public function getDefinitions()
+    public function getServices()
     {
         $router = Mockery::mock('Router');
         $router->shouldReceive('get')->once()->andReturnUsing(function ($route) {
@@ -30,7 +27,7 @@ class MockRouterDefinition implements DefinitionProviderInterface
         });
 
         return [
-            'router' => new ParameterDefinition($router),
+            'router' => new Parameter($router),
         ];
     }
 }

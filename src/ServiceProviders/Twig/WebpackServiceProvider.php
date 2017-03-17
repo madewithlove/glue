@@ -8,13 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Definitions\Twig;
+namespace Madewithlove\Glue\ServiceProviders\Twig;
 
-use Interop\Container\Definition\DefinitionProviderInterface;
-use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
+use Interop\Container\ServiceProviderInterface;
+use Psr\Container\ContainerInterface;
 use Twig_Environment;
 
-class WebpackDefinition implements DefinitionProviderInterface
+class WebpackServiceProvider implements ServiceProviderInterface
 {
     /**
      * @var string
@@ -32,12 +32,26 @@ class WebpackDefinition implements DefinitionProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getDefinitions()
+    public function getServices()
     {
-        $assets = new ExtendDefinition(Twig_Environment::class);
-        $assets->addMethodCall('addGlobal', 'assets', $this->getWebpackAssets());
+        return [
+            Twig_Environment::class => [$this, 'withAssets'],
+        ];
+    }
 
-        return [$assets];
+    /**
+     * @param ContainerInterface $container
+     * @param callable|null      $getPrevious
+     *
+     * @return Twig_Environment
+     */
+    public function withAssets(ContainerInterface $container, callable $getPrevious = null)
+    {
+        /** @var Twig_Environment $twig */
+        $twig = $getPrevious();
+        $twig->addGlobal('assets', $this->getWebpackAssets());
+
+        return $twig;
     }
 
     /**

@@ -11,10 +11,10 @@
 namespace Madewithlove\Glue\Console;
 
 use Madewithlove\Glue\Configuration\Configuration;
-use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
-use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
 use Madewithlove\Glue\Glue;
+use Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider;
 use Madewithlove\Glue\TestCase;
+use Madewithlove\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Phinx\Console\Command\Migrate;
 use Symfony\Component\Console\Application;
 
@@ -24,11 +24,11 @@ class PhinxDefinitionTest extends TestCase
     {
         $glue = new Glue(new Configuration([
             'paths' => [
-              'migrations' => 'foobar',
+                'migrations' => 'foobar',
             ],
             'definitions' => [
-              new SymfonyConsoleDefinition(),
-                new PhinxDefinition([
+                new SymfonyConsoleServiceProvider(),
+                new PhinxServiceProvider([
                     'paths' => ['migrations' => 'foobar'],
                 ]),
             ],

@@ -8,20 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Definitions\Console;
+namespace Madewithlove\Glue\ServiceProviders\Console;
 
-use Interop\Container\Definition\DefinitionProviderInterface;
-use League\Container\ImmutableContainerAwareInterface;
-use League\Container\ImmutableContainerAwareTrait;
-use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
+use Interop\Container\ServiceProviderInterface;
 use Phinx\Config\Config;
 use Phinx\Console\Command;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 
-class PhinxDefinition implements DefinitionProviderInterface, ImmutableContainerAwareInterface
+class PhinxServiceProvider implements ServiceProviderInterface
 {
-    use ImmutableContainerAwareTrait;
-
     /**
      * @var array
      */
@@ -38,17 +34,31 @@ class PhinxDefinition implements DefinitionProviderInterface, ImmutableContainer
     /**
      * {@inheritdoc}
      */
-    public function getDefinitions()
+    public function getServices()
     {
-        $phinx = new ExtendDefinition(Application::class);
-        $phinx->addMethodCall('addCommands', [
+        return [
+            Application::class => [$this, 'withMigrateCommands'],
+        ];
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @param callable|null      $getPrevious
+     *
+     * @return Application
+     */
+    public function withMigrateCommands(ContainerInterface $container, callable $getPrevious = null)
+    {
+        /** @var Application $application */
+        $application = $getPrevious();
+        $application->addCommands([
             $this->getCommand(new Command\Create()),
             $this->getCommand(new Command\Migrate()),
             $this->getCommand(new Command\Rollback()),
             $this->getCommand(new Command\Status()),
         ]);
 
-        return [$phinx];
+        return $application;
     }
 
     /**

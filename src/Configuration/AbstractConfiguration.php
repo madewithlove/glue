@@ -11,17 +11,17 @@
 namespace Madewithlove\Glue\Configuration;
 
 use Illuminate\Support\Fluent;
-use Interop\Container\Definition\DefinitionProviderInterface;
+use Interop\Container\ServiceProviderInterface;
 use League\Container\ImmutableContainerAwareInterface;
 use League\Container\ImmutableContainerAwareTrait;
 
 /**
- * @property string                        $namespace   The namespace of your application
- * @property string                        $rootPath    The path to the root of your application
- * @property bool                          $debug       Whether we're in debug mode or not
- * @property string[]                      $middlewares The middlewares to apply to the current route
- * @property array                         $paths       The paths in your application
- * @property DefinitionProviderInterface[] $definitions The definition providers
+ * @property string                     $namespace   The namespace of your application
+ * @property string                     $rootPath    The path to the root of your application
+ * @property bool                       $debug       Whether we're in debug mode or not
+ * @property string[]                   $middlewares The middlewares to apply to the current route
+ * @property array                      $paths       The paths in your application
+ * @property ServiceProviderInterface[] $providers   The definition providers
  */
 abstract class AbstractConfiguration extends Fluent implements ConfigurationInterface, ImmutableContainerAwareInterface
 {
@@ -100,17 +100,17 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
-    public function getDefinitionProviders()
+    public function getServiceProviders()
     {
-        return (array) $this->definitions;
+        return (array) $this->providers;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setDefinitionProviders(array $providers = [])
+    public function setServiceProviders(array $providers = [])
     {
-        $this->definitions = $providers;
+        $this->providers = $providers;
 
         return $this;
     }
@@ -120,28 +120,28 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
      *
      * @param string $provider
      *
-     * @return DefinitionProviderInterface
+     * @return ServiceProviderInterface
      */
-    public function getDefinitionProvider($provider)
+    public function getServiceProvider($provider)
     {
-        return array_get($this->definitions, $provider);
+        return array_get($this->providers, $provider);
     }
 
     /**
      * Set a definition provider in particular.
      *
-     * @param string                      $name
-     * @param DefinitionProviderInterface $provider
+     * @param string                   $name
+     * @param ServiceProviderInterface $provider
      *
      * @return $this
      */
-    public function setDefinitionProvider($name, $provider)
+    public function setServiceProvider($name, ServiceProviderInterface $provider)
     {
-        $definitions = array_merge($this->getDefinitionProviders(), [
-           $name => $provider,
+        $definitions = array_merge($this->getServiceProviders(), [
+            $name => $provider,
         ]);
 
-        $this->definitions = $definitions;
+        $this->providers = $definitions;
 
         return $this;
     }

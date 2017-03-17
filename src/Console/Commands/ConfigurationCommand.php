@@ -105,7 +105,7 @@ class ConfigurationCommand extends Command
         $this->title('Definitions');
 
         $rows = [];
-        foreach ($this->configuration->getDefinitionProviders() as $definition) {
+        foreach ($this->configuration->getServiceProviders() as $definition) {
             if ($definition instanceof ImmutableContainerAwareInterface) {
                 $definition->setContainer(new Container());
             }

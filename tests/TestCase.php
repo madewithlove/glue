@@ -11,13 +11,14 @@
 namespace Madewithlove\Glue;
 
 use Mockery;
-use PHPUnit_Framework_TestCase;
 
-abstract class TestCase extends PHPUnit_Framework_TestCase
+abstract class TestCase extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * Define constants and stuff.
+     */
     public function setUp()
     {
-        // Define constants and stuff
         new Glue();
     }
 

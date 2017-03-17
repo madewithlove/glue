@@ -10,7 +10,7 @@
 
 namespace Madewithlove\Glue\Configuration;
 
-use Madewithlove\Glue\Dummies\Definitions\DummyDefinition;
+use Madewithlove\Glue\Dummies\Definitions\DummyServiceProvider;
 use Madewithlove\Glue\TestCase;
 
 class AbstractConfigurationTest extends TestCase
@@ -18,8 +18,8 @@ class AbstractConfigurationTest extends TestCase
     public function testCanOverrideParticularProvider()
     {
         $configuration = new DefaultConfiguration();
-        $configuration->setDefinitionProvider('console', new DummyDefinition());
+        $configuration->setServiceProvider('console', new DummyServiceProvider());
 
-        $this->assertInstanceOf(DummyDefinition::class, $configuration->getDefinitionProvider('console'));
+        $this->assertInstanceOf(DummyServiceProvider::class, $configuration->getServiceProvider('console'));
     }
 }

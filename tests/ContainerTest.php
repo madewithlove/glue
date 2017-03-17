@@ -13,8 +13,8 @@ namespace Madewithlove\Glue;
 use Assembly\ArrayDefinitionProvider;
 use Assembly\ParameterDefinition;
 use Assembly\Reference;
-use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
-use Madewithlove\Glue\Dummies\Definitions\DummyDefinition;
+use Madewithlove\Glue\Dummies\Definitions\DummyServiceProvider;
+use Madewithlove\Glue\ServiceProviders\DefinitionTypes\ExtendDefinition;
 use Mockery;
 
 class ContainerTest extends TestCase
@@ -22,7 +22,7 @@ class ContainerTest extends TestCase
     public function testDoesntResolveDefinitionTwice()
     {
         $container = new Container();
-        $container->addDefinitionProvider(new DummyDefinition());
+        $container->addServiceProvider(new DummyServiceProvider());
 
         $container->get('foo');
         $container->add('foo', 'baz');
@@ -31,14 +31,14 @@ class ContainerTest extends TestCase
         $this->assertEquals('baz', $container->get('foo'));
     }
 
-    public function testCanAddExtensionsToDefinition()
+    public function testCanAddExtensionsToProvider()
     {
         $service = Mockery::mock('foobar');
         $service->shouldReceive('someMethod')->once()->with('bar');
 
         $container = new Container();
 
-        $container->addDefinitionProvider(new ArrayDefinitionProvider([
+        $container->addServiceProvider(new ArrayDefinitionProvider([
             'foobar' => (new ParameterDefinition($service)),
             'foo' => 'bar',
             'extenstion' => (new ExtendDefinition('foobar'))->addPropertyAssignment('foo', 'bar')->addMethodCall('someMethod', new Reference('foo')),

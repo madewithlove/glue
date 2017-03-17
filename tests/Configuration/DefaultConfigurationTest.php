@@ -46,11 +46,11 @@ class DefaultConfigurationTest extends TestCase
 
         $configuration->setDebug(true);
         $configuration->configure();
-        $this->assertArrayHasKey('debugbar', $configuration->getDefinitionProviders());
+        $this->assertArrayHasKey('debugbar', $configuration->getServiceProviders());
 
         $configuration->setDebug(false);
         $configuration->configure();
-        $this->assertArrayNotHasKey('debugbar', $configuration->getDefinitionProviders());
+        $this->assertArrayNotHasKey('debugbar', $configuration->getServiceProviders());
     }
 
     public function testCanProperlySerialize()

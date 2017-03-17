@@ -8,24 +8,38 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Definitions;
+namespace Madewithlove\Glue\ServiceProviders;
 
-use Interop\Container\Definition\DefinitionProviderInterface;
+use Interop\Container\ServiceProviderInterface;
 use League\Route\RouteCollection;
-use Madewithlove\Glue\Definitions\DefinitionTypes\ExtendDefinition;
+use Psr\Container\ContainerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 
-class DemoDefinition implements DefinitionProviderInterface
+class DemoServiceProvider implements ServiceProviderInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function getDefinitions()
+    public function getServices()
     {
-        $routes = new ExtendDefinition(RouteCollection::class);
-        $routes->addMethodCall('get', '/', [$this, 'welcomeScreen']);
+        return [
+            RouteCollection::class => [$this, 'withDemoRoutes'],
+        ];
+    }
 
-        return [$routes];
+    /**
+     * @param ContainerInterface $container
+     * @param callable|null      $getPrevious
+     *
+     * @return RouteCollection
+     */
+    public function withDemoRoutes(ContainerInterface $container, callable $getPrevious = null)
+    {
+        /** @var RouteCollection $router */
+        $router = $getPrevious();
+        $router->get('/', [$this, 'welcomeScreen']);
+
+        return $router;
     }
 
     /**

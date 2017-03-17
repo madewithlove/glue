@@ -8,26 +8,26 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Definitions;
+namespace Madewithlove\Glue\ServiceProviders;
 
-use Madewithlove\Definitions\Definitions\Templating\TwigDefinition;
 use Madewithlove\Glue\Container;
-use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
-use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
-use Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition;
-use Madewithlove\Glue\Definitions\Twig\WebpackDefinition;
 use Madewithlove\Glue\Glue;
+use Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider;
+use Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorServiceProvider;
+use Madewithlove\Glue\ServiceProviders\Twig\WebpackServiceProvider;
 use Madewithlove\Glue\TestCase;
+use Madewithlove\ServiceProviders\Console\SymfonyConsoleServiceProvider;
+use Madewithlove\ServiceProviders\Templating\TwigServiceProvider;
 use Symfony\Component\Console\Application;
 use Twig_Environment;
 
-class DefinitionsTest extends TestCase
+class ServiceProvidersTest extends TestCase
 {
     public function testCanAddPhinxCommands()
     {
         $container = new Container();
-        $container->addDefinitionProvider(new SymfonyConsoleDefinition());
-        $container->addDefinitionProvider(new PhinxDefinition());
+        $container->addServiceProvider(new SymfonyConsoleServiceProvider());
+        $container->addServiceProvider(new PhinxServiceProvider());
 
         /** @var Application $console */
         $console = $container->get(Application::class);
@@ -37,8 +37,8 @@ class DefinitionsTest extends TestCase
     public function testCanAddUrlGeneratorToTwig()
     {
         $container = new Container();
-        $container->addDefinitionProvider(new TwigDefinition());
-        $container->addDefinitionProvider(new UrlGeneratorDefinition());
+        $container->addServiceProvider(new TwigServiceProvider());
+        $container->addServiceProvider(new UrlGeneratorServiceProvider());
 
         /** @var Twig_Environment $twig */
         $twig = $container->get(Twig_Environment::class);
@@ -48,8 +48,8 @@ class DefinitionsTest extends TestCase
     public function testCanAddWebpackAssets()
     {
         $container = new Container();
-        $container->addDefinitionProvider(new TwigDefinition());
-        $container->addDefinitionProvider(new WebpackDefinition(__DIR__));
+        $container->addServiceProvider(new TwigServiceProvider());
+        $container->addServiceProvider(new WebpackServiceProvider(__DIR__));
 
         /** @var Twig_Environment $twig */
         $twig = $container->get(Twig_Environment::class);

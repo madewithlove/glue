@@ -8,15 +8,16 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Definitions\Console;
+namespace Madewithlove\Glue\ServiceProviders\Console;
 
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Glue;
+use Madewithlove\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Symfony\Component\Console\Command\Command;
 
-class SymfonyConsoleDefinition extends \Madewithlove\Definitions\Definitions\Console\SymfonyConsoleDefinition
+class SymfonyConsoleDefinition extends SymfonyConsoleServiceProvider
 {
     /**
      * @var Command[]|string[]

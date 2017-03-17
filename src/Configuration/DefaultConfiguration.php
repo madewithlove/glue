@@ -12,25 +12,24 @@ namespace Madewithlove\Glue\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use Illuminate\Database\Capsule\Manager;
-use League\FactoryMuffin\Factory;
+use League\FactoryMuffin\FactoryMuffin;
 use League\Flysystem\Adapter\Local;
-use Madewithlove\Definitions\Definitions\CommandBus\TacticianDefinition;
-use Madewithlove\Definitions\Definitions\Database\EloquentDefinition;
-use Madewithlove\Definitions\Definitions\Database\FactoryMuffinDefinition;
-use Madewithlove\Definitions\Definitions\Development\DebugbarDefinition;
-use Madewithlove\Definitions\Definitions\Development\MonologDefinition;
-use Madewithlove\Definitions\Definitions\Filesystem\FlysystemDefinition;
-use Madewithlove\Definitions\Definitions\Http\LeagueRouteDefinition;
-use Madewithlove\Definitions\Definitions\Http\RelayDefinition;
-use Madewithlove\Definitions\Definitions\Http\ZendDiactorosDefinition;
-use Madewithlove\Definitions\Definitions\Templating\TwigDefinition;
-use Madewithlove\Glue\Definitions\Console\PhinxDefinition;
-use Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition;
-use Madewithlove\Glue\Definitions\ContainerLocatorDefinition;
-use Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition;
-use Madewithlove\Glue\Definitions\Twig\WebpackDefinition;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
+use Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider;
+use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleDefinition;
+use Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorServiceProvider;
+use Madewithlove\Glue\ServiceProviders\Twig\WebpackServiceProvider;
 use Madewithlove\Glue\Utils;
+use Madewithlove\ServiceProviders\CommandBus\TacticianServiceProvider;
+use Madewithlove\ServiceProviders\Database\EloquentServiceProvider;
+use Madewithlove\ServiceProviders\Database\FactoryMuffinServiceProvider;
+use Madewithlove\ServiceProviders\Development\DebugbarServiceProvider;
+use Madewithlove\ServiceProviders\Development\MonologServiceProvider;
+use Madewithlove\ServiceProviders\Filesystem\FlysystemServiceProvider;
+use Madewithlove\ServiceProviders\Http\LeagueRouteServiceProvider;
+use Madewithlove\ServiceProviders\Http\RelayServiceProvider;
+use Madewithlove\ServiceProviders\Http\ZendDiactorosServiceProvider;
+use Madewithlove\ServiceProviders\Templating\TwigServiceProvider;
 use Psr7Middlewares\Middleware\DebugBar;
 use Psr7Middlewares\Middleware\FormatNegotiator;
 use Twig_Extension_Debug;
@@ -62,7 +61,7 @@ class DefaultConfiguration extends AbstractConfiguration
         $this->paths = $this->configurePaths();
         $this->namespace = $this->configureNamespace();
         $this->middlewares = $this->configureMiddlewares();
-        $this->definitions = $this->configureDefinitionProviders();
+        $this->providers = $this->configureServiceProvider();
     }
 
     /**
@@ -140,16 +139,15 @@ class DefaultConfiguration extends AbstractConfiguration
     /**
      * {@inheritdoc}
      */
-    public function configureDefinitionProviders()
+    public function configureServiceProvider()
     {
         $providers = [
-            'assets' => new WebpackDefinition($this->getPath('assets')),
-            'request' => new ZendDiactorosDefinition(),
-            'bus' => new TacticianDefinition(),
-            new ContainerLocatorDefinition(),
-            'pipeline' => new RelayDefinition($this->getMiddlewares()),
-            'routing' => new LeagueRouteDefinition(),
-            'db' => new EloquentDefinition([
+            'assets' => new WebpackServiceProvider($this->getPath('assets')),
+            'request' => new ZendDiactorosServiceProvider(),
+            'bus' => new TacticianServiceProvider(),
+            'pipeline' => new RelayServiceProvider($this->getMiddlewares()),
+            'routing' => new LeagueRouteServiceProvider(),
+            'db' => new EloquentServiceProvider([
                 'default' => [
                     'driver' => 'mysql',
                     'host' => getenv('DB_HOST'),
@@ -161,13 +159,13 @@ class DefaultConfiguration extends AbstractConfiguration
                     'prefix' => '',
                 ],
             ]),
-            'factories' => new FactoryMuffinDefinition($this->getPath('factories')),
-            'filesystem' => new FlysystemDefinition('local', [
+            'factories' => new FactoryMuffinServiceProvider($this->getPath('factories')),
+            'filesystem' => new FlysystemServiceProvider('local', [
                 'local' => new Local($this->getRootPath()),
             ]),
-            'logging' => new MonologDefinition($this->getPath('logs'), 'glue.log'),
+            'logging' => new MonologServiceProvider($this->getPath('logs'), 'glue.log'),
             'console' => SymfonyConsoleDefinition::withDefaultCommands(),
-            'views' => new TwigDefinition(
+            'views' => new TwigServiceProvider(
                 $this->getPath('views'),
                 [
                     'debug' => $this->isDebug(),
@@ -179,13 +177,13 @@ class DefaultConfiguration extends AbstractConfiguration
                     $this->isDebug() ? Twig_Extension_Debug::class : null,
                 ])
             ),
-            'url' => new UrlGeneratorDefinition($this->namespace),
+            'url' => new UrlGeneratorServiceProvider($this->namespace),
         ];
 
         if ($this->isDebug()) {
             $providers = array_merge($providers, [
-                'debugbar' => new DebugbarDefinition(),
-                'migrations' => new PhinxDefinition([
+                'debugbar' => new DebugbarServiceProvider(),
+                'migrations' => new PhinxServiceProvider([
                     'paths' => [
                         'migrations' => $this->getPath('migrations'),
                     ],
@@ -214,10 +212,10 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function boot()
     {
-        $definitions = array_map('get_class', $this->definitions);
+        $definitions = array_map('get_class', $this->providers);
         $bootableDefinitions = [
-            EloquentDefinition::class => Manager::class,
-            FactoryMuffinDefinition::class => Factory::class,
+            EloquentServiceProvider::class => Manager::class,
+            FactoryMuffinServiceProvider::class => FactoryMuffin::class,
         ];
 
         foreach ($bootableDefinitions as $definition => $booted) {
