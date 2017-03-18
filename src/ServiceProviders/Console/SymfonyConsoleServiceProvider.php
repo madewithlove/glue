@@ -10,6 +10,7 @@
 
 namespace Madewithlove\Glue\ServiceProviders\Console;
 
+use Glue\Console\Commands\ServeCommand;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
@@ -44,6 +45,7 @@ class SymfonyConsoleServiceProvider extends \Madewithlove\ServiceProviders\Conso
         return new self(array_merge($commands, [
             BootstrapCommand::class,
             TinkerCommand::class,
+            ServeCommand::class,
             ConfigurationCommand::class,
         ]));
     }
