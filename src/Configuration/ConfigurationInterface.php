@@ -76,14 +76,14 @@ interface ConfigurationInterface extends Arrayable
     public function setMiddlewares(array $middlewares = []);
 
     /**
-     * Get the definition providers to register.
+     * Get the service providers to register.
      *
      * @return ServiceProviderInterface[]
      */
     public function getServiceProviders();
 
     /**
-     * Get a definition provider in particular.
+     * Get a service provider in particular.
      *
      * @param string $provider
      *
@@ -92,7 +92,7 @@ interface ConfigurationInterface extends Arrayable
     public function getServiceProvider($provider);
 
     /**
-     * Set the definition providers to register.
+     * Set the service providers to register.
      *
      * @param ServiceProviderInterface[] $providers
      *
@@ -101,7 +101,7 @@ interface ConfigurationInterface extends Arrayable
     public function setServiceProviders(array $providers = []);
 
     /**
-     * Set a definition provider in particular.
+     * Set a service provider in particular.
      *
      * @param string                   $name
      * @param ServiceProviderInterface $provider

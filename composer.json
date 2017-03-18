@@ -45,7 +45,6 @@
         "league/tactician": "^1.0",
         "madewithlove/service-providers": "1.0.x@dev",
         "maximebf/debugbar": "^1.13",
-        "mnapoli/assembly": "^0.2.0",
         "monolog/monolog": "^1.22",
         "oscarotero/psr7-middlewares": "^3.19",
         "psy/psysh": "^0.8.2",

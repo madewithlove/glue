@@ -80,13 +80,13 @@ PHP
             ,
             $web.DS.'index.php' => <<<'PHP'
 <?php
-use Madewithlove\Glue\Definitions\DemoDefinition;
+use Madewithlove\Glue\ServiceProviders\DemoServiceProvider;
 use Madewithlove\Glue\Glue;
 
 require __DIR__.'/../vendor/autoload.php';
 
 $app = new Glue();
-$app->setServiceProvider('demo', new DemoDefinition());
+$app->setServiceProvider('demo', new DemoServiceProvider());
 
 $app->run();
 PHP

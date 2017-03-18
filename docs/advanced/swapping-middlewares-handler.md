@@ -1,6 +1,6 @@
 # Swapping middlewares handler
 
-Most of the things that come with Glue are easily swappable as they're simply service definitions you can or not include.
+Most of the things that come with Glue are easily swappable as they're simply service providers you can or not include.
 The PSR7 middlewares handlers ([Relay] by default) is however more ingrained into Glue, you can still easily change it though by changing the `pipeline` binding on the container.
 
 It simply has to return a callable accepting a request and response, and returning a response.

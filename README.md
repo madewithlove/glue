@@ -12,7 +12,7 @@
 Glue is an adhesive substance used for sticking objects or materials together ( ͡° ͜ʖ ͡°)
 
 **Glue** is also an helper package made to quickly bootstrap packages-based applications.
-At its core it's just a container and a quick PSR7 setup, on top of which are glued together service definitions and middlewares.
+At its core it's just a container and a quick PSR7 setup, on top of which are glued together service providers and middlewares.
 
 This is _not_ a microframework (in the sense that it doesn't frame your work). If this is what you're looking for I recommend instead using [Silex], [Slim] or whatever you want.
 On the contrary, Glue is as its name indicates just a bit of glue to tie existing packages and middlewares together. It doesn't assume much, it won't get in your way, it's just a way to tie stuff together.
@@ -32,8 +32,7 @@ $router = new RouteCollection($container);
 $router->get('/', 'SomeController::index');
 
 // Create PSR7 middleware handler
-$builder = new RelayBuilder();
-$relay = $builder->newInstance([
+$relay = (new RelayBuilder())->newInstance([
     SomeMiddleware::class,
     function($request, $response, $next) use ($router) {
         $next($request, $router->dispatch($request, $response));
@@ -69,11 +68,11 @@ $app->run();
 
 In order to be truly flexible, Glue accepts any PSR11 compatible container, and register its services through the [service-provider] standard.
 
-As you can see Glue serves two purposes: eliminating recurring boilerplate in binding packages together, and providing definitions for common packages such as `league/route`.
+As you can see Glue serves two purposes: eliminating recurring boilerplate in binding packages together, and providing service providers for common packages such as `league/route`.
 It is configurable and flexible, it won't get in your way, it's just here to help you not type the same things over and over again.
 
 ### What's in the box
-Glue provides several definitions out of the box:
+Glue provides several service providers out of the box:
 - **Routing**
     - Base routing system with `league/route`
     - PSR7 stack with `zendframework/zend-diactoros`

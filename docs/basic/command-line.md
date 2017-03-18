@@ -51,19 +51,19 @@ Variables: $app, $config
 
 >>> $config->definitions
 => [
-     "assets" => Madewithlove\Glue\Definitions\Twig\WebpackDefinition {#12},
-     "request" => Madewithlove\Glue\Definitions\ZendDiactorosDefinition {#13},
-     "bus" => Madewithlove\Glue\Definitions\TacticianDefinition {#14},
-     "pipeline" => Madewithlove\Glue\Definitions\RelayDefinition {#15},
-     "routing" => Madewithlove\Glue\Definitions\LeagueRouteDefinition {#16},
-     "db" => Madewithlove\Glue\Definitions\EloquentDefinition {#17},
-     "filesystem" => Madewithlove\Glue\Definitions\FlysystemDefinition {#18},
-     "logging" => Madewithlove\Glue\Definitions\MonologDefinition {#20},
-     "console" => Madewithlove\Glue\Definitions\Console\SymfonyConsoleDefinition {#21},
-     "views" => Madewithlove\Glue\Definitions\Twig\TwigDefinition {#22},
-     "url" => Madewithlove\Glue\Definitions\Twig\UrlGeneratorDefinition {#25},
-     "debugbar" => Madewithlove\Glue\Definitions\DebugbarDefinition {#26},
-     "migrations" => Madewithlove\Glue\Definitions\Console\PhinxDefinition {#27},
+     "assets" => Madewithlove\Glue\ServiceProviders\Twig\WebpackDefinition {#12},
+     "request" => Madewithlove\Glue\ServiceProviders\ZendDiactorosDefinition {#13},
+     "bus" => Madewithlove\Glue\ServiceProviders\TacticianDefinition {#14},
+     "pipeline" => Madewithlove\Glue\ServiceProviders\RelayDefinition {#15},
+     "routing" => Madewithlove\Glue\ServiceProviders\LeagueRouteDefinition {#16},
+     "db" => Madewithlove\Glue\ServiceProviders\EloquentDefinition {#17},
+     "filesystem" => Madewithlove\Glue\ServiceProviders\FlysystemDefinition {#18},
+     "logging" => Madewithlove\Glue\ServiceProviders\MonologDefinition {#20},
+     "console" => Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleDefinition {#21},
+     "views" => Madewithlove\Glue\ServiceProviders\Twig\TwigDefinition {#22},
+     "url" => Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorDefinition {#25},
+     "debugbar" => Madewithlove\Glue\ServiceProviders\DebugbarDefinition {#26},
+     "migrations" => Madewithlove\Glue\ServiceProviders\Console\PhinxDefinition {#27},
    ]
 ```
 
@@ -80,7 +80,7 @@ $app->setServiceProvider('console', new SymfonyConsoleDefinition([
 Glue uses `symfony/console` so created commands should be instances of `Symfony\Component\Console\Command\Command`.
 All commands are resolved through the container so you can inject dependencies in their constructor.
 
-If you want to use the default definition **with** the default commands provided by Glue, you can use the factory method `withDefaultCommands`:
+If you want to use the service provider **with** the default commands provided by Glue, you can use the factory method `withDefaultCommands`:
 
 ```php
 $app->setServiceProvider('console', SymfonyConsoleServiceProvider::withDefaultCommands([
@@ -90,7 +90,7 @@ $app->setServiceProvider('console', SymfonyConsoleServiceProvider::withDefaultCo
 
 ## Using a different CLI
 
-You can of course override the console application by overriding the `console` binding in a definition provider of your doing.
+You can of course override the console application by overriding the `console` binding in a service provider of your doing.
 
 ```php
 $app = new Glue();
