@@ -36,22 +36,22 @@ You can see which provider is bound to which provider key through the `php conso
 
 ```bash
 $ php console tinker
-Psy Shell v0.8.2 (PHP 7.1.2 — cli) by Justin Hileman
->>> $config->providers;
+>>> $config->providers
 => [
-     "assets" => Madewithlove\Glue\ServiceProviders\WebpackDefinition {#12},
-     "request" => Madewithlove\Glue\ServiceProviders\ZendDiactorosDefinition {#13},
-     "bus" => Madewithlove\Glue\ServiceProviders\TacticianDefinition {#14},
-     "pipeline" => Madewithlove\Glue\ServiceProviders\RelayDefinition {#15},
-     "routing" => Madewithlove\Glue\ServiceProviders\LeagueRouteDefinition {#16},
-     "db" => Madewithlove\Glue\ServiceProviders\EloquentDefinition {#17},
-     "filesystem" => Madewithlove\Glue\ServiceProviders\FlysystemDefinition {#18},
-     "logging" => Madewithlove\Glue\ServiceProviders\MonologDefinition {#20},
-     "console" => Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleDefinition {#21},
-     "views" => Madewithlove\Glue\ServiceProviders\Twig\TwigDefinition {#22},
-     "url" => Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorDefinition {#25},
-     "debugbar" => Madewithlove\Glue\ServiceProviders\DebugbarDefinition {#26},
-     "migrations" => Madewithlove\Glue\ServiceProviders\Console\PhinxDefinition {#27},
+     "request" => Madewithlove\ServiceProviders\Http\ZendDiactorosServiceProvider {#23},
+     "bus" => Madewithlove\ServiceProviders\CommandBus\TacticianServiceProvider {#21},
+     "pipeline" => Madewithlove\ServiceProviders\Http\RelayServiceProvider {#20},
+     "routing" => Madewithlove\ServiceProviders\Http\LeagueRouteServiceProvider {#19},
+     "db" => Madewithlove\ServiceProviders\Database\EloquentServiceProvider {#18},
+     "factories" => Madewithlove\ServiceProviders\Database\FactoryMuffinServiceProvider {#16},
+     "filesystem" => Madewithlove\ServiceProviders\Filesystem\FlysystemServiceProvider {#17},
+     "logging" => Madewithlove\ServiceProviders\Development\MonologServiceProvider {#14},
+     "console" => Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleServiceProvider {#13},
+     "views" => Madewithlove\ServiceProviders\Templating\TwigServiceProvider {#12},
+     "url" => Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorServiceProvider {#11},
+     "assets" => Madewithlove\Glue\ServiceProviders\Twig\WebpackServiceProvider {#10},
+     "debugbar" => Madewithlove\ServiceProviders\Development\DebugbarServiceProvider {#40},
+     "migrations" => Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider {#41},
    ]
 ```
 
