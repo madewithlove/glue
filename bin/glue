@@ -1,13 +1,13 @@
 #!/usr/bin/env php
 <?php
-use Glue\Console\Commands\ServeCommand;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
+use Madewithlove\Glue\Console\Commands\ServeCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
-use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Madewithlove\Glue\Glue;
+use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Madewithlove\Glue\Utils;
 
 require __DIR__.'/../src/Utils.php';

@@ -10,9 +10,9 @@
 
 namespace Madewithlove\Glue\ServiceProviders\Console;
 
-use Glue\Console\Commands\ServeCommand;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
+use Madewithlove\Glue\Console\Commands\ServeCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Glue;
 use Symfony\Component\Console\Command\Command;
