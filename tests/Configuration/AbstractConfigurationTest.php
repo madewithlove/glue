@@ -10,7 +10,7 @@
 
 namespace Madewithlove\Glue\Configuration;
 
-use Madewithlove\Glue\Dummies\Definitions\DummyServiceProvider;
+use Madewithlove\Glue\Dummies\ServiceProviders\DummyServiceProvider;
 use Madewithlove\Glue\TestCase;
 
 class AbstractConfigurationTest extends TestCase

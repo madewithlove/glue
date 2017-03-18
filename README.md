@@ -51,10 +51,10 @@ Into this:
 
 ```php
 $app = (new Glue())
-    ->setDefinitionProviders([
-        new SomeDefinition(),
-        new AnotherDefinition(),
-        new LeagueRouteDefinition(),
+    ->setServiceProviders([
+        new SomeServiceProvider(),
+        new AnotherServiceProvider(),
+        new LeagueRouteServiceProvider(),
     ])
     ->setMiddlewares([
         SomeMiddleware::class,
@@ -67,7 +67,7 @@ $app->get('/', 'SomeController::index');
 $app->run();
 ```
 
-In order to be truly flexible, Glue accepts any PSR11 compatible container, and register its services through the [definition-interop] standard.
+In order to be truly flexible, Glue accepts any PSR11 compatible container, and register its services through the [service-provider] standard.
 
 As you can see Glue serves two purposes: eliminating recurring boilerplate in binding packages together, and providing definitions for common packages such as `league/route`.
 It is configurable and flexible, it won't get in your way, it's just here to help you not type the same things over and over again.
@@ -129,7 +129,7 @@ If you discover any security related issues, please email heroes@madewithlove.be
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[definition-interop]: https://github.com/container-interop/definition-interop
+[service-provider]: https://github.com/container-interop/service-provider
 [documentation]: http://madewithlove.github.io/glue
 [silex]: http://silex.sensiolabs.org
 [slim]: http://www.slimframework.com

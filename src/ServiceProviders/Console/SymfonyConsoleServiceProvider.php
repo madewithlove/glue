@@ -14,10 +14,9 @@ use Madewithlove\Glue\Console\Commands\BootstrapCommand;
 use Madewithlove\Glue\Console\Commands\ConfigurationCommand;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Glue;
-use Madewithlove\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Symfony\Component\Console\Command\Command;
 
-class SymfonyConsoleDefinition extends SymfonyConsoleServiceProvider
+class SymfonyConsoleServiceProvider extends \Madewithlove\ServiceProviders\Console\SymfonyConsoleServiceProvider
 {
     /**
      * @var Command[]|string[]
@@ -38,7 +37,7 @@ class SymfonyConsoleDefinition extends SymfonyConsoleServiceProvider
      *
      * @param array $commands
      *
-     * @return SymfonyConsoleDefinition
+     * @return SymfonyConsoleServiceProvider
      */
     public static function withDefaultCommands(array $commands = [])
     {

@@ -21,7 +21,7 @@ use League\Container\ImmutableContainerAwareTrait;
  * @property bool                       $debug       Whether we're in debug mode or not
  * @property string[]                   $middlewares The middlewares to apply to the current route
  * @property array                      $paths       The paths in your application
- * @property ServiceProviderInterface[] $providers   The definition providers
+ * @property ServiceProviderInterface[] $providers   The service providers
  */
 abstract class AbstractConfiguration extends Fluent implements ConfigurationInterface, ImmutableContainerAwareInterface
 {
@@ -116,7 +116,7 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     }
 
     /**
-     * Get a definition provider in particular.
+     * Get a service provider in particular.
      *
      * @param string $provider
      *
@@ -128,7 +128,7 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     }
 
     /**
-     * Set a definition provider in particular.
+     * Set a service provider in particular.
      *
      * @param string                   $name
      * @param ServiceProviderInterface $provider
@@ -137,11 +137,11 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
      */
     public function setServiceProvider($name, ServiceProviderInterface $provider)
     {
-        $definitions = array_merge($this->getServiceProviders(), [
+        $providers = array_merge($this->getServiceProviders(), [
             $name => $provider,
         ]);
 
-        $this->providers = $definitions;
+        $this->providers = $providers;
 
         return $this;
     }

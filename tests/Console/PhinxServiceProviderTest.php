@@ -18,7 +18,7 @@ use Madewithlove\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Phinx\Console\Command\Migrate;
 use Symfony\Component\Console\Application;
 
-class PhinxDefinitionTest extends TestCase
+class PhinxServiceProviderTest extends TestCase
 {
     public function testCanMirrorPhinxCommands()
     {

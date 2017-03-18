@@ -69,10 +69,10 @@ Variables: $app, $config
 
 ## Adding commands
 
-To add commands, pass them as constructor arguments to the `SymfonyConsoleDefinition`:
+To add commands, pass them as constructor arguments to the `SymfonyConsoleServiceProvider`:
 
 ```php
-$app->setDefinitionProvider('console', new SymfonyConsoleDefinition([
+$app->setServiceProvider('console', new SymfonyConsoleDefinition([
     SomeCommand::class,
 ]));
 ```
@@ -83,7 +83,7 @@ All commands are resolved through the container so you can inject dependencies i
 If you want to use the default definition **with** the default commands provided by Glue, you can use the factory method `withDefaultCommands`:
 
 ```php
-$app->setDefinitionProvider('console', SymfonyConsoleDefinition::withDefaultCommands([
+$app->setServiceProvider('console', SymfonyConsoleServiceProvider::withDefaultCommands([
     SomeCommand::class,
 ]));
 ```
@@ -94,7 +94,7 @@ You can of course override the console application by overriding the `console` b
 
 ```php
 $app = new Glue();
-$app->setDefinitionProvider('console', new ClimateDefinition([
+$app->setServiceProvider('console', new ClimateServiceProvider([
     SomeCommand::class,
     OtherCommand::class
 ]);

@@ -68,7 +68,7 @@ class ConfigurationCommand extends Command
 
         $this->printConfiguration();
         $this->printMiddlewares();
-        $this->printDefinitions();
+        $this->printServiceProviders();
     }
 
     /**
@@ -98,20 +98,20 @@ class ConfigurationCommand extends Command
     }
 
     /**
-     * Print the current definitions.
+     * Print the current service providers.
      */
-    protected function printDefinitions()
+    protected function printServiceProviders()
     {
-        $this->title('providers');
+        $this->title('Service providers');
 
         $rows = [];
-        foreach ($this->configuration->getServiceProviders() as $definition) {
-            if ($definition instanceof ImmutableContainerAwareInterface) {
-                $definition->setContainer(new Container());
+        foreach ($this->configuration->getServiceProviders() as $provider) {
+            if ($provider instanceof ImmutableContainerAwareInterface) {
+                $provider->setContainer(new Container());
             }
 
             $parameters = [];
-            $reflection = new ReflectionClass($definition);
+            $reflection = new ReflectionClass($provider);
             if ($reflection->getProperties()) {
                 foreach ($reflection->getProperties() as $parameter) {
                     if ($parameter->getName() === 'container') {
@@ -127,21 +127,21 @@ class ConfigurationCommand extends Command
                 }
             }
 
-            $definitions = array_keys($definition->getServices());
-            foreach ($definitions as $key => $binding) {
-                $definitions[$key] = is_string($binding) ? ($key + 1).'. <comment>'.$binding.'</comment>' : null;
+            $services = array_keys($provider->getServices());
+            foreach ($services as $key => $binding) {
+                $services[$key] = is_string($binding) ? ($key + 1).'. <comment>'.$binding.'</comment>' : null;
             }
 
             $rows[] = [
-                'definition' => '<comment>'.get_class($definition).'</comment>',
+                'provider' => '<comment>'.get_class($provider).'</comment>',
                 'options' => implode(PHP_EOL, $parameters),
-                'bindings' => implode(PHP_EOL, $definitions),
+                'services' => implode(PHP_EOL, $services),
             ];
 
             $rows[] = new TableSeparator();
         }
 
-        $this->output->table(['Definition', 'Options', 'Bindings'], array_slice($rows, 0, -1));
+        $this->output->table(['Service Provider', 'Options', 'Services'], array_slice($rows, 0, -1));
     }
 
     /**

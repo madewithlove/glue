@@ -15,16 +15,16 @@ use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
 use Madewithlove\Glue\Dummies\DummyConsoleCommand;
 use Madewithlove\Glue\Glue;
-use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleDefinition;
+use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Madewithlove\Glue\TestCase;
 use Symfony\Component\Console\Application;
 
-class SymfonyConsoleDefinitionTest extends TestCase
+class SymfonyConsoleServiceProviderTest extends TestCase
 {
     public function testCanBindCommandsToConsole()
     {
         $glue = new Glue(new Configuration([
-            'providers' => [new SymfonyConsoleDefinition([TinkerCommand::class])],
+            'providers' => [new SymfonyConsoleServiceProvider([TinkerCommand::class])],
         ]));
 
         $glue->boot();
@@ -39,7 +39,7 @@ class SymfonyConsoleDefinitionTest extends TestCase
         $glue = new Glue();
         $glue->setServiceProvider(
             'console',
-            SymfonyConsoleDefinition::withDefaultCommands([
+            SymfonyConsoleServiceProvider::withDefaultCommands([
                 DummyConsoleCommand::class,
             ])
         );
@@ -54,7 +54,7 @@ class SymfonyConsoleDefinitionTest extends TestCase
     public function testCanPassActualCommandInstances()
     {
         $glue = new Glue(new Configuration([
-            'providers' => [new SymfonyConsoleDefinition([
+            'providers' => [new SymfonyConsoleServiceProvider([
                 new TinkerCommand(new Container()),
             ])],
         ]));

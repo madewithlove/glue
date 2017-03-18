@@ -10,7 +10,7 @@ class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
 {
     public function __construct()
     {
-        $this->definitions      = [new SomeDefinition()];
+        $this->providers = [new SomeServiceProvider()];
         $this->someCustomConfig = 'foobar';
     }
 }
@@ -24,7 +24,7 @@ class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
 {
     public function __construct()
     {
-        $this->definitions      = [new SomeDefinition()];
+        $this->providers = [new SomeServiceProvider()];
         $this->someCustomConfig = 'foobar';
     }
 
@@ -43,7 +43,7 @@ class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
     public function __construct()
     {
         parent::__construct([
-            'providers'      => [new SomeDefinition()],
+            'providers' => [new SomeServiceProvider()],
             'someCustomConfig' => 'foobar',
         ]);
     }
@@ -96,7 +96,7 @@ class MyConfiguration implements ConfigurationInterface
 
 ## Boot event
 
-The configurations can facultatively have a `boot` method that is called once all definitions are bound and the application is about done booting.
+The configurations can facultatively have a `boot` method that is called once all service providers are bound and the application is about done booting.
 All you need to do is add the method and do whatever you want in it:
 
 ```php

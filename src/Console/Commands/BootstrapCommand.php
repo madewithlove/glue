@@ -86,7 +86,7 @@ use Madewithlove\Glue\Glue;
 require __DIR__.'/../vendor/autoload.php';
 
 $app = new Glue();
-$app->setDefinitionProvider('demo', new DemoDefinition());
+$app->setServiceProvider('demo', new DemoDefinition());
 
 $app->run();
 PHP

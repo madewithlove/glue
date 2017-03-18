@@ -163,10 +163,10 @@ class Glue
         $this->container->addServiceProvider(new PrefixedProvider('paths', new ParametersServiceProvider($this->configuration->getPaths())));
         $this->container->addServiceProvider(new PrefixedProvider('config', new ParametersServiceProvider($this->configuration->toArray())));
 
-        // Register definitions
-        $definitionProviders = $this->configuration->getServiceProviders();
-        foreach ($definitionProviders as &$definitionProvider) {
-            $this->container->addServiceProvider($definitionProvider);
+        // Register service providers
+        $serviceProviders = $this->configuration->getServiceProviders();
+        foreach ($serviceProviders as &$serviceProvider) {
+            $this->container->addServiceProvider($serviceProvider);
         }
     }
 

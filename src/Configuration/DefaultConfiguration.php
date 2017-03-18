@@ -16,7 +16,7 @@ use League\FactoryMuffin\Factory;
 use League\Flysystem\Adapter\Local;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider;
-use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleDefinition;
+use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorServiceProvider;
 use Madewithlove\Glue\ServiceProviders\Twig\WebpackServiceProvider;
 use Madewithlove\Glue\Utils;
@@ -163,7 +163,7 @@ class DefaultConfiguration extends AbstractConfiguration
                 'local' => new Local($this->getRootPath()),
             ]),
             'logging' => new MonologServiceProvider($this->getPath('logs'), 'glue.log'),
-            'console' => SymfonyConsoleDefinition::withDefaultCommands(),
+            'console' => SymfonyConsoleServiceProvider::withDefaultCommands(),
             'views' => new TwigServiceProvider(
                 $this->getPath('views'),
                 [
@@ -212,14 +212,14 @@ class DefaultConfiguration extends AbstractConfiguration
      */
     public function boot()
     {
-        $definitions = array_map('get_class', $this->providers);
-        $bootableDefinitions = [
+        $providers = array_map('get_class', $this->providers);
+        $bootableProviders = [
             EloquentServiceProvider::class => Manager::class,
             FactoryMuffinServiceProvider::class => Factory::class,
         ];
 
-        foreach ($bootableDefinitions as $definition => $booted) {
-            if (in_array($definition, $definitions, true)) {
+        foreach ($bootableProviders as $provider => $booted) {
+            if (in_array($provider, $providers, true)) {
                 $this->container->get($booted);
             }
         }

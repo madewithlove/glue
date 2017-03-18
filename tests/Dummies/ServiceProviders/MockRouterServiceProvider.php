@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Madewithlove\Glue\Dummies\Definitions;
+namespace Madewithlove\Glue\Dummies\ServiceProviders;
 
 use Interop\Container\ServiceProviderInterface;
 use Madewithlove\ServiceProviders\Utilities\Parameter;

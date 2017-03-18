@@ -1,15 +1,15 @@
 # Providers configuration
 
-If you want to configure some of the providers that come with Glue, most of the time I recommend you write your own definition and swap ours for yours:
+If you want to configure some of the providers that come with Glue, most of the time I recommend you write your own service provider and swap ours for yours:
 
 ```php
 $app = new Glue();
 $app->configure('providers', [
-    'view' => new MyTwigDefinition(),
+    'view' => new MyTwigServiceProvider(),
 ]);
 ```
 
-If however you just want to tweak one setting here and there, most definitions accepts various arguments to configure them in depth. You can look at the definitions themselves to see which options they accept:
+If however you just want to tweak one setting here and there, most providers accepts various arguments to configure them in depth. You can look at the providers themselves to see which options they accept:
 
 ```php
 class MonologDefinition implements DefinitionProviderInterface
@@ -29,15 +29,15 @@ If per example you want to change the filename and path used by Monolog you can 
 
 ```php
 $app = new Glue();
-$app->setDefinitionProvider('logging', new MonologDefinition('/logs', date('m-d').'.log'));
+$app->setServiceProvider('logging', new MonologDefinition('/logs', date('m-d').'.log'));
 ```
 
-You can see which definition is bound to which provider key through the `php console tinker` command:
+You can see which provider is bound to which provider key through the `php console tinker` command:
 
 ```bash
 $ php console tinker
-Psy Shell v0.6.1 (PHP 5.6.16 — cli) by Justin Hileman
->>> $config->definitions;
+Psy Shell v0.8.2 (PHP 7.1.2 — cli) by Justin Hileman
+>>> $config->providers;
 => [
      "assets" => Madewithlove\Glue\Definitions\Twig\WebpackDefinition {#12},
      "request" => Madewithlove\Glue\Definitions\ZendDiactorosDefinition {#13},
@@ -55,4 +55,4 @@ Psy Shell v0.6.1 (PHP 5.6.16 — cli) by Justin Hileman
    ]
 ```
 
-You can also see which options a definition exposes through the `php console config` command.
+You can also see which options a provider exposes through the `php console config` command.
