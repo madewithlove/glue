@@ -8,7 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  */
 
-namespace Glue\Console\Commands;
+namespace Madewithlove\Glue\Console\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProcessHelper;

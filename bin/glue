@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+use Glue\Console\Commands\ServeCommand;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Console\Commands\BootstrapCommand;
@@ -25,6 +26,7 @@ $glue->setServiceProviders([
     'console' => new SymfonyConsoleServiceProvider([
         BootstrapCommand::class,
         TinkerCommand::class,
+        ServeCommand::class,
         ConfigurationCommand::class,
     ]),
 ]);
