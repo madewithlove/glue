@@ -78,7 +78,7 @@ class ConfigurationCommand extends Command
     {
         $this->title('Configuration');
 
-        $values = array_except($this->configuration->toArray(), ['definitions', 'middlewares']);
+        $values = array_except($this->configuration->toArray(), ['providers', 'middlewares']);
         $values = array_dot($values);
         foreach ($values as $key => &$value) {
             $value = ['<comment>'.$key.'</comment>', $value];
@@ -102,7 +102,7 @@ class ConfigurationCommand extends Command
      */
     protected function printDefinitions()
     {
-        $this->title('Definitions');
+        $this->title('providers');
 
         $rows = [];
         foreach ($this->configuration->getServiceProviders() as $definition) {
@@ -127,7 +127,7 @@ class ConfigurationCommand extends Command
                 }
             }
 
-            $definitions = array_keys($definition->getDefinitions());
+            $definitions = array_keys($definition->getServices());
             foreach ($definitions as $key => $binding) {
                 $definitions[$key] = is_string($binding) ? ($key + 1).'. <comment>'.$binding.'</comment>' : null;
             }

@@ -10,9 +10,9 @@
 
 namespace Madewithlove\Glue\Console;
 
+use League\Container\Container;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Console\Commands\TinkerCommand;
-use Madewithlove\Glue\Container;
 use Madewithlove\Glue\Dummies\DummyConsoleCommand;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleDefinition;
@@ -24,7 +24,7 @@ class SymfonyConsoleDefinitionTest extends TestCase
     public function testCanBindCommandsToConsole()
     {
         $glue = new Glue(new Configuration([
-            'definitions' => [new SymfonyConsoleDefinition([TinkerCommand::class])],
+            'providers' => [new SymfonyConsoleDefinition([TinkerCommand::class])],
         ]));
 
         $glue->boot();
@@ -54,7 +54,7 @@ class SymfonyConsoleDefinitionTest extends TestCase
     public function testCanPassActualCommandInstances()
     {
         $glue = new Glue(new Configuration([
-            'definitions' => [new SymfonyConsoleDefinition([
+            'providers' => [new SymfonyConsoleDefinition([
                 new TinkerCommand(new Container()),
             ])],
         ]));

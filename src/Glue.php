@@ -13,6 +13,7 @@ namespace Madewithlove\Glue;
 use Acclimate\Container\ContainerAcclimator;
 use Dotenv\Dotenv;
 use Interop\Container\ContainerInterface;
+use League\Container\Container;
 use League\Container\ContainerAwareTrait;
 use League\Container\ReflectionContainer;
 use League\Route\RouteCollection;
@@ -20,6 +21,7 @@ use Madewithlove\Glue\Configuration\AbstractConfiguration;
 use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Madewithlove\Glue\Configuration\DefaultConfiguration;
 use Madewithlove\Glue\Traits\Configurable;
+use Madewithlove\ServiceProviders\Bridges\LeagueContainerDecorator;
 use Madewithlove\ServiceProviders\Utilities\ParametersServiceProvider;
 use Madewithlove\ServiceProviders\Utilities\PrefixedProvider;
 use Psr\Http\Message\ResponseInterface;
@@ -83,7 +85,7 @@ class Glue
     {
         // Setup container
         $delegates = [$this->container, new ReflectionContainer()];
-        $parentContainer = new Container();
+        $parentContainer = new LeagueContainerDecorator(new Container());
         $parentContainer->share(ContainerInterface::class, $parentContainer);
 
         if ($container) {
@@ -175,6 +177,7 @@ class Glue
     {
         $this->boot();
 
+        /** @var SapiEmitter $emitter */
         $request = $this->container->get(ServerRequestInterface::class);
         $response = $this->container->get(ResponseInterface::class);
         $emitter = $this->container->get(SapiEmitter::class);
@@ -185,6 +188,8 @@ class Glue
         $response = $pipeline($request, $response);
 
         $emitter->emit($response);
+
+        return $response;
     }
 
     /**

@@ -10,12 +10,13 @@
 
 namespace Madewithlove\Glue\ServiceProviders;
 
-use Madewithlove\Glue\Container;
+use League\Container\Container;
 use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider;
 use Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorServiceProvider;
 use Madewithlove\Glue\ServiceProviders\Twig\WebpackServiceProvider;
 use Madewithlove\Glue\TestCase;
+use Madewithlove\ServiceProviders\Bridges\LeagueContainerDecorator;
 use Madewithlove\ServiceProviders\Console\SymfonyConsoleServiceProvider;
 use Madewithlove\ServiceProviders\Templating\TwigServiceProvider;
 use Symfony\Component\Console\Application;
@@ -25,7 +26,7 @@ class ServiceProvidersTest extends TestCase
 {
     public function testCanAddPhinxCommands()
     {
-        $container = new Container();
+        $container = new LeagueContainerDecorator(new Container());
         $container->addServiceProvider(new SymfonyConsoleServiceProvider());
         $container->addServiceProvider(new PhinxServiceProvider());
 
@@ -36,7 +37,7 @@ class ServiceProvidersTest extends TestCase
 
     public function testCanAddUrlGeneratorToTwig()
     {
-        $container = new Container();
+        $container = new LeagueContainerDecorator(new Container());
         $container->addServiceProvider(new TwigServiceProvider());
         $container->addServiceProvider(new UrlGeneratorServiceProvider());
 
@@ -47,7 +48,7 @@ class ServiceProvidersTest extends TestCase
 
     public function testCanAddWebpackAssets()
     {
-        $container = new Container();
+        $container = new LeagueContainerDecorator(new Container());
         $container->addServiceProvider(new TwigServiceProvider());
         $container->addServiceProvider(new WebpackServiceProvider(__DIR__));
 

@@ -43,7 +43,7 @@ class MyConfiguration extends \Madewithlove\Glue\AbstractConfiguration
     public function __construct()
     {
         parent::__construct([
-            'definitions'      => [new SomeDefinition()],
+            'providers'      => [new SomeDefinition()],
             'someCustomConfig' => 'foobar',
         ]);
     }

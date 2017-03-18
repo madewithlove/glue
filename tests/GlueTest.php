@@ -12,11 +12,13 @@ namespace Madewithlove\Glue;
 
 use Illuminate\Container\Container as IlluminateContainer;
 use Interop\Container\ServiceProviderInterface;
+use League\Container\Container;
 use League\Tactician\CommandBus;
 use Madewithlove\Glue\Configuration\Configuration;
 use Madewithlove\Glue\Dummies\Definitions\MockRouterServiceProvider;
 use Madewithlove\Glue\Dummies\DummyController;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
+use Madewithlove\ServiceProviders\Bridges\LeagueContainerDecorator;
 use Madewithlove\ServiceProviders\Http\LeagueRouteServiceProvider;
 use Madewithlove\ServiceProviders\Http\RelayServiceProvider;
 use Madewithlove\ServiceProviders\Http\ZendDiactorosServiceProvider;
@@ -66,7 +68,7 @@ class GlueTest extends TestCase
         $provider->shouldReceive('getServices')->once()->andReturn(['foobar' => new Parameter('foobar')]);
 
         $glue = new Glue(new Configuration([
-            'definitions' => [$provider],
+            'providers' => [$provider],
         ]));
 
         $glue->boot();
@@ -78,7 +80,7 @@ class GlueTest extends TestCase
         $console = Mockery::mock('console');
         $console->shouldReceive('run')->once()->andReturn('foobar');
 
-        $container = new Container();
+        $container = new LeagueContainerDecorator(new Container());
         $container->add('console', $console);
 
         $glue = new Glue(new Configuration());
@@ -112,14 +114,16 @@ class GlueTest extends TestCase
 
         $glue = new Glue(new Configuration([
             'debug' => false,
-            'definitions' => [
+            'providers' => [
                 new LeagueRouteServiceProvider(),
                 new RelayServiceProvider([LeagueRouteMiddleware::class]),
             ],
         ]), $container);
 
         $glue->get('foobar', DummyController::class.'::index');
-        $glue->run();
+        $response = $glue->run();
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
     public function testCanDeclareConfigurationFluently()

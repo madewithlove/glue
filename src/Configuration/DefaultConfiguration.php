@@ -12,7 +12,7 @@ namespace Madewithlove\Glue\Configuration;
 
 use Franzl\Middleware\Whoops\Middleware as WhoopsMiddleware;
 use Illuminate\Database\Capsule\Manager;
-use League\FactoryMuffin\FactoryMuffin;
+use League\FactoryMuffin\Factory;
 use League\Flysystem\Adapter\Local;
 use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
 use Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider;
@@ -142,7 +142,6 @@ class DefaultConfiguration extends AbstractConfiguration
     public function configureServiceProvider()
     {
         $providers = [
-            'assets' => new WebpackServiceProvider($this->getPath('assets')),
             'request' => new ZendDiactorosServiceProvider(),
             'bus' => new TacticianServiceProvider(),
             'pipeline' => new RelayServiceProvider($this->getMiddlewares()),
@@ -178,6 +177,7 @@ class DefaultConfiguration extends AbstractConfiguration
                 ])
             ),
             'url' => new UrlGeneratorServiceProvider($this->namespace),
+            'assets' => new WebpackServiceProvider($this->getPath('assets')),
         ];
 
         if ($this->isDebug()) {
@@ -215,7 +215,7 @@ class DefaultConfiguration extends AbstractConfiguration
         $definitions = array_map('get_class', $this->providers);
         $bootableDefinitions = [
             EloquentServiceProvider::class => Manager::class,
-            FactoryMuffinServiceProvider::class => FactoryMuffin::class,
+            FactoryMuffinServiceProvider::class => Factory::class,
         ];
 
         foreach ($bootableDefinitions as $definition => $booted) {

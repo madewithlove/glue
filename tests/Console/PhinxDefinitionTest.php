@@ -26,7 +26,7 @@ class PhinxDefinitionTest extends TestCase
             'paths' => [
                 'migrations' => 'foobar',
             ],
-            'definitions' => [
+            'providers' => [
                 new SymfonyConsoleServiceProvider(),
                 new PhinxServiceProvider([
                     'paths' => ['migrations' => 'foobar'],
