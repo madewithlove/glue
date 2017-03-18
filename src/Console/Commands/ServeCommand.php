@@ -38,12 +38,14 @@ class ServeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $host = $input->getOption('host');
+        $port = $input->getOption('port');
+        $address = $host.':'.$port;
+
+        $output->writeln('Starting webserver at http://'.$address);
+
         /** @var ProcessHelper $processes */
         $processes = $this->getHelperSet()->get('process');
-        $processes->mustRun($output, sprintf(
-            'php -S %s:%s public/index.php',
-            $input->getOption('host'),
-            $input->getOption('port')
-        ));
+        $processes->mustRun($output, sprintf('php -S %s public/index.php', $address));
     }
 }

@@ -51,6 +51,7 @@
         "relay/relay": "^1.1",
         "robmorgan/phinx": "^0.8.0",
         "symfony/console": "^3.2",
+        "symfony/process": "^3.2",
         "twig/twig": "^2.2",
         "vlucas/phpdotenv": "^2.4",
         "willdurand/negotiation": "^2.2",
