@@ -49,7 +49,7 @@ $ php console tinker
 >>> ls
 Variables: $app, $config
 
->>> $config->definitions
+>>> $config->providers
 => [
      "assets" => Madewithlove\Glue\ServiceProviders\Twig\WebpackDefinition {#12},
      "request" => Madewithlove\Glue\ServiceProviders\ZendDiactorosDefinition {#13},

@@ -71,6 +71,7 @@ class BootstrapCommand extends Command
         $files = [
             '.env' => 'APP_ENV=local',
             'console' => <<<'PHP'
+#!/usr/bin/env php
 <?php
 require __DIR__.'/vendor/autoload.php';
 
