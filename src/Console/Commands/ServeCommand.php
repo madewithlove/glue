@@ -15,6 +15,7 @@ use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 class ServeCommand extends Command
 {
@@ -44,8 +45,13 @@ class ServeCommand extends Command
 
         $output->writeln('Starting webserver at http://'.$address);
 
+        // Create process
+        $process = new Process(sprintf('php -S %s public/index.php', $address));
+        $process->setTimeout(null);
+        $process->setIdleTimeout(null);
+
         /** @var ProcessHelper $processes */
         $processes = $this->getHelperSet()->get('process');
-        $processes->mustRun($output, sprintf('php -S %s public/index.php', $address));
+        $processes->mustRun($output, $process);
     }
 }
