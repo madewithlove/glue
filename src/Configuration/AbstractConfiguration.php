@@ -30,6 +30,24 @@ abstract class AbstractConfiguration extends Fluent implements ConfigurationInte
     /**
      * {@inheritdoc}
      */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setNamespace($namespace)
+    {
+        $this->namespace = $namespace;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isDebug()
     {
         return $this->debug !== null ? $this->debug : true;

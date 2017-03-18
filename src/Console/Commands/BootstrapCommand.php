@@ -54,7 +54,7 @@ class BootstrapCommand extends Command
     protected function configure()
     {
         $this->setName('bootstrap')
-             ->setDescription('Bootstrap the configured folder structure');
+            ->setDescription('Bootstrap the configured folder structure');
     }
 
     /**

@@ -43,7 +43,7 @@ $app->run();
 
 ### Creating a Glue instance
 
-You configure the application by passing a `ConfigurationInterface` implementation to the constructor.
+You configure the application by passing a `ConfigurationInterface` implementation to the constructor. The class accepts an array of various options:
 
 ```php
 <?php
@@ -68,6 +68,23 @@ $app = new Glue(new Configuration([
         'views' => __DIR__.'/paths/to/views',
     ],
 ]));
+```
+
+You can also configure it through a fluent interface if you prefer – here is the above example using methods instead:
+
+```php
+<?php
+use Madewithlove\Glue\Configuration\Configuration;
+use Madewithlove\Glue\Glue;
+
+$configuration = (new Configuration())
+    ->setDebug(getenv('APP_DEBUG'))
+    ->setNamespace('Acme')
+    ->setServiceProviders([])
+    ->setMiddlewares([])
+    ->setPath('views', __DIR__.'/paths/to/views');
+
+$app = new Glue($configuration);
 ```
 
 If none is passed, Glue will use the `DefaultConfiguration` class which provides some functionnality out of the box (routing, database, logs, etc.).

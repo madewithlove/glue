@@ -52,8 +52,8 @@ class ConfigurationCommand extends Command
     protected function configure()
     {
         $this->setName('config')
-             ->setDescription('Prints out the current configuration')
-             ->addOption('default', null, InputOption::VALUE_NONE, 'Dump the default configuration');
+            ->setDescription('Prints out the current configuration')
+            ->addOption('default', null, InputOption::VALUE_NONE, 'Dump the default configuration');
     }
 
     /**

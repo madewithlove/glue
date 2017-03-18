@@ -16,6 +16,18 @@ use Interop\Container\ServiceProviderInterface;
 interface ConfigurationInterface extends Arrayable
 {
     /**
+     * @return string
+     */
+    public function getNamespace();
+
+    /**
+     * @param string $namespace
+     *
+     * @return $this
+     */
+    public function setNamespace($namespace);
+
+    /**
      * @return bool
      */
     public function isDebug();

@@ -54,9 +54,11 @@ class SymfonyConsoleServiceProviderTest extends TestCase
     public function testCanPassActualCommandInstances()
     {
         $glue = new Glue(new Configuration([
-            'providers' => [new SymfonyConsoleServiceProvider([
-                new TinkerCommand(new Container()),
-            ])],
+            'providers' => [
+                new SymfonyConsoleServiceProvider([
+                    new TinkerCommand(new Container()),
+                ]),
+            ],
         ]));
 
         $glue->boot();

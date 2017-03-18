@@ -11,7 +11,6 @@
 namespace Madewithlove\Glue\ServiceProviders;
 
 use League\Container\Container;
-use Madewithlove\Glue\Glue;
 use Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider;
 use Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorServiceProvider;
 use Madewithlove\Glue\ServiceProviders\Twig\WebpackServiceProvider;
