@@ -160,8 +160,13 @@ class Glue
     protected function registerProviders()
     {
         // Register core providers
-        $this->container->addServiceProvider(new PrefixedProvider('paths', new ParametersServiceProvider($this->configuration->getPaths())));
-        $this->container->addServiceProvider(new PrefixedProvider('config', new ParametersServiceProvider($this->configuration->toArray())));
+        $this->container->addServiceProvider(
+            new PrefixedProvider('paths', new ParametersServiceProvider($this->configuration->getPaths()))
+        );
+
+        $this->container->addServiceProvider(
+            new PrefixedProvider('config', new ParametersServiceProvider($this->configuration->toArray()))
+        );
 
         // Register service providers
         $serviceProviders = $this->configuration->getServiceProviders();

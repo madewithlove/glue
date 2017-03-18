@@ -6,13 +6,16 @@
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
+         beStrictAboutTestsThatDoNotTestAnything="false"
          processIsolation="false"
          stopOnFailure="false">
+
     <testsuites>
         <testsuite name="Glue Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+
     <filter>
         <whitelist>
             <directory>src</directory>
