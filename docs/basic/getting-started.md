@@ -46,18 +46,25 @@ $app->run();
 You configure the application by passing a `ConfigurationInterface` implementation to the constructor.
 
 ```php
+<?php
+use Madewithlove\Glue\Configuration\Configuration;
+use Madewithlove\Glue\Glue;
+use Madewithlove\ServiceProviders\Http\LeagueRouteServiceProvider;
+use Madewithlove\Glue\Http\Middlewares\LeagueRouteMiddleware;
+use Psr7Middlewares\Middleware\FormatNegotiator;
+
 $app = new Glue(new Configuration([
-    'namespace'   => 'Acme',
-    'debug'       => getenv('APP_DEBUG'),
-    'providers'   => [
-        Madewithlove\Glue\Http\Providers\LeagueRouteServiceProvider::class,
+    'namespace' => 'Acme',
+    'debug' => getenv('APP_DEBUG'),
+    'providers' => [
+        LeagueRouteServiceProvider::class,
         Acme\My\Own\Provider::class,
     ],
     'middlewares' => [
-        Madewithlove\Glue\Http\Middlewares\LeagueRouterMiddleware::class,
-        Psr7Middlewares\Middleware\FormatNegotiator::class,
+        LeagueRouteMiddleware::class,
+        FormatNegotiator::class,
     ],
-    'paths'       => [
+    'paths'  => [
         'views' => __DIR__.'/paths/to/views',
     ],
 ]));
@@ -74,7 +81,8 @@ Only constraint is you have to pass a `ConfigurationInterface` to Glue, with the
 You can override certain parts of the configuration through the `configure` method:
 
 ```php
-$app = new Glue(new MyConfiguration());
+<?php
+$app = new Madewithlove\Glue\Glue(new MyConfiguration());
 
 // This will override the `namespace` config value in `MyConfiguration`
 $app->configure(['namespace' => 'MyApp']); // or
@@ -84,6 +92,7 @@ $app->configure('namespace', 'MyApp');
 This method uses a recursive merge strategy so you can override specific providers from the `DefaultConfiguration` this way:
 
 ```php
+<?php
 $app->configure([
     'providers' => [
         'view' => MyPlatesServiceProvider::class,
@@ -102,8 +111,9 @@ $app->configure('my_key', 'some_value');
 The `Glue` class also decorates the Configuration class so you can call methods on it directly. Check the [ConfigurationInterface] for a list of methods you can call.
 
 ```php
-$app = new Glue(new Configuration());
-$app->setProviders([
+<?php
+$app = new Madewithlove\Glue\Glue(new Configuration());
+$app->setServiceProviders([
     SomeProvider::class,
 ]);
 
@@ -137,12 +147,13 @@ Per example to get the path to the cache, you'd do `$container->get('paths.cache
 The application also implements `ContainerAwareInterface` so you can swap the container at any time:
 
 ```php
-$container = new Container();
+<?php
+$container = new SomeContainer();
 $container->share(Foobar::class, function() {
     return new Foobar;
 });
 
-$app = new Glue();
+$app = new Madewithlove\Glue\Glue();
 $app->setContainer($container);
 ```
 

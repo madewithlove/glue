@@ -10,6 +10,7 @@
 
 namespace Madewithlove\Glue\Console\Commands;
 
+use Madewithlove\Glue\Configuration\ConfigurationInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,6 +20,21 @@ use Symfony\Component\Process\Process;
 
 class ServeCommand extends Command
 {
+    /**
+     * @var ConfigurationInterface
+     */
+    protected $configuration;
+
+    /**
+     * @param ConfigurationInterface $configuration
+     */
+    public function __construct(ConfigurationInterface $configuration)
+    {
+        $this->configuration = $configuration;
+
+        parent::__construct();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -39,14 +55,13 @@ class ServeCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $host = $input->getOption('host');
-        $port = $input->getOption('port');
-        $address = $host.':'.$port;
+        $address = $input->getOption('host').':'.$input->getOption('port');
+        $public = $this->configuration->getPath('web').DS.'index.php';
 
         $output->writeln('Starting webserver at http://'.$address);
 
         // Create process
-        $process = new Process(sprintf('php -S %s public/index.php', $address));
+        $process = new Process(sprintf('php -S %s %s', $address, $public));
         $process->setTimeout(null);
         $process->setIdleTimeout(null);
 
