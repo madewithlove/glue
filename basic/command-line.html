@@ -1,0 +1,507 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Command line · Glue</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        <meta name="author" content="Maxime Fabre">
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-anchors/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../styles.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="routing.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Basic usage
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="packages-based-applications.html">
+            
+                <a href="packages-based-applications.html">
+            
+                    
+                    Packages-based applications
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="getting-started.html">
+            
+                <a href="getting-started.html">
+            
+                    
+                    Getting started
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="routing.html">
+            
+                <a href="routing.html">
+            
+                    
+                    Routing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.4" data-path="command-line.html">
+            
+                <a href="command-line.html">
+            
+                    
+                    Command line
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Advanced usage
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../advanced/configuration-object.html">
+            
+                <a href="../advanced/configuration-object.html">
+            
+                    
+                    The Configuration object
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../advanced/providers-configuration.html">
+            
+                <a href="../advanced/providers-configuration.html">
+            
+                    
+                    Providers configuration
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.3" data-path="../advanced/swapping-middlewares-handler.html">
+            
+                <a href="../advanced/swapping-middlewares-handler.html">
+            
+                    
+                    Swapping middlewares handler
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    Other informations
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../CHANGELOG.md">
+            
+                <span>
+            
+                    
+                    Changelog
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../CONTRIBUTING.md">
+            
+                <span>
+            
+                    
+                    Contributing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../CONDUCT.md">
+            
+                <span>
+            
+                    
+                    Code of conduct
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../LICENSE.md">
+            
+                <span>
+            
+                    
+                    License
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >Command line</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="command-line"><a name="command-line" class="plugin-anchor" href="#command-line"><i class="fa fa-link" aria-hidden="true"></i></a>Command line</h1>
+<p>Glue provides a small CLI to hook into. For this, same principle, create a <code>console</code> file (or whatever you want) and call the <code>console</code> method of the Glue:</p>
+<pre class="language-"><code class="lang-php"><span class="token shell-comment comment">#!/usr/bin/env php</span>
+<span class="token delimiter">&lt;?php</span>
+<span class="token keyword">require</span> <span class="token string">&apos;vendor/autoload.php&apos;</span><span class="token punctuation">;</span>
+
+<span class="token variable">$app</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Glue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$app</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">console</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>You can then run <code>php console</code> to access the CLI:</p>
+<pre class="language-"><code class="lang-bash">$ php console
+Glue version 0.1.0
+
+Usage:
+  <span class="token function">command</span> <span class="token punctuation">[</span>options<span class="token punctuation">]</span> <span class="token punctuation">[</span>arguments<span class="token punctuation">]</span>
+
+Options:
+  -h, --help            Display this <span class="token function">help</span> message
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi            Force ANSI output
+      --no-ansi         Disable ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+  -v<span class="token operator">|</span>vv<span class="token operator">|</span>vvv, --verbose  Increase the verbosity of messages: 1 <span class="token keyword">for</span> normal output, 2 <span class="token keyword">for</span> <span class="token function">more</span> verbose output and 3 <span class="token keyword">for</span> debug
+
+Available commands:
+  <span class="token function">help</span>              Displays <span class="token function">help</span> <span class="token keyword">for</span> a <span class="token function">command</span>
+  list              Lists commands
+  tinker            Tinker with the application and its classes
+ migrate
+  migrate:create    Create a new migration
+  migrate:migrate   Migrate the database
+  migrate:rollback  Rollback the last or to a specific migration
+  migrate:status    Show migration status
+</code></pre>
+<h2 id="tinkering-with-the-application"><a name="tinkering-with-the-application" class="plugin-anchor" href="#tinkering-with-the-application"><i class="fa fa-link" aria-hidden="true"></i></a>Tinkering with the application</h2>
+<p>Glue includes a REPL command by default which lets you access the container and configuration and any classes you might have in the current context:</p>
+<pre class="language-"><code class="lang-bash">$ php console tinker
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> <span class="token function">ls</span>
+Variables: <span class="token variable">$app</span>, <span class="token variable">$config</span>
+
+<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span> <span class="token variable">$config</span>-<span class="token operator">&gt;</span>providers
+<span class="token operator">=</span><span class="token operator">&gt;</span> <span class="token punctuation">[</span>
+     <span class="token string">&quot;request&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Http\ZendDiactorosServiceProvider <span class="token punctuation">{</span>#23<span class="token punctuation">}</span>,
+     <span class="token string">&quot;bus&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\CommandBus\TacticianServiceProvider <span class="token punctuation">{</span>#21<span class="token punctuation">}</span>,
+     <span class="token string">&quot;pipeline&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Http\RelayServiceProvider <span class="token punctuation">{</span>#20<span class="token punctuation">}</span>,
+     <span class="token string">&quot;routing&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Http\LeagueRouteServiceProvider <span class="token punctuation">{</span>#19<span class="token punctuation">}</span>,
+     <span class="token string">&quot;db&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Database\EloquentServiceProvider <span class="token punctuation">{</span>#18<span class="token punctuation">}</span>,
+     <span class="token string">&quot;factories&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Database\FactoryMuffinServiceProvider <span class="token punctuation">{</span>#16<span class="token punctuation">}</span>,
+     <span class="token string">&quot;filesystem&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Filesystem\FlysystemServiceProvider <span class="token punctuation">{</span>#17<span class="token punctuation">}</span>,
+     <span class="token string">&quot;logging&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Development\MonologServiceProvider <span class="token punctuation">{</span>#14<span class="token punctuation">}</span>,
+     <span class="token string">&quot;console&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\Glue\ServiceProviders\Console\SymfonyConsoleServiceProvider <span class="token punctuation">{</span>#13<span class="token punctuation">}</span>,
+     <span class="token string">&quot;views&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Templating\TwigServiceProvider <span class="token punctuation">{</span>#12<span class="token punctuation">}</span>,
+     <span class="token string">&quot;url&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\Glue\ServiceProviders\Twig\UrlGeneratorServiceProvider <span class="token punctuation">{</span>#11<span class="token punctuation">}</span>,
+     <span class="token string">&quot;assets&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\Glue\ServiceProviders\Twig\WebpackServiceProvider <span class="token punctuation">{</span>#10<span class="token punctuation">}</span>,
+     <span class="token string">&quot;debugbar&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\ServiceProviders\Development\DebugbarServiceProvider <span class="token punctuation">{</span>#40<span class="token punctuation">}</span>,
+     <span class="token string">&quot;migrations&quot;</span> <span class="token operator">=</span><span class="token operator">&gt;</span> Madewithlove\Glue\ServiceProviders\Console\PhinxServiceProvider <span class="token punctuation">{</span>#41<span class="token punctuation">}</span>,
+   <span class="token punctuation">]</span>
+</code></pre>
+<h2 id="adding-commands"><a name="adding-commands" class="plugin-anchor" href="#adding-commands"><i class="fa fa-link" aria-hidden="true"></i></a>Adding commands</h2>
+<p>To add commands, pass them as constructor arguments to the <code>SymfonyConsoleServiceProvider</code>:</p>
+<pre class="language-"><code class="lang-php"><span class="token variable">$app</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">setServiceProvider</span><span class="token punctuation">(</span><span class="token string">&apos;console&apos;</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">SymfonyConsoleDefinition</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    SomeCommand<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Glue uses <code>symfony/console</code> so created commands should be instances of <code>Symfony\Component\Console\Command\Command</code>.
+All commands are resolved through the container so you can inject dependencies in their constructor.</p>
+<p>If you want to use the service provider <strong>with</strong> the default commands provided by Glue, you can use the factory method <code>withDefaultCommands</code>:</p>
+<pre class="language-"><code class="lang-php"><span class="token variable">$app</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">setServiceProvider</span><span class="token punctuation">(</span><span class="token string">&apos;console&apos;</span><span class="token punctuation">,</span> SymfonyConsoleServiceProvider<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token function">withDefaultCommands</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    SomeCommand<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<h2 id="using-a-different-cli"><a name="using-a-different-cli" class="plugin-anchor" href="#using-a-different-cli"><i class="fa fa-link" aria-hidden="true"></i></a>Using a different CLI</h2>
+<p>You can of course override the console application by overriding the <code>console</code> binding in a service provider of your doing.</p>
+<pre class="language-"><code class="lang-php"><span class="token variable">$app</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Glue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$app</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">setServiceProvider</span><span class="token punctuation">(</span><span class="token string">&apos;console&apos;</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">ClimateServiceProvider</span><span class="token punctuation">(</span><span class="token punctuation">[</span>
+    SomeCommand<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span><span class="token punctuation">,</span>
+    OtherCommand<span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token keyword">class</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="routing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: Routing">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Command line","level":"1.2.4","depth":2,"next":{"title":"Advanced usage","level":"1.3","depth":1,"ref":"","articles":[{"title":"The Configuration object","level":"1.3.1","depth":2,"path":"advanced/configuration-object.md","ref":"advanced/configuration-object.md","articles":[]},{"title":"Providers configuration","level":"1.3.2","depth":2,"path":"advanced/providers-configuration.md","ref":"advanced/providers-configuration.md","articles":[]},{"title":"Swapping middlewares handler","level":"1.3.3","depth":2,"path":"advanced/swapping-middlewares-handler.md","ref":"advanced/swapping-middlewares-handler.md","articles":[]}]},"previous":{"title":"Routing","level":"1.2.3","depth":2,"path":"basic/routing.md","ref":"basic/routing.md","articles":[]},"dir":"ltr"},"config":{"plugins":["edit-link","github","anchors","prism","-highlight"],"root":"docs","styles":{"website":"styles.css"},"pluginsConfig":{"prism":{},"github":{"url":"https://github.com/madewithlove/glue"},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"label":"Edit This Page","base":"https://github.com/madewithlove/glue/tree/develop"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"anchors":{}},"theme":"default","author":"Maxime Fabre","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"README.md"},"variables":{},"title":"Glue","gitbook":"3.x"},"file":{"path":"basic/command-line.md","mtime":"2017-03-18T15:45:07.000Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2017-03-18T16:40:20.689Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
