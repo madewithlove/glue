@@ -1,23 +1,25 @@
 {
-    "gitbook": "2.x",
+    "gitbook": "3.x",
+    "root": "docs",
+    "title": "Glue",
+    "author": "Maxime Fabre",
     "structure": {
-        "summary": "docs/README.md",
-        "glossary": "docs/GLOSSARY.md"
+        "summary": "README.md",
+        "glossary": "GLOSSARY.md"
     },
     "plugins": [
         "edit-link",
         "github",
         "anchors",
         "prism",
-        "ungrey",
         "-highlight"
     ],
     "styles": {
-      "website": "docs/styles.css"
+      "website": "styles.css"
     },
     "pluginsConfig": {
         "edit-link": {
-            "base": "https://github.com/madewithlove/glue/tree/master",
+            "base": "https://github.com/madewithlove/glue/tree/develop",
             "label": "Edit This Page"
         },
         "github": {
